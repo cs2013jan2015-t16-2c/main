@@ -1,11 +1,30 @@
-#include "Storage.h"
+#include "storage.h"
 
+void storage::ending(TaskList taskList, string fileName) {
+	ofstream file;
+	string currentLine;
 
-Storage::Storage()
-{
+	remove(fileName.c_str());
+
+	file.open(fileName);
+	currentLine = taskList.display();
+	file << currentLine << endl;	
+	file.close();
 }
 
+void storage::starting(vector<string> task, string fileName) {
+	ifstream file;
+	string currentLine;
 
-Storage::~Storage()
-{
+	task.clear();
+	file.open(fileName);
+
+	while(getline(file,currentLine)) {
+		task.push_back(currentLine);
+	}
+	file.close();
 }
+vector<string> storage::returnTask(TaskList taskList) {
+	return  taskList.display();  //convert TaskList to vector string
+}
+
