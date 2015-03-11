@@ -7,6 +7,7 @@ class Task
 public:
 	//vector<string> task;
 	Task(string input);
+	Task(string task, string input);
 	string ToString();
 	string getTaskname();
 	string UpdateTask(string input);
