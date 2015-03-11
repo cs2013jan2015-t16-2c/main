@@ -34,7 +34,6 @@ string Interface::getUserCommand() {
 string Interface::executeUserCommand(string fileName, string userCommand) {
 	string commandTypeString;
 	string taskString;
-	string taskMessageString;
 
 	commandTypeString = getFirstWord(userCommand);
 	taskString = removeFirstWord(userCommand);
@@ -44,23 +43,21 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 	COMMAND_TYPE commandType;
 	commandType = determineCommandType(commandTypeString, taskString);
 
-	taskMessageString = getTaskMessage(taskString);
-
 	switch (commandType) {
 	case HELP:
 		return help();
 	case ADD_TASK:
-		return TaskLsit::addTask(taskMessageString);
+		return TaskLsit::addTask(taskString);
 	case SEARCH:
-		return TaskLsit::search(taskMessageString);
+		return TaskLsit::search(taskString);
 	case UPDATE:
-		return TaskLsit::updateTask(taskMessageString);
+		return TaskLsit::updateTask(taskString);
 	case DELETE_TASK:
-		return TaskLsit::deleteTask(taskMessageString);
+		return TaskLsit::deleteTask(taskString);
 	case DISPLAY_TASKS:
 		return TaskLsit::display();
 	case MARK_DONE:
-		return TaskLsit::markAsDone(taskMessageString);
+		return TaskLsit::markAsDone(taskString);
 	case UNDO:
 		return TaskLsit::undo();
 	case REDO:
@@ -113,20 +110,6 @@ string Interface::getFirstWord(string userCommand) {
 
 string Interface::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
-}
-
-string Interface::getTaskMessage(string taskString) {
-	if (determineTaskType(taskString) == TASK_TYPE::STATIC) {
-		size_t foundFrom = taskString.find("-from");
-		return taskString.substr(0, foundFrom - 1);
-	}
-	else if (determineTaskType(taskString) == TASK_TYPE::DEADLINE) {
-		size_t foundBy = taskString.find("-by");
-		return taskString.substr(0, foundBy - 1);
-	}
-	else {
-		return taskString;
-	}
 }
 
 void Interface::help() {
