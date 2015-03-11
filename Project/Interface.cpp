@@ -19,7 +19,7 @@ string Interface::displayWelcome() {
 	char buffer[80];
 	strftime(buffer, sizeof(buffer), "%Y-%m-%d.%X", &tstruct);*/
 
-	return MESSAGE_WELCOME + "\n";// + buffer;
+	return MESSAGE_WELCOME;// + buffer;
 }
 
 void Interface::showToUser(string text) {
@@ -49,7 +49,7 @@ string Interface::executeUserCommand(string userCommand) {
 
 	switch (commandType) {
 	case HELP:
-		help();
+		return help();
 	case ADD_TASK:
 		return TaskList::addTask(taskString);
 	case SEARCH:
@@ -70,6 +70,7 @@ string Interface::executeUserCommand(string userCommand) {
 		storage::ending();
 		cout << MESSAGE_GOODBYE << endl;;
 		exit(0);
+	case OTHERS:
 	default:
 		return ERROR_INVALID_COMMAND;
 	}
@@ -103,8 +104,11 @@ Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString
 	else if (commandTypeString == "redo") {
 		return COMMAND_TYPE::REDO;
 	}
-	else {
+	else if (commandTypeString == "exit") {
 		return COMMAND_TYPE::EXIT;
+	}
+	else{
+		return COMMAND_TYPE::OTHERS;
 	}
 }
 
@@ -116,7 +120,7 @@ string Interface::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
 }
 
-void Interface::help() {
+string Interface::help() {
 	cout << "Here are some instructions for you to follow:\n";
 	cout << " 1. Add Function: add CS meeting -from 1200 -to 1400 23/12\n";
 	cout << " 2. Display All Tasks Function: display all\n";
@@ -124,7 +128,7 @@ void Interface::help() {
 	cout << " 4. Search Function: search CS meeting\n";
 	cout << " 5. Delete Function: delete 1\n";
 	cout << " 6. Display Floating Tasks Function: display floating\n";
-	cout << " 7. Display Static Tasks Function: display static\n ";
+	cout << " 7. Display Static Tasks Function: display static\n";
 	cout << " 8. Display Deadline Tasks Function: display deadline\n";
 	cout << " 9. Display Unfinished Tasks Function: display unfinished\n";
 	cout << "10. Display Finished Tasks Function: display finished\n";
@@ -132,4 +136,6 @@ void Interface::help() {
 	cout << "12. Undo Function: undo\n";
 	cout << "13. Redo Function: redo\n";
 	cout << "14. Exit Function: exit\n";
+
+	return "";
 }

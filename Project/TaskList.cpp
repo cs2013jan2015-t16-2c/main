@@ -15,7 +15,6 @@ void TaskList::copyFromStorage(){
 		Task newTask(task, "copy");
 		list.push_back(newTask);
 	}
-
 }
 
 string TaskList::addTask(string input){
@@ -108,13 +107,13 @@ string TaskList::display(){
 	}
 	else{
 		ostringstream overallOss;
-		for (unsigned int i = 0; i < list.size(); i++){
+		for (unsigned int i = 0; i < list.size()-1; i++){
 			ostringstream oss;
 			oss << i + 1 << ". " << list[i].ToString() << endl;
 			string taskDisplay = oss.str();
 			overallOss << taskDisplay;
 		}
-		return overallOss.str();
+		return overallOss.str()+list[list.size()-1].ToString();
 	}
 }
 
@@ -148,6 +147,9 @@ string TaskList::undo(){
 		list[lastChangedTaskIndex].markAsUndone();
 		return "MarkasDone command is undone";
 	}
+	else{
+		return "Previous action cannot be undo";
+	}
 }
 
 string TaskList::redo(){
@@ -167,23 +169,19 @@ string TaskList::redo(){
 		list[lastChangedTaskIndex].markAsDone();
 		return "MarkasDone command is redone";
 	}
+	else{
+		return "previous action cannot be redo";
+	}
 }
 
 string TaskList::getFirstWord(string input)
 {
-	size_t start = input.find_first_not_of(" \f\n\r\t\v");
-	size_t end = input.find_first_of(" \f\n\r\t\v");
-	string output = input.substr(start, end - start);
-	return output;
+	return input.substr(0, input.find(' '));
 }
 
 string TaskList::removeFirstWord(string input)
 {
-	size_t firstspace = input.find_first_of(" \f\n\r\t\v");
-	size_t start = input.find_first_not_of(" \f\n\r\t\v", firstspace);
-	size_t end = input.find_last_not_of(" \f\n\r\t\v");
-	string output = input.substr(start, end + 1 - start);
-	return output;
+	return input.substr(input.find_first_of(" ") + 1);
 }
 
 vector<string> TaskList::splitText(string text){

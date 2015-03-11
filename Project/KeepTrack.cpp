@@ -5,7 +5,7 @@
 
 int main() {
 	Interface::showToUser(Interface::displayWelcome());
-	cout << "\n================================================================================\n";
+	cout << "================================================================================\n";
 	while (true) {
 		string userCommand;
 		string output;
@@ -15,5 +15,7 @@ int main() {
 		Interface::showToUser(output);
 		cout << "\n================================================================================\n";
     }
+
+//	system("pause");
 	return 0;
 }

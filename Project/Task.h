@@ -15,7 +15,7 @@ public:
 	Task(string task, string input);
 	string ToString();
 	string getTaskname();
-	string UpdateTask(string input);
+	void UpdateTask(string input);
 	void markAsDone();
 	void markAsUndone();
 	void checkInputValidation();

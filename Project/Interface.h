@@ -22,7 +22,7 @@ using namespace std;
 class Interface {
 public:
 	enum COMMAND_TYPE {
-		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, UNDO, REDO, EXIT
+		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, UNDO, REDO, EXIT, OTHERS
 	};
 
 private:
@@ -35,7 +35,7 @@ private:
 	static string removeFirstWord(string userCommand);
 	static string getTaskMessage(string taskString);
 
-	static void help();
+	static string help();
 
 public:
 	static string executeUserCommand(string userCommand);
