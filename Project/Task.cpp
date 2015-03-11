@@ -1,6 +1,11 @@
 #include "task.h"
 
 const int TASK_LEN = 256;
+const string SCHEDULED_TASK_LABEL = "timed";
+const string DEADLINE_TASK_LABEL = "deadline";
+const string FLOATING_TASK_LABEL = "floating";
+const string PROCESSING_TASK_LABEL = "progressing";
+const string FINISHED_TASK_LABEL = "done";
 
 Task::Task(string input){
 	if (!input.empty()){
@@ -9,7 +14,7 @@ Task::Task(string input){
 		if (timed_task != std::string::npos){
 			std::size_t end_time = input.find("-to");
 			std::size_t get_date = input.find("/");
-			task_type = "timed";
+			task_type = SCHEDULED_TASK_LABEL;
 			taskname = str.copy(input, 0, timed_task - 2);
 			start_time = str.copy(input, timed_task + 6, 4);
 			end_time = str.copy(input, end_time + 4, 4);
@@ -20,7 +25,7 @@ Task::Task(string input){
 		}
 		else if (deadlined_task != std::string::npos){
 			std::size_t get_date = input.find("/");
-			task_type = "deadline";
+			task_type = DEADLINE_TASK_LABEL;
 			taskname = str.copy(input, 0, deadlined_task - 2);
 			start_time = "";
 			end_time = "";
@@ -30,7 +35,7 @@ Task::Task(string input){
 			status = "progressing";
 		}
 		else{
-			task_type = "floating";
+			task_type = FLOATING_TASK_LABEL;
 			taskname = input;
 			start_time = "";
 			end_time = "";
@@ -42,10 +47,74 @@ Task::Task(string input){
 	}
 }
 
+Task::Task(string task, string input){
+	if (!task.empty()){
+
+		//store status
+		std::size_t find_status = task.find("progressing");
+		if (find_status != std::string::npos){
+			status = "progressing";
+		}
+		else{
+			std::size_t find_status = task.find("done");
+			if (find_status != std::string::npos){
+				status = "done";
+			}
+			else{
+				status = " ";
+			}
+		}
+
+		//classify tasks into scheduled, deadlined or floating
+		std::size_t find_date = task.find("/");
+		string temp_date;
+		string temp;	//to store remaining part of the task arguement to check whether there is a time included there
+		if (find_date != std::string::npos){	//date found, task is either scheduled or deadlined.
+			if (task[find_date - 2] == " "){	//check date is in single digit or double
+				taskname = str.copy(task, 0, find_date - 2);
+				temp_date = str.copy(task, find_date - 1, find_date + 2);
+			}
+			else{
+				taskname = str.copy(task, 0, find_date - 3);
+				temp_date = str.copy(task, find_date - 2, find_date + 2);
+			}
+			std::size_t find_time = task.find(":"); 
+			temp = str.substr(find_time + 2);
+			std::size_t find_ending_time = temp.find(":");	//check if there's an ending time ie. seperate deadlined task and scheduled task
+			if ((find_time != std::string::npos) && (find_ending_time != std::string::npos)){
+				task_type = SCHEDULED_TASK_LABEL;
+				start_time = str.copy(task, find_time - 2, find_time + 2);
+				end_time = str.copy(temp, find_ending_time - 2, find_ending_time + 2);
+				deadline_time = "";
+				scheduled_date = temp_date;
+				deadline_date = "";
+			}
+			else if (find_time != std::string::npos){
+				task_type = DEADLINE_TASK_LABEL;
+				start_time = "";
+				end_time = "";
+				deadline_time = str.copy(task, find_time - 2, find_time + 2);
+				scheduled_date = "";
+				deadline_date = temp_date;
+			}
+
+		}
+		else{
+			task_type = FLOATING_TASK_LABEL;
+			taskname = str.copy(task, 0, find_status - 1);
+			start_time = "";
+			end_time = "";
+			deadline_time = "";
+			scheduled_date = "";
+			deadline_date = "";
+		}
+	}
+}
+
 string Task::ToString(){
 	char task[TASK_LEN];
 	strcpy(task, taskname);
-	if (task_type == "deadline"){
+	if (task_type == DEADLINE_TASK_LABEL){
 		strcat(task, " ");
 		strcat(task, deadline_date);
 		strcat(task, " ");
@@ -77,7 +146,7 @@ string Task::UpdateTask(){
 		if (timed_task != std::string::npos){
 			std::size_t end_time = input.find("-to");
 			std::size_t get_date = input.find("/");
-			task_type = "timed";
+			task_type = SCHEDULED_TASK_LABEL;
 			start_time = str.copy(input, timed_task + 6, 4);
 			end_time = str.copy(input, end_time + 4, 4);
 			if (get_date != std::string::npos){
@@ -86,7 +155,7 @@ string Task::UpdateTask(){
 		}
 		else if (deadlined_task != std::string::npos){
 			std::size_t get_date = input.find("/");
-			task_type = "deadline";
+			task_type = DEADLINE_TASK_LABEL;
 			deadline_time = str.copy(input, deadlined_task + 4, 4);
 			if (get_date != std::string::npos){
 				deadline_date = str.copy(input, get_date - 2, get_date + 2);
@@ -112,7 +181,7 @@ void Task::checkInputValidation(){
 	string end_mins;
 
 	//check time frame in scheduled task
-	while ((task_type == "timed") && (!valid_time)){
+	while ((task_type == SCHEDULED_TASK_LABEL) && (!valid_time)){
 		std::size_t get_start_time = start_time.find(":");
 		std::size_t get_end_time = end_time.find(":");
 		start_hour = str.copy(start_time, 0, get_start_time - 1);
@@ -141,7 +210,7 @@ void Task::checkInputValidation(){
 	}
 
 	//check time frame in deadline task
-	while ((task_type == "deadline") && (!valid_time)){
+	while ((task_type == DEADLINE_TASK_LABEL) && (!valid_time)){
 		std::size_t get_time = deadline_time.find(":");
 		start_hour = str.copy(deadline_time, 0, get_time - 1);
 		start_mins = str.copy(deadline_time, get_time + 1, get_time.end());
@@ -161,7 +230,7 @@ void Task::checkInputValidation(){
 	string date;
 
 	//check date for deadline task
-	while ((task_type == "deadline") && (!valid_date)){
+	while ((task_type == DEADLINE_TASK_LABEL) && (!valid_date)){
 		std::size_t get_date = deadline_date.find("/");
 		date = str.copy(deadline_date, 0, get_date - 1);
 		month = str.copy(deadline_date, get_date + 1, get_date + 3);
@@ -175,7 +244,7 @@ void Task::checkInputValidation(){
 	}
 
 	//check date for schedule task
-	while ((task_type == "timed") && (!valid_date)){
+	while ((task_type == SCHEDULED_TASK_LABEL) && (!valid_date)){
 		std::size_t get_date = scheduled_date.find("/");
 		date = str.copy(scheduled_date, 0, get_date - 1);
 		month = str.copy(scheduled_date, get_date + 1, get_date + 3);
