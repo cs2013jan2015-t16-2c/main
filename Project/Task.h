@@ -7,11 +7,12 @@ class Task
 public:
 	//vector<string> task;
 	Task(string input);
-	string ToString(int time);
+	string ToString();
 	string getTaskname();
 	string UpdateTask(string input);
 	void markAsDone();
 	void markAsUndone();
+	void checkInputValidation();
 	string taskname;
 	string task_type;
 	string start_time;
