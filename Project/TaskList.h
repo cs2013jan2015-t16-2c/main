@@ -29,7 +29,7 @@ public:
 	static string display();
 	static string markAsDone(string input);
 
-	static void copyFromStorage(storage startingStorage);
+	static void copyFromStorage();
 
 	static string undo();
 	static string redo();

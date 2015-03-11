@@ -117,8 +117,8 @@ string TaskList::markAsDone(string input){
 	string output = "Task " + input + " marked as done";
 }
 
-void TaskList::copyFromStorage(storage startingStorage){
-	vector<string> taskList = startingStorage.returnTask;
+void TaskList::copyFromStorage(){
+	vector<string> taskList = storage::returnTask();
 
 	for (int i = 0; i < taskList.size(); i++){
 		string task = removeFirstWord(taskList[i]);

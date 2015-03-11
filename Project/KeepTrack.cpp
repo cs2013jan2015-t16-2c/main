@@ -4,15 +4,15 @@
 #include "TaskList.h"
 
 int main() {
-	showToUser(welcomeMessage());
+	Interface::showToUser(Interface::displayWelcome());
 	cout << "\n================================================================================\n";
 	while (true) {
 		string userCommand;
 		string output;
 
-		userCommand = getUserCommand();
-		output = executeUserCommand(userCommand);
-		showToUser(output);
+		userCommand = Interface::getUserCommand();
+		output = Interface::executeUserCommand(userCommand);
+		Interface::showToUser(output);
 		cout << "\n================================================================================\n";
     }
 	return 0;

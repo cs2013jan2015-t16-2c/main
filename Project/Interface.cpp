@@ -8,7 +8,9 @@ const string Interface::MESSAGE_GOODBYE = "Goodbye!";
 
 const string Interface::ERROR_INVALID_COMMAND = "Error: invalid command!";
 
+
 string Interface::displayWelcome() {
+	
 	string currentDayTime;
 	time_t now = time(0);
 	struct tm tstruct;
@@ -23,6 +25,9 @@ void Interface::showToUser(string text) {
 }
 
 string Interface::getUserCommand() {
+	storage::starting();
+	TaskList::copyFromStorage();
+	
 	string userCommand;
 
 	cout << "command: ";
@@ -45,23 +50,23 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 
 	switch (commandType) {
 	case HELP:
-		return help();
+		help();
 	case ADD_TASK:
-		return TaskLsit::addTask(taskString);
+		return TaskList::addTask(taskString);
 	case SEARCH:
-		return TaskLsit::search(taskString);
+		return TaskList::search(taskString);
 	case UPDATE:
-		return TaskLsit::updateTask(taskString);
+		return TaskList::updateTask(taskString);
 	case DELETE_TASK:
-		return TaskLsit::deleteTask(taskString);
+		return TaskList::deleteTask(taskString);
 	case DISPLAY_TASKS:
-		return TaskLsit::display();
+		return TaskList::display();
 	case MARK_DONE:
-		return TaskLsit::markAsDone(taskString);
+		return TaskList::markAsDone(taskString);
 	case UNDO:
-		return TaskLsit::undo();
+		return TaskList::undo();
 	case REDO:
-		return TaskLsit::redo();
+		return TaskList::redo();
 	case EXIT:
 		storage::ending();
 		cout << MESSAGE_GOODBYE << endl;;

@@ -8,17 +8,19 @@
 #include <fstream>
 #include <stdio.h>
 #include <algorithm>
+#include "TaskList.h"
 
 using namespace std;
 
 class storage{
 private:
-	vector<string> task;
-	string fileName;
+	static vector<string> task;
+	static const string FILENAME;
+
 public:
-	void ending(TaskList,string);
-	void starting(vector<string>,string);
-	vector<string> returnTask(TaskList);
+	static void ending();
+	static void starting();
+	static vector<string> returnTask();
 };
 
 #endif

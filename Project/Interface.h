@@ -28,13 +28,7 @@ public:
 private:
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_GOODBYE;
-
 	static const string ERROR_INVALID_COMMAND;
-
-	static string displayWelcome();
-	static void showToUser(string text);
-
-	static string getUserCommand();
 	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
 
 	static string getFirstWord(string userCommand);
@@ -45,5 +39,9 @@ private:
 
 public:
 	static string executeUserCommand(string fileName, string userCommand);
+
+	static string displayWelcome();
+	static void showToUser(string text);
+	static string getUserCommand();
 };
 #endif
