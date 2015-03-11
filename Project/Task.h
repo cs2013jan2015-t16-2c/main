@@ -14,6 +14,8 @@ public:
 	void markAsDone();
 	void markAsUndone();
 	void checkInputValidation();
+	
+private:
 	string taskname;
 	string task_type;
 	string start_time;

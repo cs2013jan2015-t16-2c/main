@@ -12,26 +12,26 @@ Task::Task(string input){
 		std::size_t timed_task = input.find("-from");
 		std::size_t deadlined_task = input.find("-by");
 		if (timed_task != std::string::npos){
-			std::size_t end_time = input.find("-to");
+			std::size_t ending_time = input.find("-to");
 			std::size_t get_date = input.find("/");
 			task_type = SCHEDULED_TASK_LABEL;
-			taskname = str.copy(input, 0, timed_task - 2);
-			start_time = str.copy(input, timed_task + 6, 4);
-			end_time = str.copy(input, end_time + 4, 4);
+			taskname = input.substr(0, timed_task - 2);
+			start_time = input.substr(timed_task + 6, 4);
+			end_time = input.substr(ending_time + 4, 4);
 			deadline_time = "";
-			scheduled_date = str.copy(input, get_date - 2, get_date + 2);
+			scheduled_date = input.substr(get_date - 2, 5);
 			deadline_date = "";
 			status = "progressing";
 		}
 		else if (deadlined_task != std::string::npos){
 			std::size_t get_date = input.find("/");
 			task_type = DEADLINE_TASK_LABEL;
-			taskname = str.copy(input, 0, deadlined_task - 2);
+			taskname = input.substr(0, deadlined_task - 2);
 			start_time = "";
 			end_time = "";
-			deadline_time = str.copy(input, deadlined_task + 4, 4);
+			deadline_time = input.substr(deadlined_task + 4, 4);
 			scheduled_date = "";
-			deadline_date = (input, get_date - 2, get_date + 2);
+			deadline_date = input.substr(get_date - 2, 5);
 			status = "progressing";
 		}
 		else{
@@ -113,24 +113,24 @@ Task::Task(string task, string input){
 
 string Task::ToString(){
 	char task[TASK_LEN];
-	strcpy(task, taskname);
+	strcpy(task, taskname.c_str);
 	if (task_type == DEADLINE_TASK_LABEL){
 		strcat(task, " ");
-		strcat(task, deadline_date);
+		strcat(task, deadline_date.c_str);
 		strcat(task, " ");
-		strcat(task, deadline_time);
+		strcat(task, deadline_time.c_str);
 		strcat(task, " ");
-		strcat(task, status);
+		strcat(task, status.c_str);
 	}
 	else if (task_type == "timed"){
 		strcat(task, " ");
-		strcat(task, scheduled_date);
+		strcat(task, scheduled_date.c_str);
 		strcat(task, " ");
-		strcat(task, start_time);
+		strcat(task, start_time.c_str);
 		strcat(task, " ");
-		strcat(task, end_time);
+		strcat(task, end_time.c_str);
 		strcat(task, " ");
-		strcat(task, status);
+		strcat(task, status.c_str);
 	}
 	return task;
 }
@@ -139,7 +139,7 @@ string Task::getTaskname(){
 	return taskname;
 }
 
-string Task::UpdateTask(){
+string Task::UpdateTask(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find("-from");
 		std::size_t deadlined_task = input.find("-by");
