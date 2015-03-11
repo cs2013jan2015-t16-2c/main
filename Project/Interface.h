@@ -30,9 +30,7 @@ public:
 	};*/
 
 private:
-	static string MESSAGE_WELCOME;
-	static const string MESSAGE_ADDED;
-	static const string MESSAGE_DELETED;
+	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_GOODBYE;
 
 	static const string ERROR_INVALID_COMMAND;

@@ -3,9 +3,7 @@
 
 #include "BasicUI.h"
 
-string Interface::MESSAGE_WELCOME = "Welcome to KeepTrack";
-const string Interface::MESSAGE_ADDED = "Added to %s: \"%s\"";
-const string Interface::MESSAGE_DELETED = "Deleted from %s: \"%s\"";
+const string Interface::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string Interface::MESSAGE_GOODBYE = "Goodbye!";
 
 const string Interface::ERROR_INVALID_COMMAND = "Error: invalid command!";
