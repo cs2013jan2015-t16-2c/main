@@ -15,21 +15,19 @@
 #include <sstream>
 #include <time.h>
 #include "TaskList.h"
-//#include 'Task class' header file
+#include "Storage.h"
 
 using namespace std;
 
 class Interface {
 public:
 	enum COMMAND_TYPE {
-		HELP, ADD_FLOATING, ADD_STATIC, ADD_DEADLINE, UPDATE, DELETE_TASK, SEARCH,
-		DISPLAY_ALL, DISPLAY_SATIC, DISPLAY_DEADLINE, DISPLAY_FLOATING, DISPLAY_UNFINISHED, DISPLAY_FINISHED, DISPLAY_TODAY,
-		MARK_DONE, UNDO, REDO, EXIT
+		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, UNDO, REDO, EXIT
 	};
 
-	enum TASK_TYPE {
+	/*enum TASK_TYPE {
 		STATIC_TASK, DEADLINE, FLOATING_TASK
-	};
+	};*/
 
 private:
 	static string MESSAGE_WELCOME;

@@ -49,33 +49,26 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 	taskMessageString = getTaskMessage(taskString);
 
 	switch (commandType) {
-		// add more!!
 	case HELP:
 		return help();
-	case ADD_FLOATING:
-	case ADD_STATIC:
-	case ADD_DEADLINE:
+	case ADD_TASK:
+		return TaskLsit::addTask(taskMessageString);
 	case SEARCH:
-		return search(taskMessageString);
+		return TaskLsit::search(taskMessageString);
 	case UPDATE:
-		return updateTask(taskMessageString);
+		return TaskLsit::updateTask(taskMessageString);
 	case DELETE_TASK:
-		return deleteTask(taskMessageString);
-	case DISPLAY_ALL:
-	case DISPLAY_SATIC:
-	case DISPLAY_DEADLINE:
-	case DISPLAY_FLOATING:
-	case DISPLAY_UNFINISHED:
-	case DISPLAY_FINISHED:
-	case DISPLAY_TODAY:
+		return TaskLsit::deleteTask(taskMessageString);
+	case DISPLAY_TASKS:
+		return TaskLsit::display();
 	case MARK_DONE:
-		return markAsDone(taskMessageString);
+		return TaskLsit::markAsDone(taskMessageString);
 	case UNDO:
-		return undo();
+		return TaskLsit::undo();
 	case REDO:
-		return redo();
+		return TaskLsit::redo();
 	case EXIT:
-		// copy to final file
+		storage::ending();
 		cout << MESSAGE_GOODBYE << endl;;
 		exit(0);
 	default:
@@ -83,7 +76,7 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 	}
 }
 
-Task::TASK_TYPE Interface::determineTaskType(string taskString) {
+/*Task::TASK_TYPE Interface::determineTaskType(string taskString) {
 	size_t foundFrom = taskString.find("-from");
 	size_t foundTo = taskString.find("-to");
 	size_t foundBy = taskString.find("-by");
@@ -97,22 +90,14 @@ Task::TASK_TYPE Interface::determineTaskType(string taskString) {
 	else {
 		return TASK_TYPE::FLOATING;
 	}
-}
+}*/
 
 Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString, string taskString) {
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
 	}
 	else if (commandTypeString == "add") {
-		if (determineTaskType(taskString) == TASK_TYPE::STATIC_TASK) {
-			return COMMAND_TYPE::ADD_STATIC;
-		}
-		else if (determineTaskType(taskString) == TASK_TYPE::DEADLINE) {
-			return COMMAND_TYPE::ADD_DEADLINE;
-		}
-		else {
-			return COMMAND_TYPE::ADD_FLOATING;
-		}
+		return COMMAND_TYPE::ADD_TASK;
 	}
 	else if (commandTypeString == "update") {
 		return COMMAND_TYPE::UPDATE;
@@ -124,9 +109,9 @@ Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString
 		return COMMAND_TYPE::SEARCH;
 	}
 	else if (commandTypeString == "display") {
-		return COMMAND_TYPE::DISPLAY_ALL;
+		return COMMAND_TYPE::DISPLAY_TASKS;
 	}
-	else if (commandTypeString == "done") { // done??
+	else if (commandTypeString == "done") {
 		return COMMAND_TYPE::MARK_DONE;
 	}
 	else if (commandTypeString == "undo") {
