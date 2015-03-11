@@ -107,11 +107,26 @@ Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString
 			return COMMAND_TYPE::ADD_FLOATING;
 		}
 	}
+	else if (commandTypeString == "update") {
+		return COMMAND_TYPE::UPDATE;
+	}
 	else if (commandTypeString == "delete") {
 		return COMMAND_TYPE::DELETE_TASK;
 	}
+	else if (commandTypeString == "search") {
+		return COMMAND_TYPE::SEARCH;
+	}
 	else if (commandTypeString == "display") {
-		return COMMAND_TYPE::DISPLAY_TASK;
+		return COMMAND_TYPE::DISPLAY_ALL;
+	}
+	else if (commandTypeString == "done") { // done??
+		return COMMAND_TYPE::MARK_DONE;
+	}
+	else if (commandTypeString == "undo") {
+		return COMMAND_TYPE::UNDO;
+	}
+	else if (commandTypeString == "redo") {
+		return COMMAND_TYPE::REDO;
 	}
 	else {
 		return COMMAND_TYPE::EXIT;
