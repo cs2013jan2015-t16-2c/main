@@ -1,7 +1,7 @@
 // Resource File
 // BasicUI.cpp
 
-#include "BasicUI.h"
+#include "Interface.h"
 
 const string Interface::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string Interface::MESSAGE_GOODBYE = "Goodbye!";
@@ -34,7 +34,6 @@ string Interface::getUserCommand() {
 string Interface::executeUserCommand(string fileName, string userCommand) {
 	string commandTypeString;
 	string taskString;
-	string taskMessageString;
 
 	commandTypeString = getFirstWord(userCommand);
 	taskString = removeFirstWord(userCommand);
@@ -44,23 +43,21 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 	COMMAND_TYPE commandType;
 	commandType = determineCommandType(commandTypeString, taskString);
 
-	taskMessageString = getTaskMessage(taskString);
-
 	switch (commandType) {
 	case HELP:
 		return help();
 	case ADD_TASK:
-		return TaskLsit::addTask(taskMessageString);
+		return TaskLsit::addTask(taskString);
 	case SEARCH:
-		return TaskLsit::search(taskMessageString);
+		return TaskLsit::search(taskString);
 	case UPDATE:
-		return TaskLsit::updateTask(taskMessageString);
+		return TaskLsit::updateTask(taskString);
 	case DELETE_TASK:
-		return TaskLsit::deleteTask(taskMessageString);
+		return TaskLsit::deleteTask(taskString);
 	case DISPLAY_TASKS:
 		return TaskLsit::display();
 	case MARK_DONE:
-		return TaskLsit::markAsDone(taskMessageString);
+		return TaskLsit::markAsDone(taskString);
 	case UNDO:
 		return TaskLsit::undo();
 	case REDO:
@@ -73,22 +70,6 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 		return ERROR_INVALID_COMMAND
 	}
 }
-
-/*Task::TASK_TYPE Interface::determineTaskType(string taskString) {
-	size_t foundFrom = taskString.find("-from");
-	size_t foundTo = taskString.find("-to");
-	size_t foundBy = taskString.find("-by");
-
-	if ((foundFrom != string::npos) && (foundTo != string::npos)) {
-		return TASK_TYPE::STATIC_TASK;
-	}
-	else if (foundBy != string::npos) {
-		return TASK_TYPE::DEADLINE;
-	}
-	else {
-		return TASK_TYPE::FLOATING;
-	}
-}*/
 
 Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString, string taskString) {
 	if (commandTypeString == "help") {
@@ -131,25 +112,11 @@ string Interface::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
 }
 
-string Interface::getTaskMessage(string taskString) {
-	if (determineTaskType(taskString) == TASK_TYPE::STATIC) {
-		size_t foundFrom = taskString.find("-from");
-		return taskString.substr(0, foundFrom - 1);
-	}
-	else if (determineTaskType(taskString) == TASK_TYPE::DEADLINE) {
-		size_t foundBy = taskString.find("-by");
-		return taskString.substr(0, foundBy - 1);
-	}
-	else {
-		return taskString;
-	}
-}
-
 void Interface::help() {
 	cout << "Here are some instructions for you to follow:\n";
 	cout << " 1. Add Function: add CS meeting -from 1200 -to 1400 23/12\n";
 	cout << " 2. Display All Tasks Function: display all\n";
-	cout << " 3. Update Function: Update 1 CS meeting -from 1300 -to 1500 23/12\n";
+	cout << " 3. Update Function: Update 1 -from 1300 -to 1500 23/12\n";
 	cout << " 4. Search Function: search CS meeting\n";
 	cout << " 5. Delete Function: delete 1\n";
 	cout << " 6. Display Floating Tasks Function: display floating\n";

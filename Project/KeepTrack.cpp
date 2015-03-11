@@ -5,6 +5,7 @@
 
 int main() {
 	showToUser(welcomeMessage());
+	cout << "\n================================================================================\n";
 	while (true) {
 		string userCommand;
 		string output;
@@ -12,6 +13,7 @@ int main() {
 		userCommand = getUserCommand();
 		output = executeUserCommand(userCommand);
 		showToUser(output);
-	}
+		cout << "\n================================================================================\n";
+    }
 	return 0;
 }
