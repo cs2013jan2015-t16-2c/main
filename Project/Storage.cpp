@@ -1,5 +1,6 @@
 #include "storage.h"
 
+//	static vector<string> task;
 const string storage::FILENAME = "storage.txt";
 
 void storage::ending() {

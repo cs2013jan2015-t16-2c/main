@@ -1,6 +1,13 @@
 #include <sstream>
 #include "TaskList.h"
 
+//vector<Task> TaskList::list(99);
+string TaskList::lastCommandType = "";
+int TaskList::lastChangedTaskIndex = NULL;
+//Task lastUnchangedTask = NULL;
+//Task lastChangedTask = NULL;
+
+
 string TaskList::addTask(string input){
 	lastCommandType = "add";
 
@@ -17,7 +24,7 @@ string TaskList::updateTask(string input){
 	string taskIndex = getFirstWord(input);
 	string taskInfo = removeFirstWord(input);
 
-	int index;
+	unsigned int index;
 	istringstream in(taskIndex);
 	in >> index;
 
@@ -41,7 +48,7 @@ string TaskList::updateTask(string input){
 }
 
 string TaskList::deleteTask(string input){
-	int index;
+	unsigned int index;
 	istringstream in(input);
 	in >> index;
 
@@ -69,11 +76,11 @@ string TaskList::search(string input){
 		lastCommandType = "search";
 
 		vector<string> output;
-		for (int i = 0; i < list.size(); i++){
+		for (unsigned int i = 0; i < list.size(); i++){
 			string taskName = (list[i]).getTaskname();
 			vector<string> contents = splitText(taskName);
 
-			for (int j = 0; j < contents.size(); j++){
+			for (unsigned int j = 0; j < contents.size(); j++){
 				if (input == contents[j]){
 					ostringstream oss;
 					oss << i + 1 << "." << list[i].ToString() << endl;
@@ -95,7 +102,7 @@ string TaskList::display(){
 		lastCommandType = "display";
 
 		ostringstream overallOss;
-		for (int i = 0; i < list.size(); i++){
+		for (unsigned int i = 0; i < list.size(); i++){
 			ostringstream oss;
 			oss << i + 1 << ". " << list[i].ToString() << endl;
 			string taskDisplay = oss.str();
@@ -113,14 +120,15 @@ string TaskList::markAsDone(string input){
 	lastCommandType = "done";
 	lastChangedTaskIndex = index;
 
-	list[index].markAsDone;
+	list[index].markAsDone();
 	string output = "Task " + input + " marked as done";
+	return output;
 }
 
 void TaskList::copyFromStorage(){
 	vector<string> taskList = storage::returnTask();
 
-	for (int i = 0; i < taskList.size(); i++){
+	for (unsigned int i = 0; i < taskList.size(); i++){
 		string task = removeFirstWord(taskList[i]);
 		Task newTask(task, "copy");
 		list.push_back(newTask);
@@ -143,7 +151,7 @@ string TaskList::undo(){
 		list.insert(list.begin() + lastChangedTaskIndex - 1, lastUnchangedTask);
 		return "Deleting command is undone";
 	}
-	else if (lastCommandType == "done"){
+	else {
 		list[lastChangedTaskIndex].markAsUndone();
 		return "MarkasDone command is undone";
 	}
@@ -165,7 +173,7 @@ string TaskList::redo(){
 		list.erase(list.begin() + lastChangedTaskIndex - 1);
 		return "Deleting command is redone";
 	}
-	else if (lastCommandType == "done"){
+	else {
 		list[lastChangedTaskIndex].markAsDone();
 		return "MarkasDone command is redone";
 	}
@@ -201,7 +209,7 @@ vector<string> TaskList::splitText(string text){
 
 string TaskList::printVector(vector<string> output){
 	ostringstream oss;
-	for (int i = 0; i < output.size(); i++){
+	for (unsigned int i = 0; i < output.size(); i++){
 		oss << output[i];
 	}
 	return oss.str();

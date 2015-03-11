@@ -38,7 +38,7 @@ private:
 	static void help();
 
 public:
-	static string executeUserCommand(string fileName, string userCommand);
+	static string executeUserCommand(string userCommand);
 
 	static string displayWelcome();
 	static void showToUser(string text);

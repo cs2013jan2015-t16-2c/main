@@ -1,3 +1,6 @@
+#ifndef TASK_H_
+#define TASK_H_
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -7,6 +10,7 @@ class Task
 public:
 	//vector<string> task;
 	Task(string input);
+	~Task();
 	Task(string task, string input);
 	string ToString();
 	string getTaskname();
@@ -25,3 +29,5 @@ private:
 	string deadline_date;
 	string status;
 };
+
+#endif

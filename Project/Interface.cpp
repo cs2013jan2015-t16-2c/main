@@ -36,7 +36,7 @@ string Interface::getUserCommand() {
 	return userCommand;
 }
 
-string Interface::executeUserCommand(string fileName, string userCommand) {
+string Interface::executeUserCommand(string userCommand) {
 	string commandTypeString;
 	string taskString;
 
@@ -72,7 +72,7 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 		cout << MESSAGE_GOODBYE << endl;;
 		exit(0);
 	default:
-		return ERROR_INVALID_COMMAND
+		return ERROR_INVALID_COMMAND;
 	}
 }
 
