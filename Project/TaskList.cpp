@@ -1,12 +1,22 @@
 #include <sstream>
 #include "TaskList.h"
 
-//vector<Task> TaskList::list(99);
-string TaskList::lastCommandType = "";
-int TaskList::lastChangedTaskIndex = NULL;
-//Task lastUnchangedTask = NULL;
-//Task lastChangedTask = NULL;
+vector<Task> TaskList::list;
+string TaskList::lastCommandType;
+int TaskList::lastChangedTaskIndex;
+Task TaskList::lastChangedTask;
+Task TaskList::lastUnchangedTask;
 
+void TaskList::copyFromStorage(){
+	vector<string> taskList = storage::returnTask();
+
+	for (unsigned int i = 0; i < taskList.size(); i++){
+		string task = removeFirstWord(taskList[i]);
+		Task newTask(task, "copy");
+		list.push_back(newTask);
+	}
+
+}
 
 string TaskList::addTask(string input){
 	lastCommandType = "add";
@@ -73,8 +83,6 @@ string TaskList::search(string input){
 		return "Task list is empty";
 	}
 	else{
-		lastCommandType = "search";
-
 		vector<string> output;
 		for (unsigned int i = 0; i < list.size(); i++){
 			string taskName = (list[i]).getTaskname();
@@ -99,8 +107,6 @@ string TaskList::display(){
 		return "Task list is empty";
 	}
 	else{
-		lastCommandType = "display";
-
 		ostringstream overallOss;
 		for (unsigned int i = 0; i < list.size(); i++){
 			ostringstream oss;
@@ -120,26 +126,13 @@ string TaskList::markAsDone(string input){
 	lastCommandType = "done";
 	lastChangedTaskIndex = index;
 
-	list[index].markAsDone();
+	list[index-1].markAsDone();
 	string output = "Task " + input + " marked as done";
 	return output;
 }
 
-void TaskList::copyFromStorage(){
-	vector<string> taskList = storage::returnTask();
-
-	for (unsigned int i = 0; i < taskList.size(); i++){
-		string task = removeFirstWord(taskList[i]);
-		Task newTask(task, "copy");
-		list.push_back(newTask);
-	}
-}
-
 string TaskList::undo(){
-	if (lastCommandType == "display" || "search"){
-		return "Previous command cannot be undone";
-	}
-	else if (lastCommandType == "add"){
+	if (lastCommandType == "add"){
 		list.pop_back();
 		return "Adding command is undone";
 	}
@@ -151,17 +144,14 @@ string TaskList::undo(){
 		list.insert(list.begin() + lastChangedTaskIndex - 1, lastUnchangedTask);
 		return "Deleting command is undone";
 	}
-	else {
+	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsUndone();
 		return "MarkasDone command is undone";
 	}
 }
 
 string TaskList::redo(){
-	if (lastCommandType == "display" || "search"){
-		return "Previous command has not been redone";
-	}
-	else if (lastCommandType == "add"){
+	if (lastCommandType == "add"){
 		list.push_back(lastChangedTask);
 		return "Adding command is redone";
 	}
@@ -173,7 +163,7 @@ string TaskList::redo(){
 		list.erase(list.begin() + lastChangedTaskIndex - 1);
 		return "Deleting command is redone";
 	}
-	else {
+	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsDone();
 		return "MarkasDone command is redone";
 	}

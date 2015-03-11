@@ -10,14 +10,16 @@ const string Interface::ERROR_INVALID_COMMAND = "Error: invalid command!";
 
 
 string Interface::displayWelcome() {
-	
-	string currentDayTime;
+	storage::starting();
+	TaskList::copyFromStorage();
+
+	/*string currentDayTime;
 	time_t now = time(0);
 	struct tm tstruct;
 	char buffer[80];
-	strftime(buffer, sizeof(buffer), "%Y-%m-%d.%X", &tstruct);
+	strftime(buffer, sizeof(buffer), "%Y-%m-%d.%X", &tstruct);*/
 
-	return MESSAGE_WELCOME + "\n" + buffer;
+	return MESSAGE_WELCOME + "\n";// + buffer;
 }
 
 void Interface::showToUser(string text) {
@@ -25,9 +27,6 @@ void Interface::showToUser(string text) {
 }
 
 string Interface::getUserCommand() {
-	storage::starting();
-	TaskList::copyFromStorage();
-	
 	string userCommand;
 
 	cout << "command: ";

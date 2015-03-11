@@ -7,6 +7,8 @@ const string FLOATING_TASK_LABEL = "floating";
 const string PROCESSING_TASK_LABEL = "progressing";
 const string FINISHED_TASK_LABEL = "done";
 
+Task::Task(){}
+
 Task::Task(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find("-from");

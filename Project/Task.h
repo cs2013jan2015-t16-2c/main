@@ -9,6 +9,7 @@ class Task
 {
 public:
 	//vector<string> task;
+	Task();
 	Task(string input);
 	~Task();
 	Task(string task, string input);

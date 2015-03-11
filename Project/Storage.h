@@ -18,8 +18,8 @@ private:
 	static const string FILENAME;
 
 public:
-	static void ending();
 	static void starting();
+	static void ending();
 	static vector<string> returnTask();
 };
 

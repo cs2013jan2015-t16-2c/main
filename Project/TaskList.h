@@ -22,15 +22,15 @@ private:
 	static string printVector(vector<string> output);
 
 public:
+	static void copyFromStorage();
+
 	static string addTask(string input);
 	static string updateTask(string input);
 	static string deleteTask(string input);
 	static string search(string input);
 	static string display();
 	static string markAsDone(string input);
-
-	static void copyFromStorage();
-
+	
 	static string undo();
 	static string redo();
 };
