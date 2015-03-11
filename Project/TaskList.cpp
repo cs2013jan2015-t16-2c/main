@@ -128,7 +128,7 @@ void TaskList::copyFromStorage(Storage startingStorage){
 
 string TaskList::undo(){
 	if (lastCommandType == "display" || "search"){
-		return "Previous command cannot be undoed";
+		return "Previous command cannot be undone";
 	}
 	else if (lastCommandType == "add"){
 		list.pop_back();
