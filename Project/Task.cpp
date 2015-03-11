@@ -6,6 +6,9 @@ const string DEADLINE_TASK_LABEL = "deadline";
 const string FLOATING_TASK_LABEL = "floating";
 const string PROCESSING_TASK_LABEL = "progressing";
 const string FINISHED_TASK_LABEL = "done";
+const string INVALID_DATE_MSG = "invalid date, please input a valid one";
+const string INVALID_TIME_MSG = "invalid time, please enter a valid one";
+const string INVALID_TIME_MSG2 = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 
 Task::Task(){}
 
@@ -17,9 +20,9 @@ Task::Task(string input){
 			std::size_t ending_time = input.find("-to");
 			std::size_t get_date = input.find("/");
 			task_type = SCHEDULED_TASK_LABEL;
-			taskname = input.substr(0, timed_task - 2);
-			start_time = input.substr(timed_task + 6, 4);
-			end_time = input.substr(ending_time + 4, 4);
+			taskname = input.substr(0, timed_task - 1);
+			start_time = input.substr(timed_task + 6, 5);
+			end_time = input.substr(ending_time + 4, 5);
 			deadline_time = "";
 			scheduled_date = input.substr(get_date - 2, 5);
 			deadline_date = "";
@@ -28,10 +31,10 @@ Task::Task(string input){
 		else if (deadlined_task != std::string::npos){
 			std::size_t get_date = input.find("/");
 			task_type = DEADLINE_TASK_LABEL;
-			taskname = input.substr(0, deadlined_task - 2);
+			taskname = input.substr(0, deadlined_task - 1);
 			start_time = "";
 			end_time = "";
-			deadline_time = input.substr(deadlined_task + 4, 4);
+			deadline_time = input.substr(deadlined_task + 4, 5);
 			scheduled_date = "";
 			deadline_date = input.substr(get_date - 2, 5);
 			status = "progressing";
@@ -47,6 +50,7 @@ Task::Task(string input){
 			status = "progressing";
 		}
 	}
+	checkInputValidation();
 }
 
 Task::~Task(){}
@@ -113,28 +117,29 @@ Task::Task(string task, string input){
 			deadline_date = "";
 		}
 	}
+	checkInputValidation();
 }
 
 string Task::ToString(){
 	char task[TASK_LEN];
-	strcpy_s(task, taskname.c_str());
+	strcpy(task, taskname.c_str());
 	if (task_type == DEADLINE_TASK_LABEL){
-		strcat_s(task, " ");
-		strcat_s(task, deadline_date.c_str());
-		strcat_s(task, " ");
-		strcat_s(task, deadline_time.c_str());
-		strcat_s(task, " ");
-		strcat_s(task, status.c_str());
+		strcat(task, " ");
+		strcat(task, deadline_date.c_str());
+		strcat(task, " ");
+		strcat(task, deadline_time.c_str());
+		strcat(task, " ");
+		strcat(task, status.c_str());
 	}
 	else if (task_type == "timed"){
-		strcat_s(task, " ");
-		strcat_s(task, scheduled_date.c_str());
-		strcat_s(task, " ");
-		strcat_s(task, start_time.c_str());
-		strcat_s(task, " ");
-		strcat_s(task, end_time.c_str());
-		strcat_s(task, " ");
-		strcat_s(task, status.c_str());
+		strcat(task, " ");
+		strcat(task, scheduled_date.c_str());
+		strcat(task, " ");
+		strcat(task, start_time.c_str());
+		strcat(task, " ");
+		strcat(task, end_time.c_str());
+		strcat(task, " ");
+		strcat(task, status.c_str());
 	}
 	return task;
 }
@@ -151,8 +156,8 @@ string Task::UpdateTask(string input){
 			std::size_t ending_time = input.find("-to");
 			std::size_t get_date = input.find("/");
 			task_type = SCHEDULED_TASK_LABEL;
-			start_time = input.substr(timed_task + 6, 4);
-			end_time = input.substr(ending_time + 4, 4);
+			start_time = input.substr(timed_task + 6, 5);
+			end_time = input.substr(ending_time + 4, 5);
 			if (get_date != std::string::npos){
 				scheduled_date = input.substr(get_date - 2, 5);
 			}
@@ -160,12 +165,13 @@ string Task::UpdateTask(string input){
 		else if (deadlined_task != std::string::npos){
 			std::size_t get_date = input.find("/");
 			task_type = DEADLINE_TASK_LABEL;
-			deadline_time = input.substr(deadlined_task + 4, 4);
+			deadline_time = input.substr(deadlined_task + 4, 5);
 			if (get_date != std::string::npos){
 				deadline_date = input.substr(get_date - 2, 5);
 			}
 		}
 	}
+	checkInputValidation();
 	return "Task list is updated";
 }
 
@@ -180,25 +186,26 @@ void Task::markAsUndone(){
 void Task::checkInputValidation(){
 	//check for valid time frame
 	bool valid_time = false;
-	string start_hour; //deadline task use this to store time
-	string start_mins; //deadline task use this to store time
-	string end_hour;
-	string end_mins;
+	int start_hour; //deadline task use this to store time
+	int start_mins; //deadline task use this to store time
+	int end_hour;
+	int end_mins;
 
 	//check time frame in scheduled task
 	while ((task_type == SCHEDULED_TASK_LABEL) && (!valid_time)){
 		std::size_t get_start_time = start_time.find(":");
 		std::size_t get_end_time = end_time.find(":");
-		start_hour = start_time.substr(0, get_start_time - 1);
-		start_mins = start_time.substr(get_start_time + 1, 2);
-		end_hour = end_time.substr(0, get_end_time - 1);
-		end_mins = end_time.substr(get_end_time + 1, 2);
-		if ((start_hour >= "0" && start_hour <= "24") && (start_mins >= "0" && start_mins <= "60") && (end_hour >= "0" && end_hour <= "24") && (end_mins >= "0" && end_mins <= "60")){
+		start_hour = atoi(start_time.substr(0, get_start_time).c_str());
+		start_mins = atoi(start_time.substr(get_start_time + 1, 2).c_str());
+		end_hour = atoi(end_time.substr(0, get_end_time).c_str());
+		end_mins = atoi(end_time.substr(get_end_time + 1, 2).c_str());
+		cout << start_hour << start_mins << end_hour << end_mins << endl;
+		if ((start_hour >= 0 && start_hour <= 24) && (start_mins >= 0 && start_mins <= 60) && (end_hour >= 0 && end_hour <= 24) && (end_mins >= 0 && end_mins <= 60)){
 			if (start_hour < end_hour){
 				valid_time = true;
 			}
 			else{
-				cout << "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one" << endl;
+				cout << INVALID_TIME_MSG2 << endl;
 				cout << "starting time:";
 				cin >> start_time;
 				cout << "ending time";
@@ -206,7 +213,7 @@ void Task::checkInputValidation(){
 			}
 		}
 		else{
-			cout << "invalid time, please enter a valid one" << endl;
+			cout << INVALID_TIME_MSG << endl;
 			cout << "starting time:";
 			cin >> start_time;
 			cout << "ending time";
@@ -217,13 +224,13 @@ void Task::checkInputValidation(){
 	//check time frame in deadline task
 	while ((task_type == DEADLINE_TASK_LABEL) && (!valid_time)){
 		std::size_t get_time = deadline_time.find(":");
-		start_hour = deadline_time.substr(0, get_time - 1);
-		start_mins = deadline_time.substr(get_time + 1, 2);
-		if ((start_hour >= "0" && start_hour <= "24") && (start_mins >= "0" && start_mins <= "60")){
+		start_hour = atoi(deadline_time.substr(0, get_time).c_str());
+		start_mins = atoi(deadline_time.substr(get_time + 1, 2).c_str());
+		if ((start_hour >= 0 && start_hour <= 24) && (start_mins >= 0 && start_mins <= 60)){
 			valid_time = true;
 		}
 		else{
-			cout << "invalid time, please enter a valid one" << endl;
+			cout << INVALID_TIME_MSG << endl;
 			cout << "deadline time:";
 			cin >> deadline_time;
 		}
@@ -231,19 +238,19 @@ void Task::checkInputValidation(){
 
 	//check for valid date
 	bool valid_date = false;
-	string month;
-	string date;
+	int month;
+	int date;
 
 	//check date for deadline task
 	while ((task_type == DEADLINE_TASK_LABEL) && (!valid_date)){
 		std::size_t get_date = deadline_date.find("/");
-		date = deadline_date.substr(0, get_date - 1);
-		month = deadline_date.substr(get_date + 1, 2);
-		if ((date >= "1" && date <= "31") && (month >= "1" && month <= "12")){
+		date = atoi(deadline_date.substr(0, get_date).c_str());
+		month = atoi(deadline_date.substr(get_date + 1, 2).c_str());
+		if ((date >= 1 && date <= 31) && (month >= 1 && month <= 12)){
 			valid_date = true;
 		}
 		else{
-			cout << "invalid date, please input a valid one" << endl;
+			cout << INVALID_DATE_MSG << endl;
 			cin >> deadline_date;
 		}
 	}
@@ -251,13 +258,14 @@ void Task::checkInputValidation(){
 	//check date for schedule task
 	while ((task_type == SCHEDULED_TASK_LABEL) && (!valid_date)){
 		std::size_t get_date = scheduled_date.find("/");
-		date = scheduled_date.substr(0, get_date - 1);
-		month = scheduled_date.substr(get_date + 1, 2);
-		if ((date >= "1" && date <= "31") && (month >= "1" && month <= "12")){
+		date = atoi(scheduled_date.substr(0, get_date).c_str());
+		month = atoi(scheduled_date.substr(get_date + 1, 2).c_str());
+		cout << date << month << endl;
+		if ((date >= 1 && date <= 31) && (month >= 1 && month <= 12)){
 			valid_date = true;
 		}
 		else{
-			cout << "invalid date, please input a valid one" << endl;
+			cout << INVALID_DATE_MSG << endl;
 			cin >> scheduled_date;
 		}
 	}
