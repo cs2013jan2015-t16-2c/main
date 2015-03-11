@@ -116,7 +116,7 @@ void Interface::help() {
 	cout << "Here are some instructions for you to follow:\n";
 	cout << " 1. Add Function: add CS meeting -from 1200 -to 1400 23/12\n";
 	cout << " 2. Display All Tasks Function: display all\n";
-	cout << " 3. Update Function: Update 1 CS meeting -from 1300 -to 1500 23/12\n";
+	cout << " 3. Update Function: Update 1 -from 1300 -to 1500 23/12\n";
 	cout << " 4. Search Function: search CS meeting\n";
 	cout << " 5. Delete Function: delete 1\n";
 	cout << " 6. Display Floating Tasks Function: display floating\n";

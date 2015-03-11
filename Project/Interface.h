@@ -34,8 +34,6 @@ private:
 	static string displayWelcome();
 	static void showToUser(string text);
 
-	static void startUp(vector<string> tempStorage, string fileName);
-
 	static string getUserCommand();
 	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
 
