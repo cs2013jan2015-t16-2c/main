@@ -205,3 +205,8 @@ string TaskList::printVector(vector<string> output){
 	}
 	return oss.str();
 }
+
+int main(){
+	TaskList::addTask("tutorial A 11/03 -from 1400 -to 1600");
+	cout << TaskList::display();
+}

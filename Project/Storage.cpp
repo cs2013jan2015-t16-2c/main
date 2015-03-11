@@ -27,4 +27,3 @@ void storage::starting(vector<string> task, string fileName) {
 vector<string> storage::returnTask(TaskList taskList) {
 	return  taskList.display();  //convert TaskList to vector string
 }
-
