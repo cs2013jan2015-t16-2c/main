@@ -25,10 +25,6 @@ public:
 		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, UNDO, REDO, EXIT
 	};
 
-	/*enum TASK_TYPE {
-		STATIC_TASK, DEADLINE, FLOATING_TASK
-	};*/
-
 private:
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_GOODBYE;
@@ -41,7 +37,6 @@ private:
 	static void startUp(vector<string> tempStorage, string fileName);
 
 	static string getUserCommand();
-	static TASK_TYPE determineTaskType(string taskString);
 	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
 
 	static string getFirstWord(string userCommand);

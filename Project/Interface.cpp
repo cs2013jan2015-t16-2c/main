@@ -1,7 +1,7 @@
 // Resource File
 // BasicUI.cpp
 
-#include "BasicUI.h"
+#include "Interface.h"
 
 const string Interface::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string Interface::MESSAGE_GOODBYE = "Goodbye!";
@@ -73,22 +73,6 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 		return ERROR_INVALID_COMMAND
 	}
 }
-
-/*Task::TASK_TYPE Interface::determineTaskType(string taskString) {
-	size_t foundFrom = taskString.find("-from");
-	size_t foundTo = taskString.find("-to");
-	size_t foundBy = taskString.find("-by");
-
-	if ((foundFrom != string::npos) && (foundTo != string::npos)) {
-		return TASK_TYPE::STATIC_TASK;
-	}
-	else if (foundBy != string::npos) {
-		return TASK_TYPE::DEADLINE;
-	}
-	else {
-		return TASK_TYPE::FLOATING;
-	}
-}*/
 
 Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString, string taskString) {
 	if (commandTypeString == "help") {
