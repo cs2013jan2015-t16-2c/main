@@ -1,5 +1,7 @@
 #include "task.h"
 
+const int TASK_LEN = 256;
+
 Task::Task(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find("-from");
@@ -37,30 +39,26 @@ Task::Task(string input){
 			deadline_date = "";
 			status = "progressing";
 		}
-		// check for validation for time frame in scheduled task
-		while ((start_time != "") && (start_time > 2400) || (start_time < 0000)){
-			cout << "invalid starting time, please enter again." << endl;
-			cin >> start_time;
-		}
-		while ((end_time != "") && (end_time > 2400) || (end_time < 0000)){
-			cout << "invalid ending time, please enter again." << endl;
-			cin >> end_time;
-		}
-		if (start_time > end_time){
-			string temp_time;
-			cout << "invalid time frame, please enter again" << endl;
-			cin >> temp_time;
-			std::size_t get_time = temp_time.find("-");
-			start_time = str.copy(temp_time, 0, get_time - 1);
-			end_time = str.copy(temp_time, get_time + 1, get_time + 5);
-		}
 	}
 }
 
-string Task::ToString(int time){
-	string time_in_string;
-	time_in_string = to_string(time);
-	return time_in_string;
+string Task::ToString(){
+	char task[TASK_LEN];
+	strcpy(task, taskname);
+	if (task_type == "deadline"){
+		strcat(task, " ");
+		strcat(task, deadline_date);
+		strcat(task, " ");
+		strcat(task, deadline_time);
+	}
+	else if (task_type == "timed"){
+		strcat(task, " ");
+		strcat(task, scheduled_date);
+		strcat(task, " ");
+		strcat(task, start_time);
+		strcat(task, end_time);
+	}
+	return task;
 }
 
 string Task::getTaskname(){
@@ -100,3 +98,26 @@ void Task::markAsUndone(){
 	status = "processing";
 }
 
+void Task::checkInputValidation(){
+	// check for validation for time frame in scheduled task
+	while ((start_time != "") && ((start_time > 2400) || (start_time < 0000))){
+		cout << "invalid starting time, please enter again." << endl;
+		cin >> start_time;
+	}
+	while ((end_time != "") && ((end_time > 2400) || (end_time < 0000))){
+		cout << "invalid ending time, please enter again." << endl;
+		cin >> end_time;
+	}
+	if (start_time > end_time){
+		string temp_time;
+		cout << "invalid time frame, please enter again" << endl;
+		cin >> temp_time;
+		std::size_t get_time = temp_time.find("-");
+		start_time = str.copy(temp_time, 0, get_time - 1);
+		end_time = str.copy(temp_time, get_time + 1, get_time + 5);
+	}
+	//check for valid date
+	if (deadline_date != ""){
+		//
+	}
+}
