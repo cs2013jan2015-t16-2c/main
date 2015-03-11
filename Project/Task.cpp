@@ -50,13 +50,18 @@ string Task::ToString(){
 		strcat(task, deadline_date);
 		strcat(task, " ");
 		strcat(task, deadline_time);
+		strcat(task, " ");
+		strcat(task, status);
 	}
 	else if (task_type == "timed"){
 		strcat(task, " ");
 		strcat(task, scheduled_date);
 		strcat(task, " ");
 		strcat(task, start_time);
+		strcat(task, " ");
 		strcat(task, end_time);
+		strcat(task, " ");
+		strcat(task, status);
 	}
 	return task;
 }
