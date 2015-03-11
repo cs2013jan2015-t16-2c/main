@@ -27,6 +27,10 @@ public:
 		MARK_DONE, UNDO, REDO, EXIT
 	};
 
+	enum TASK_TYPE {
+		STATIC_TASK, DEADLINE, FLOATING_TASK
+	};
+
 private:
 	static string MESSAGE_WELCOME;
 	static const string MESSAGE_ADDED;
