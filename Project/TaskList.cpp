@@ -68,7 +68,7 @@ string TaskList::deleteTask(string input){
 	}
 	else{
 		lastCommandType = "delete";
-		lastChangedTaskIndex = index;
+		lastChangedTaskIndex = index-1;
 		lastUnchangedTask = list[index - 1];
 
 		list.erase(list.begin() + index - 1);
@@ -107,13 +107,16 @@ string TaskList::display(){
 	}
 	else{
 		ostringstream overallOss;
-		for (unsigned int i = 0; i < list.size()-1; i++){
+		for (unsigned int i = 0; i < list.size() - 1; i++){
 			ostringstream oss;
 			oss << i + 1 << ". " << list[i].ToString() << endl;
 			string taskDisplay = oss.str();
 			overallOss << taskDisplay;
 		}
-		return overallOss.str()+list[list.size()-1].ToString();
+
+		int size = list.size();
+		overallOss << size << ". " << list[size - 1].ToString();
+		return overallOss.str();
 	}
 }
 
@@ -123,7 +126,7 @@ string TaskList::markAsDone(string input){
 	in >> index;
 
 	lastCommandType = "done";
-	lastChangedTaskIndex = index;
+	lastChangedTaskIndex = index-1;
 
 	list[index-1].markAsDone();
 	string output = "Task " + input + " marked as done";
@@ -140,7 +143,7 @@ string TaskList::undo(){
 		return "Updating command is undone";
 	}
 	else if (lastCommandType == "delete"){
-		list.insert(list.begin() + lastChangedTaskIndex - 1, lastUnchangedTask);
+		list.insert(list.begin() + lastChangedTaskIndex, lastUnchangedTask);
 		return "Deleting command is undone";
 	}
 	else if (lastCommandType == "done"){
@@ -162,7 +165,7 @@ string TaskList::redo(){
 		return "Updating command is redone";
 	}
 	else if (lastCommandType == "delete"){
-		list.erase(list.begin() + lastChangedTaskIndex - 1);
+		list.erase(list.begin() + lastChangedTaskIndex);
 		return "Deleting command is redone";
 	}
 	else if (lastCommandType == "done"){
