@@ -31,7 +31,7 @@ string TaskList::updateTask(string input){
 		lastChangedTaskIndex = index - 1;
 		lastUnchangedTask = list[index - 1];
 
-		list[index-1].update(taskInfo);
+		list[index-1].UpdateTask(taskInfo);
 
 		lastChangedTask = list[index - 1];
 
@@ -70,13 +70,13 @@ string TaskList::search(string input){
 
 		vector<string> output;
 		for (int i = 0; i < list.size(); i++){
-			string taskName = (list[i]).getTaskName();
+			string taskName = (list[i]).getTaskname();
 			vector<string> contents = splitText(taskName);
 
 			for (int j = 0; j < contents.size(); j++){
 				if (input == contents[j]){
 					ostringstream oss;
-					oss << i + 1 << "." << list[i].toString() << endl;
+					oss << i + 1 << "." << list[i].ToString() << endl;
 					string taskDisplay = oss.str();
 					output.push_back(taskDisplay);
 				}
@@ -97,7 +97,7 @@ string TaskList::display(){
 		ostringstream overallOss;
 		for (int i = 0; i < list.size(); i++){
 			ostringstream oss;
-			oss << i + 1 << "." << list[i].toString() << endl;
+			oss << i + 1 << ". " << list[i].ToString() << endl;
 			string taskDisplay = oss.str();
 			overallOss << taskDisplay;
 		}
@@ -117,11 +117,12 @@ string TaskList::markAsDone(string input){
 	string output = "Task " + input + " marked as done";
 }
 
-void TaskList::copyFromStorage(Storage startingStorage){
-	vector<string> taskList = startingStorage.returnTaskString;
+void TaskList::copyFromStorage(storage startingStorage){
+	vector<string> taskList = startingStorage.returnTask;
 
 	for (int i = 0; i < taskList.size(); i++){
-		Task newTask(taskList[i]);
+		string task = removeFirstWord(taskList[i]);
+		Task newTask(task, "copy");
 		list.push_back(newTask);
 	}
 }
@@ -204,9 +205,4 @@ string TaskList::printVector(vector<string> output){
 		oss << output[i];
 	}
 	return oss.str();
-}
-
-int main(){
-	TaskList::addTask("tutorial A 11/03 -from 1400 -to 1600");
-	cout << TaskList::display();
 }
