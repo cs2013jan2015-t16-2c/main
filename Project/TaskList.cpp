@@ -128,45 +128,45 @@ void TaskList::copyFromStorage(Storage startingStorage){
 
 string TaskList::undo(){
 	if (lastCommandType == "display" || "search"){
-		return "Previous command cannot be undoed";
+		return "Previous command cannot be undone";
 	}
 	else if (lastCommandType == "add"){
 		list.pop_back();
-		return "Adding command is undoed";
+		return "Adding command is undone";
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
-		return "Updating command is undoed";
+		return "Updating command is undone";
 	}
 	else if (lastCommandType == "delete"){
 		list.insert(list.begin() + lastChangedTaskIndex - 1, lastUnchangedTask);
-		return "Deleting command is undoed";
+		return "Deleting command is undone";
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsUndone();
-		return "MarkasDone command is undoed";
+		return "MarkasDone command is undone";
 	}
 }
 
 string TaskList::redo(){
 	if (lastCommandType == "display" || "search"){
-		return "Previous command has not been undoed";
+		return "Previous command has not been redone";
 	}
 	else if (lastCommandType == "add"){
 		list.push_back(lastChangedTask);
-		return "Adding command is redoed";
+		return "Adding command is redone";
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastChangedTask;
-		return "Updating command is redoed";
+		return "Updating command is redone";
 	}
 	else if (lastCommandType == "delete"){
 		list.erase(list.begin() + lastChangedTaskIndex - 1);
-		return "Deleting command is redoed";
+		return "Deleting command is redone";
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsDone();
-		return "MarkasDone command is redoed";
+		return "MarkasDone command is redone";
 	}
 }
 

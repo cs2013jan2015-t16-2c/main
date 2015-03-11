@@ -3,9 +3,7 @@
 
 #include "BasicUI.h"
 
-string Interface::MESSAGE_WELCOME = "Welcome to KeepTrack";
-const string Interface::MESSAGE_ADDED = "Added to %s: \"%s\"";
-const string Interface::MESSAGE_DELETED = "Deleted from %s: \"%s\"";
+const string Interface::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string Interface::MESSAGE_GOODBYE = "Goodbye!";
 
 const string Interface::ERROR_INVALID_COMMAND = "Error: invalid command!";
@@ -49,26 +47,26 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 	taskMessageString = getTaskMessage(taskString);
 
 	switch (commandType) {
-		// add more!!
 	case HELP:
-		help();
-	case ADD_FLOATING:
-	case ADD_STATIC:
-	case ADD_DEADLINE:
+		return help();
+	case ADD_TASK:
+		return TaskLsit::addTask(taskMessageString);
 	case SEARCH:
+		return TaskLsit::search(taskMessageString);
 	case UPDATE:
+		return TaskLsit::updateTask(taskMessageString);
 	case DELETE_TASK:
-	case DISPLAY_ALL:
-	case DISPLAY_SATIC:
-	case DISPLAY_DEADLINE:
-	case DISPLAY_FLOATING:
-	case DISPLAY_UNFINISHED:
-	case DISPLAY_FINISHED:
-	case DISPLAY_TODAY:
+		return TaskLsit::deleteTask(taskMessageString);
+	case DISPLAY_TASKS:
+		return TaskLsit::display();
+	case MARK_DONE:
+		return TaskLsit::markAsDone(taskMessageString);
 	case UNDO:
+		return TaskLsit::undo();
 	case REDO:
+		return TaskLsit::redo();
 	case EXIT:
-		// copy to final file
+		storage::ending();
 		cout << MESSAGE_GOODBYE << endl;;
 		exit(0);
 	default:
@@ -76,7 +74,7 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 	}
 }
 
-Task::TASK_TYPE Interface::determineTaskType(string taskString) {
+/*Task::TASK_TYPE Interface::determineTaskType(string taskString) {
 	size_t foundFrom = taskString.find("-from");
 	size_t foundTo = taskString.find("-to");
 	size_t foundBy = taskString.find("-by");
@@ -90,28 +88,35 @@ Task::TASK_TYPE Interface::determineTaskType(string taskString) {
 	else {
 		return TASK_TYPE::FLOATING;
 	}
-}
+}*/
 
 Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString, string taskString) {
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
 	}
 	else if (commandTypeString == "add") {
-		if (determineTaskType(taskString) == TASK_TYPE::STATIC_TASK) {
-			return COMMAND_TYPE::ADD_STATIC;
-		}
-		else if (determineTaskType(taskString) == TASK_TYPE::DEADLINE) {
-			return COMMAND_TYPE::ADD_DEADLINE;
-		}
-		else {
-			return COMMAND_TYPE::ADD_FLOATING;
-		}
+		return COMMAND_TYPE::ADD_TASK;
+	}
+	else if (commandTypeString == "update") {
+		return COMMAND_TYPE::UPDATE;
 	}
 	else if (commandTypeString == "delete") {
 		return COMMAND_TYPE::DELETE_TASK;
 	}
+	else if (commandTypeString == "search") {
+		return COMMAND_TYPE::SEARCH;
+	}
 	else if (commandTypeString == "display") {
-		return COMMAND_TYPE::DISPLAY_TASK;
+		return COMMAND_TYPE::DISPLAY_TASKS;
+	}
+	else if (commandTypeString == "done") {
+		return COMMAND_TYPE::MARK_DONE;
+	}
+	else if (commandTypeString == "undo") {
+		return COMMAND_TYPE::UNDO;
+	}
+	else if (commandTypeString == "redo") {
+		return COMMAND_TYPE::REDO;
 	}
 	else {
 		return COMMAND_TYPE::EXIT;

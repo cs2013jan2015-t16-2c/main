@@ -14,23 +14,23 @@
 #include <iterator>
 #include <sstream>
 #include <time.h>
-//#include 'Task class' header file
-//#include 'TaskList class' header file
+#include "TaskList.h"
+#include "Storage.h"
 
 using namespace std;
 
 class Interface {
 public:
 	enum COMMAND_TYPE {
-		HELP, ADD_FLOATING, ADD_STATIC, ADD_DEADLINE, SEARCH, UPDATE, DELETE_TASK, 
-		DISPLAY_ALL, DISPLAY_SATIC, DISPLAY_DEADLINE, DISPLAY_FLOATING, DISPLAY_UNFINISHED, DISPLAY_FINISHED, DISPLAY_TODAY,
-		UNDO, REDO, EXIT
+		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, UNDO, REDO, EXIT
 	};
 
+	/*enum TASK_TYPE {
+		STATIC_TASK, DEADLINE, FLOATING_TASK
+	};*/
+
 private:
-	static string MESSAGE_WELCOME;
-	static const string MESSAGE_ADDED;
-	static const string MESSAGE_DELETED;
+	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_GOODBYE;
 
 	static const string ERROR_INVALID_COMMAND;
