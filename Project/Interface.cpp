@@ -51,13 +51,16 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 	switch (commandType) {
 		// add more!!
 	case HELP:
-		help();
+		return help();
 	case ADD_FLOATING:
 	case ADD_STATIC:
 	case ADD_DEADLINE:
 	case SEARCH:
+		return search(taskMessageString);
 	case UPDATE:
+		return updateTask(taskMessageString);
 	case DELETE_TASK:
+		return deleteTask(taskMessageString);
 	case DISPLAY_ALL:
 	case DISPLAY_SATIC:
 	case DISPLAY_DEADLINE:
@@ -65,8 +68,12 @@ string Interface::executeUserCommand(string fileName, string userCommand) {
 	case DISPLAY_UNFINISHED:
 	case DISPLAY_FINISHED:
 	case DISPLAY_TODAY:
+	case MARK_DONE:
+		return markAsDone(taskMessageString);
 	case UNDO:
+		return undo();
 	case REDO:
+		return redo();
 	case EXIT:
 		// copy to final file
 		cout << MESSAGE_GOODBYE << endl;;
