@@ -1,5 +1,5 @@
 // Resource File
-// BasicUI.cpp
+// Interface.cpp
 
 #include "Interface.h"
 
@@ -12,14 +12,7 @@ const string Interface::ERROR_INVALID_COMMAND = "Error: invalid command!";
 string Interface::displayWelcome() {
 	storage::starting();
 	TaskList::copyFromStorage();
-
-	/*string currentDayTime;
-	time_t now = time(0);
-	struct tm tstruct;
-	char buffer[80];
-	strftime(buffer, sizeof(buffer), "%Y-%m-%d.%X", &tstruct);*/
-
-	return MESSAGE_WELCOME;// + buffer;
+	return MESSAGE_WELCOME;
 }
 
 void Interface::showToUser(string text) {
