@@ -11,14 +11,14 @@ public:
 	//vector<string> task;
 	Task();
 	Task(string input);
-	~Task();
 	Task(string task, string input);
+	~Task();
 	string ToString();
 	string getTaskname();
 	void UpdateTask(string input);
 	void markAsDone();
 	void markAsUndone();
-	void checkInputValidation();
+	//void checkInputValidation();
 	
 private:
 	string taskname;

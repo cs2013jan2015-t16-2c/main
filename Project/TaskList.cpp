@@ -17,6 +17,10 @@ void TaskList::copyFromStorage(){
 	}
 }
 
+void TaskList::copyToStorage(){
+	storage::ending();
+}
+
 string TaskList::addTask(string input){
 	lastCommandType = "add";
 

@@ -50,7 +50,7 @@ Task::Task(string input){
 			status = "progressing";
 		}
 	}
-	checkInputValidation();
+	//checkInputValidation();
 }
 
 Task::~Task(){}
@@ -117,7 +117,7 @@ Task::Task(string task, string input){
 			deadline_date = "";
 		}
 	}
-	checkInputValidation();
+	//checkInputValidation();
 }
 
 string Task::ToString(){
@@ -175,7 +175,7 @@ void Task::UpdateTask(string input){
 			}
 		}
 	}
-	checkInputValidation();
+	//checkInputValidation();
 }
 
 void Task::markAsDone(){
@@ -186,7 +186,7 @@ void Task::markAsUndone(){
 	status = "processing";
 }
 
-void Task::checkInputValidation(){
+/*void Task::checkInputValidation(){
 	//check for valid time frame
 	bool valid_time = false;
 	int start_hour; //deadline task use this to store time
@@ -271,3 +271,4 @@ void Task::checkInputValidation(){
 		}
 	}
 }
+*/

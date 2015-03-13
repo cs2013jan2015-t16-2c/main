@@ -23,6 +23,7 @@ private:
 
 public:
 	static void copyFromStorage();
+	static void copyToStorage();
 
 	static string addTask(string input);
 	static string updateTask(string input);

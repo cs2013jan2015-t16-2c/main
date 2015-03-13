@@ -20,12 +20,11 @@
 using namespace std;
 
 class Interface {
-public:
+private:
 	enum COMMAND_TYPE {
 		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, UNDO, REDO, EXIT, OTHERS
 	};
 
-private:
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_GOODBYE;
 	static const string ERROR_INVALID_COMMAND;

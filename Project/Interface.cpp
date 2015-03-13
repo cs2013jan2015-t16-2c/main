@@ -1,5 +1,5 @@
 // Resource File
-// BasicUI.cpp
+// Interface.cpp
 
 #include "Interface.h"
 
@@ -8,9 +8,8 @@ const string Interface::MESSAGE_GOODBYE = "Goodbye!";
 
 const string Interface::ERROR_INVALID_COMMAND = "Error: invalid command!";
 
-
 string Interface::displayWelcome() {
-	storage::starting();
+	TaskList::copyToStorage();
 	TaskList::copyFromStorage();
 
 	/*string currentDayTime;
