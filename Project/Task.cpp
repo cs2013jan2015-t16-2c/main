@@ -202,6 +202,8 @@ void Task::checkInputValidation(){
 		start_mins = atoi(start_time.substr(get_start_time + 1, 2).c_str());
 		end_hour = atoi(end_time.substr(0, get_end_time).c_str());
 		end_mins = atoi(end_time.substr(get_end_time + 1, 2).c_str());
+		ofstream errorlog;
+		errorlog.open("errorlog.txt");
 		if ((start_hour >= 0 && start_hour <= 24) && (start_mins >= 0 && start_mins <= 60) && (end_hour >= 0 && end_hour <= 24) && (end_mins >= 0 && end_mins <= 60)){
 			if (start_hour < end_hour){
 				valid_time = true;
@@ -215,6 +217,7 @@ void Task::checkInputValidation(){
 			}
 		}
 		else{
+			errorlog << INVALID_TIME_MSG << endl;
 			cout << INVALID_TIME_MSG << endl;
 			cout << "starting time:";
 			cin >> start_time;
@@ -232,6 +235,7 @@ void Task::checkInputValidation(){
 			valid_time = true;
 		}
 		else{
+			errorlog << INVALID_TIME_MSG << endl;
 			cout << INVALID_TIME_MSG << endl;
 			cout << "deadline time:";
 			cin >> deadline_time;
@@ -252,6 +256,7 @@ void Task::checkInputValidation(){
 			valid_date = true;
 		}
 		else{
+			errorlog << INVALID_DATE_MSG << endl;
 			cout << INVALID_DATE_MSG << endl;
 			cin >> deadline_date;
 		}
@@ -266,8 +271,10 @@ void Task::checkInputValidation(){
 			valid_date = true;
 		}
 		else{
+			errorlog << INVALID_DATE_MSG << endl;
 			cout << INVALID_DATE_MSG << endl;
 			cin >> scheduled_date;
 		}
 	}
+	errorlog.close();
 }
