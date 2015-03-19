@@ -40,6 +40,8 @@ string Interface::executeUserCommand(string userCommand) {
 	COMMAND_TYPE commandType;
 	commandType = determineCommandType(commandTypeString, taskString);
 
+	string str;
+
 	switch (commandType) {
 	case HELP:
 		return help();
@@ -50,7 +52,13 @@ string Interface::executeUserCommand(string userCommand) {
 	case UPDATE:
 		return TaskList::updateTask(taskString);
 	case DELETE_TASK:
-		return TaskList::deleteTask(taskString);
+		try {
+			str = TaskList::deleteTask(taskString);
+		}
+		catch (string e) {
+			cerr << "Error: cannot delete " << e << endl;
+		}
+		return str;
 	case DISPLAY_TASKS:
 		return TaskList::display();
 	case MARK_DONE:

@@ -63,8 +63,8 @@ string TaskList::deleteTask(string input){
 
 	string output;
 	if (index > list.size() || index <= 0){
-		output = "Task " + input + " does not exit";
-		return output;
+		throw input;
+		return "";
 	}
 	else{
 		lastCommandType = "delete";
