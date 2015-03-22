@@ -1,5 +1,5 @@
 // Header File
-// BasicUI.h
+// Interface.h
 
 #ifndef INTERFACE_H_
 #define INTERFACE_H_
