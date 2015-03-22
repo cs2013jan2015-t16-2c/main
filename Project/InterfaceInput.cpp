@@ -41,8 +41,6 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		return TaskList::display(taskString);
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
-	/*case SORT:
-		return;*/
 	case ARCHIVE:
 		return storage::archive(taskString);
 	case UNDO:
