@@ -249,11 +249,11 @@ void Task::changePriority(string request){
 	}
 }
 
-string Task::getCertainTaskList(string type){
+/*string Task::getCertainTaskList(string type){
 	if (task_type == type){
 		return taskname;
 	}
-}
+}*/
 
 void Task::checkInputValidation(){
 	//check for valid time frame
@@ -363,11 +363,4 @@ int Task::charToASCII(char c){
 
 char Task::ASCIIToChar(int c){
 	return char(c);
-}
-
-bool Task::operator == (const Task &task2){
-	if ((taskname != task2.taskname) || (task_type != task2.task_type) || (start_time != task2.start_time) || (end_time != task2.end_time) || (deadline_time != task2.deadline_time) || (scheduled_date != task2.scheduled_date) || (deadline_date != task2.deadline_date) || (status != task2.status) || (priority[1] != task2.priority[1]) || (task_group != task2.task_group) || (place != task2.place)){
-		return false;
-	}
-	return true;
 }

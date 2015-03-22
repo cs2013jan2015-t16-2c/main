@@ -25,7 +25,7 @@ public:
 	};
 
 private:
-	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
+	static COMMAND_TYPE determineCommandType(string commandTypeString);
 
 	static string getFirstWord(string userCommand);
 	static string removeFirstWord(string userCommand);

@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "TaskList.h"
 
+
 vector<Task> TaskList::list;
 string TaskList::lastCommandType;
 int TaskList::lastChangedTaskIndex;
@@ -30,19 +31,20 @@ string TaskList::addTask(string input){
 
 	lastChangedTask = newTask;
 
-	return InterfaceOutput::MESSAGE_TASK_ADDED;
+	return "Task added";
 }
 
 string TaskList::updateTask(string input){
 	string taskIndex = getFirstWord(input);
 	string taskInfo = removeFirstWord(input);
 
-	unsigned int index;
+	int index;
 	istringstream in(taskIndex);
 	in >> index;
 
 	string output;
-	if (index > DisplayedTaskList::returnListSize() || index <= 0){
+	int size = DisplayedTaskList::returnListSize();
+	if (index > size|| index <= 0){
 		output = "Task " + taskIndex + " does not exit";
 		return output;
 	}
@@ -60,12 +62,13 @@ string TaskList::updateTask(string input){
 }
 
 string TaskList::deleteTask(string input){
-	unsigned int index;
+	int index;
 	istringstream in(input);
 	in >> index;
 
 	string output;
-	if (index > DisplayedTaskList::returnListSize() || index <= 0){
+	int size = DisplayedTaskList::returnListSize();
+	if (index > size || index <= 0){
 		output = "Task " + input + " does not exit";
 		return output;
 	}
@@ -106,7 +109,8 @@ string TaskList::search(string input){
 
 string TaskList::display(){
 	DisplayedTaskList::emptyList();
-	for (int i = 0; i < list.size(); i++){
+	int size = list.size();
+	for (int i = 0; i < size; i++){
 		DisplayedTaskList::addTask(list[i]);
 	}
 
@@ -205,9 +209,11 @@ string TaskList::printVector(vector<string> output){
 }
 
 int TaskList::findTargetedTaskIndex(int displayedIndex){
-	for (int i = 0; i < list.size(); i++){
-		if (list[i].isSame(DisplayedTaskList::resturnTask(displayedIndex))){
+	int size = list.size();
+	for (int i = 0; i < size; i++){
+		if (list[i].ToString()==(DisplayedTaskList::resturnTask(displayedIndex)).ToString()){
 			return i;
 		}
 	}
+	return -1;
 }

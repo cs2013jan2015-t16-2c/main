@@ -3,7 +3,6 @@
 
 #include "InterfaceInput.h"
 
-
 string InterfaceInput::getUserCommand() {
 	string userCommand;
 
@@ -42,8 +41,8 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		return TaskList::display();
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
-	case SORT:
-		return;
+	/*case SORT:
+		return;*/
 	case ARCHIVE:
 		return storage::archive(taskString);
 	case UNDO:
@@ -60,11 +59,8 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	}
 }
 
-<<<<<<< HEAD:Project/Interface.cpp
-Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString) {
-=======
-InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString, string taskString) {
->>>>>>> 3d743c2abf64de0f8097ab8421c03976bba36abd:Project/InterfaceInput.cpp
+
+InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString) {
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
 	}

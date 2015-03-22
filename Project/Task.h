@@ -22,14 +22,12 @@ public:
 	void markAsUndone();
 	void checkInputValidation();
 	//V0.2
-	string getCertainTaskList(string type); // return certain task group
+	//string getCertainTaskList(string type); // return certain task group
 	void setPriority(string input);
 	char gerPriority();
 	void changePriority(string request);
 	int charToASCII(char c);
 	char ASCIIToChar(int c);
-	//operator
-	bool operator == (const Task &task2);//const;
 
 private:
 	string taskname;

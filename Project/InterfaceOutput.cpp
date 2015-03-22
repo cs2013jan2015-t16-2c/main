@@ -2,14 +2,9 @@
 
 
 const string InterfaceOutput::MESSAGE_WELCOME = "Welcome to KeepTrack";
-const string InterfaceOutput::MESSAGE_TASK_ADDED = "Task is added.";
-const string InterfaceOutput::MESSAGE_TASK_DELETED = "Task %s is deleted.";
-const string InterfaceOutput::MESSAGE_TASK_UPDATED = "Task %s is updated.";
 const string InterfaceOutput::MESSAGE_GOODBYE = "Goodbye!";
 
 const string InterfaceOutput::ERROR_INVALID_COMMAND = "Error: invalid command!";
-const string InterfaceOutput::ERROR_INVALID_DELETE = "Error: Task %s does not exist";
-const string InterfaceOutput::ERROR_INVALID_UPDATE = "Error: Task %s does not exist";
 
 string InterfaceOutput::displayWelcome() {
 	storage::starting();
