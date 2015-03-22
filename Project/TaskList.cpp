@@ -22,11 +22,10 @@ string TaskList::addTask(string input){
 
 	Task newTask(input);
 	list.push_back(newTask);
-	string output = "Task added";
 
 	lastChangedTask = newTask;
 
-	return output;
+	return InterfaceOutput::MESSAGE_TASK_ADDED;
 }
 
 string TaskList::updateTask(string input){
@@ -37,9 +36,9 @@ string TaskList::updateTask(string input){
 	istringstream in(taskIndex);
 	in >> index;
 
-	string output;
+	char output[99];
 	if (index > list.size() || index <= 0){
-		output = "Task " + taskIndex + " does not exit";
+		sprintf_s(output, InterfaceOutput::ERROR_INVALID_UPDATE.c_str(), input.c_str());
 		return output;
 	}
 	else{
@@ -51,7 +50,7 @@ string TaskList::updateTask(string input){
 
 		lastChangedTask = list[index - 1];
 
-		output = "Task " + taskIndex + " updated";
+		sprintf_s(output, InterfaceOutput::MESSAGE_TASK_UPDATED.c_str(), input.c_str());
 		return output;
 	}
 }
@@ -61,7 +60,7 @@ string TaskList::deleteTask(string input){
 	istringstream in(input);
 	in >> index;
 
-	string output;
+	char output[99];
 	if (index > list.size() || index <= 0){
 		throw input;
 		return "";
@@ -72,7 +71,7 @@ string TaskList::deleteTask(string input){
 		lastUnchangedTask = list[index - 1];
 
 		list.erase(list.begin() + index - 1);
-		string output = "Task " + input + " deleted";
+		sprintf_s(output, InterfaceOutput::MESSAGE_TASK_DELETED.c_str(), input.c_str());
 		return output;
 	}
 }
