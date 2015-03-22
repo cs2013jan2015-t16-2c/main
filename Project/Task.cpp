@@ -49,6 +49,22 @@ Task::Task(string input){
 			deadline_date = "";
 			status = "progressing";
 		}
+
+		//V0.2 add task_gp and places
+		//assume at current stage there can be only one places and group added for each task
+		std::size_t get_group = input.find("#");
+		std::size_t get_place = input.find("@");
+		if ((get_group != std::string::npos) && (get_place != std::string::npos)){
+			task_group = input.substr(get_group + 2, get_place - 1);
+			place = input.substr(get_place + 2);
+		}
+		else if (get_group != std::string::npos){
+			task_group = input.substr(get_group + 2);
+		}
+		else if (get_place != std::string::npos){
+			place = input.substr(get_place + 2);
+		}
+
 	}
 	checkInputValidation();
 }
@@ -57,7 +73,6 @@ Task::~Task(){}
 
 Task::Task(string task, string input){
 	if (!task.empty()){
-
 		//store status
 		std::size_t find_status = task.find("progressing");
 		if (find_status != std::string::npos){
@@ -116,6 +131,18 @@ Task::Task(string task, string input){
 			scheduled_date = "";
 			deadline_date = "";
 		}
+	}
+	std::size_t get_group = input.find("#");
+	std::size_t get_place = input.find("@");
+	if ((get_group != std::string::npos) && (get_place != std::string::npos)){
+		task_group = input.substr(get_group + 2, get_place - 1);
+		place = input.substr(get_place + 2);
+	}
+	else if (get_group != std::string::npos){
+		task_group = input.substr(get_group + 2);
+	}
+	else if (get_place != std::string::npos){
+		place = input.substr(get_place + 2);
 	}
 	checkInputValidation();
 }
@@ -186,6 +213,48 @@ void Task::markAsUndone(){
 	status = "processing";
 }
 
+void Task::setPriority(string input){
+	string tmp_priority = "";
+	std::size_t find_priority = input.find("priority");
+	if (find_priority != std::string::npos){
+		tmp_priority = input.substr(find_priority + 9, find_priority + 10);
+		strncpy_s(priority, tmp_priority.c_str(), 1);
+	}
+}
+
+char Task::gerPriority(){
+	return priority[1];
+}
+
+void Task::changePriority(string request){
+	int temp; //stroe the ASCII value of current priority
+	char temp_char[1];
+	std::size_t first_priority = request.find("++");
+	std::size_t higher_priority = request.find("+");
+	std::size_t lower_priority = request.find("-");
+	if (first_priority != std::string::npos){
+		strncpy_s(priority, "A", 1);
+	}
+	else if (higher_priority != std::string::npos){
+		temp = charToASCII(priority[1]);
+		temp--;
+		temp_char[1] = ASCIIToChar(temp);
+		priority[1] = temp_char[1];
+	}
+	else if (lower_priority != std::string::npos){
+		temp = charToASCII(priority[1]);
+		temp++;
+		temp_char[1] = ASCIIToChar(temp);
+		priority[1] = temp_char[1];
+	}
+}
+
+string Task::getCertainTaskList(string type){
+	if (task_type == type){
+		return taskname;
+	}
+}
+
 void Task::checkInputValidation(){
 	//check for valid time frame
 	bool valid_time = false;
@@ -202,8 +271,6 @@ void Task::checkInputValidation(){
 		start_mins = atoi(start_time.substr(get_start_time + 1, 2).c_str());
 		end_hour = atoi(end_time.substr(0, get_end_time).c_str());
 		end_mins = atoi(end_time.substr(get_end_time + 1, 2).c_str());
-		ofstream errorlog;
-		errorlog.open("errorlog.txt");
 		if ((start_hour >= 0 && start_hour <= 24) && (start_mins >= 0 && start_mins <= 60) && (end_hour >= 0 && end_hour <= 24) && (end_mins >= 0 && end_mins <= 60)){
 			if (start_hour < end_hour){
 				valid_time = true;
@@ -217,7 +284,10 @@ void Task::checkInputValidation(){
 			}
 		}
 		else{
+			ofstream errorlog;
+			errorlog.open("errorlog.txt");
 			errorlog << INVALID_TIME_MSG << endl;
+			errorlog.close();
 			cout << INVALID_TIME_MSG << endl;
 			cout << "starting time:";
 			cin >> start_time;
@@ -235,7 +305,10 @@ void Task::checkInputValidation(){
 			valid_time = true;
 		}
 		else{
+			ofstream errorlog;
+			errorlog.open("errorlog.txt");
 			errorlog << INVALID_TIME_MSG << endl;
+			errorlog.close();
 			cout << INVALID_TIME_MSG << endl;
 			cout << "deadline time:";
 			cin >> deadline_time;
@@ -256,7 +329,10 @@ void Task::checkInputValidation(){
 			valid_date = true;
 		}
 		else{
+			ofstream errorlog;
+			errorlog.open("errorlog.txt");
 			errorlog << INVALID_DATE_MSG << endl;
+			errorlog.close();
 			cout << INVALID_DATE_MSG << endl;
 			cin >> deadline_date;
 		}
@@ -271,10 +347,28 @@ void Task::checkInputValidation(){
 			valid_date = true;
 		}
 		else{
+			ofstream errorlog;
+			errorlog.open("errorlog.txt");
 			errorlog << INVALID_DATE_MSG << endl;
+			errorlog.close();
 			cout << INVALID_DATE_MSG << endl;
 			cin >> scheduled_date;
 		}
 	}
-	errorlog.close();
 }
+
+int Task::charToASCII(char c){
+	return int(c);
+}
+
+char Task::ASCIIToChar(int c){
+	return char(c);
+}
+
+bool Task::operator == (const Task &task2){
+	if ((taskname != task2.taskname) || (task_type != task2.task_type) || (start_time != task2.start_time) || (end_time != task2.end_time) || (deadline_time != task2.deadline_time) || (scheduled_date != task2.scheduled_date) || (deadline_date != task2.deadline_date) || (status != task2.status) || (priority[1] != task2.priority[1]) || (task_group != task2.task_group) || (place != task2.place)){
+		return false;
+	}
+	return true;
+}
+
