@@ -44,7 +44,7 @@ string Interface::executeUserCommand(string userCommand) {
 	transform(commandTypeString.begin(), commandTypeString.end(), commandTypeString.begin(), ::tolower);
 	
 	COMMAND_TYPE commandType;
-	commandType = determineCommandType(commandTypeString, taskString);
+	commandType = determineCommandType(commandTypeString);
 
 	switch (commandType) {
 	case HELP:
@@ -75,7 +75,7 @@ string Interface::executeUserCommand(string userCommand) {
 	}
 }
 
-Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString, string taskString) {
+Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString) {
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
 	}

@@ -18,6 +18,7 @@ public:
 	void UpdateTask(string input);
 	void markAsDone();
 	void markAsUndone();
+	bool isSame(Task input);
 	//void checkInputValidation();
 	
 private:

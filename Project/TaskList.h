@@ -5,6 +5,7 @@
 #include <string>
 #include "Task.h"
 #include "Storage.h"
+#include "DisplayedTaskList.h"
 using namespace std;
 
 class TaskList
@@ -20,7 +21,7 @@ private:
 	static string removeFirstWord(string input);
 	static vector<string> splitText(string text);
 	static string printVector(vector<string> output);
-
+	static int  findTargetedTaskIndex(int displayedIndex);
 public:
 	static void copyFromStorage();
 	static void copyToStorage();

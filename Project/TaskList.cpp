@@ -1,4 +1,5 @@
 #include <sstream>
+#include <assert.h>
 #include "TaskList.h"
 
 vector<Task> TaskList::list;
@@ -21,7 +22,7 @@ void TaskList::copyToStorage(){
 	storage::ending();
 }
 
-string TaskList::addTask(string input){
+string TaskList::addTask(string input){	
 	lastCommandType = "add";
 
 	Task newTask(input);
@@ -42,18 +43,18 @@ string TaskList::updateTask(string input){
 	in >> index;
 
 	string output;
-	if (index > list.size() || index <= 0){
+	if (index > DisplayedTaskList::returnListSize() || index <= 0){
 		output = "Task " + taskIndex + " does not exit";
 		return output;
 	}
 	else{
 		lastCommandType = "update";
-		lastChangedTaskIndex = index - 1;
-		lastUnchangedTask = list[index - 1];
+		lastChangedTaskIndex = findTargetedTaskIndex(index);
+		lastUnchangedTask = list[lastChangedTaskIndex];
 
-		list[index-1].UpdateTask(taskInfo);
+		list[lastChangedTaskIndex].UpdateTask(taskInfo);
 
-		lastChangedTask = list[index - 1];
+		lastChangedTask = list[lastChangedTaskIndex];
 
 		output = "Task " + taskIndex + " updated";
 		return output;
@@ -66,22 +67,22 @@ string TaskList::deleteTask(string input){
 	in >> index;
 
 	string output;
-	if (index > list.size() || index <= 0){
+	if (index > DisplayedTaskList::returnListSize() || index <= 0){
 		output = "Task " + input + " does not exit";
 		return output;
 	}
 	else{
 		lastCommandType = "delete";
-		lastChangedTaskIndex = index-1;
-		lastUnchangedTask = list[index - 1];
+		lastChangedTaskIndex = findTargetedTaskIndex(index);
+		lastUnchangedTask = list[lastChangedTaskIndex];
 
-		list.erase(list.begin() + index - 1);
+		list.erase(list.begin() + lastChangedTaskIndex);
 		string output = "Task " + input + " deleted";
 		return output;
 	}
 }
 
-string TaskList::search(string input){	
+string TaskList::search(string input){
 	if (list.empty()){
 		return "Task list is empty";
 	}
@@ -106,21 +107,16 @@ string TaskList::search(string input){
 }
 
 string TaskList::display(){
-	if (list.empty()){
-		return "Task list is empty";
+	DisplayedTaskList::emptyList();
+	for (int i = 0; i < list.size(); i++){
+		DisplayedTaskList::addTask(list[i]);
+	}
+
+	if (DisplayedTaskList::display() == "-1"){
+		return "TaskList is empty";
 	}
 	else{
-		ostringstream overallOss;
-		for (unsigned int i = 0; i < list.size() - 1; i++){
-			ostringstream oss;
-			oss << i + 1 << ". " << list[i].ToString() << endl;
-			string taskDisplay = oss.str();
-			overallOss << taskDisplay;
-		}
-
-		int size = list.size();
-		overallOss << size << ". " << list[size - 1].ToString();
-		return overallOss.str();
+		return DisplayedTaskList::display();
 	}
 }
 
@@ -130,9 +126,9 @@ string TaskList::markAsDone(string input){
 	in >> index;
 
 	lastCommandType = "done";
-	lastChangedTaskIndex = index-1;
+	lastChangedTaskIndex = findTargetedTaskIndex(index);
 
-	list[index-1].markAsDone();
+	list[lastChangedTaskIndex].markAsDone();
 	string output = "Task " + input + " marked as done";
 	return output;
 }
@@ -208,4 +204,12 @@ string TaskList::printVector(vector<string> output){
 		oss << output[i];
 	}
 	return oss.str();
+}
+
+int TaskList::findTargetedTaskIndex(int displayedIndex){
+	for (int i = 0; i < list.size(); i++){
+		if (list[i].isSame(DisplayedTaskList::resturnTask(displayedIndex))){
+			return i;
+		}
+	}
 }

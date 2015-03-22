@@ -28,7 +28,7 @@ private:
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_GOODBYE;
 	static const string ERROR_INVALID_COMMAND;
-	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
+	static COMMAND_TYPE determineCommandType(string commandTypeString);
 
 	static string getFirstWord(string userCommand);
 	static string removeFirstWord(string userCommand);
