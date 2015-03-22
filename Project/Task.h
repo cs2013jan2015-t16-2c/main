@@ -28,6 +28,8 @@ public:
 	void changePriority(string request);
 	int charToASCII(char c);
 	char ASCIIToChar(int c);
+	//operator
+	bool operator <(const Task &b);
 
 private:
 	string taskname;
