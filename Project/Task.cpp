@@ -362,3 +362,56 @@ char Task::ASCIIToChar(int c){
 string Task::getTaskType(){
 	return task_type;
 }
+
+bool Task::operator <(const Task &b){
+	int temp; //storing month, date, hr or min that was currently comparing
+	int temp_b; // storing information for b
+	string type_a;
+	string type_b;
+	std::size_t get_date = deadline_date.find("/");
+	std::size_t get_date_b = b.deadline_date.find("/");
+	if (( get_date  == std::string::npos ) && ( get_date_b  == std::string::npos )){
+		return true;
+	}else if( get_date_b  == std::string::npos ){
+		return false;
+	}
+	if (get_date != std::string::npos){
+		//check month
+		temp = atoi(deadline_date.substr(get_date + 1, 2).c_str());
+		temp_b = atoi(b.deadline_date.substr(get_date_b + 1, 2).c_str());
+		if ( temp_b < temp ){
+			return false;
+		}
+		//check date
+		temp = atoi(deadline_date.substr(0, get_date).c_str());
+		temp_b = atoi(b.deadline_date.substr(0, get_date_b).c_str());
+		if ( temp_b < temp ){
+			return false;
+		}
+
+		std::size_t get_start_time = start_time.find(":");
+		std::size_t get_start_time_b = b.start_time.find(":");
+
+		if (( get_start_time  == std::string::npos ) && ( get_start_time_b  == std::string::npos )){
+			return true;
+		}else if( get_start_time_b  == std::string::npos ){
+			return false;
+		}
+		if (get_start_time != std::string::npos){
+			//check hr
+			temp = atoi(start_time.substr(0, get_start_time).c_str());
+			temp_b = atoi(b.start_time.substr(0, get_start_time_b).c_str());
+			if ( temp_b < temp ){
+				return false;
+			}
+			//check mins
+			temp = atoi(start_time.substr(get_start_time + 1, 2).c_str());
+			temp_b = atoi(b.start_time.substr(get_start_time_b + 1, 2).c_str());
+			if ( temp_b < temp ){
+				return false;
+			}
+		}
+	}
+	return true;
+	
+}
