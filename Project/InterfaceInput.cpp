@@ -38,7 +38,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case DELETE_TASK:
 		return TaskList::deleteTask(taskString);
 	case DISPLAY_TASKS:
-		return TaskList::display();
+		return TaskList::display(taskString);
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
 	/*case SORT:
