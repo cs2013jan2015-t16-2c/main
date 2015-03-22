@@ -15,6 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="..\..\Project\Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -24,11 +25,26 @@
     <ClInclude Include="..\..\Project\Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+=======
+    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Project\InterfaceInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Project\InterfaceOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Project\Storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+>>>>>>> 3d743c2abf64de0f8097ab8421c03976bba36abd
     <ClInclude Include="..\..\Project\TaskList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="..\..\Project\Interface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -39,6 +55,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Project\Task.cpp">
+=======
+    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\KeepTrack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\Task.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Project\InterfaceInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Project\InterfaceOutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Project\Storage.cpp">
+>>>>>>> 3d743c2abf64de0f8097ab8421c03976bba36abd
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Project\TaskList.cpp">

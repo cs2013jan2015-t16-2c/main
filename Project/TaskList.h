@@ -1,11 +1,16 @@
 #ifndef TASKLIST_H_
 #define TASKLIST_H_
 
+#include <stdio.h>
 #include <vector>
 #include <string>
 #include "Task.h"
 #include "Storage.h"
+<<<<<<< HEAD
 #include "DisplayedTaskList.h"
+=======
+#include "InterfaceOutput.h"
+>>>>>>> 3d743c2abf64de0f8097ab8421c03976bba36abd
 using namespace std;
 
 class TaskList

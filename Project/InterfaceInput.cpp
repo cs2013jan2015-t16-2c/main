@@ -1,24 +1,10 @@
-// Resource File
+// Source File
 // Interface.cpp
 
-#include "Interface.h"
+#include "InterfaceInput.h"
 
-const string Interface::MESSAGE_WELCOME = "Welcome to KeepTrack";
-const string Interface::MESSAGE_GOODBYE = "Goodbye!";
 
-const string Interface::ERROR_INVALID_COMMAND = "Error: invalid command!";
-
-string Interface::displayWelcome() {
-	TaskList::copyToStorage();
-	TaskList::copyFromStorage();
-	return MESSAGE_WELCOME;
-}
-
-void Interface::showToUser(string text) {
-	cout << text << endl;
-}
-
-string Interface::getUserCommand() {
+string InterfaceInput::getUserCommand() {
 	string userCommand;
 
 	cout << "command: ";
@@ -27,7 +13,7 @@ string Interface::getUserCommand() {
 	return userCommand;
 }
 
-string Interface::executeUserCommand(string userCommand) {
+string InterfaceInput::executeUserCommand(string userCommand) {
 	string commandTypeString;
 	string taskString;
 
@@ -43,7 +29,7 @@ string Interface::executeUserCommand(string userCommand) {
 
 	switch (commandType) {
 	case HELP:
-		return help();
+		return InterfaceOutput::displayHelp();
 	case ADD_TASK:
 		return TaskList::addTask(taskString);
 	case SEARCH:
@@ -56,21 +42,29 @@ string Interface::executeUserCommand(string userCommand) {
 		return TaskList::display();
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
+	case SORT:
+		return;
+	case ARCHIVE:
+		return storage::archive(taskString);
 	case UNDO:
 		return TaskList::undo();
 	case REDO:
 		return TaskList::redo();
 	case EXIT:
 		storage::ending();
-		cout << MESSAGE_GOODBYE << endl;;
+		cout << InterfaceOutput::MESSAGE_GOODBYE << endl;;
 		exit(0);
 	case OTHERS:
 	default:
-		return ERROR_INVALID_COMMAND;
+		return InterfaceOutput::ERROR_INVALID_COMMAND;
 	}
 }
 
+<<<<<<< HEAD:Project/Interface.cpp
 Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString) {
+=======
+InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString, string taskString) {
+>>>>>>> 3d743c2abf64de0f8097ab8421c03976bba36abd:Project/InterfaceInput.cpp
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
 	}
@@ -92,6 +86,12 @@ Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString
 	else if (commandTypeString == "done") {
 		return COMMAND_TYPE::MARK_DONE;
 	}
+	else if (commandTypeString == "sort") {
+		return COMMAND_TYPE::SORT;
+	}
+	else if (commandTypeString == "archive") {
+		return COMMAND_TYPE::ARCHIVE;
+	}
 	else if (commandTypeString == "undo") {
 		return COMMAND_TYPE::UNDO;
 	}
@@ -106,30 +106,10 @@ Interface::COMMAND_TYPE Interface::determineCommandType(string commandTypeString
 	}
 }
 
-string Interface::getFirstWord(string userCommand) {
+string InterfaceInput::getFirstWord(string userCommand) {
 	return userCommand.substr(0, userCommand.find(' '));
 }
 
-string Interface::removeFirstWord(string userCommand) {
+string InterfaceInput::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
-}
-
-string Interface::help() {
-	cout << "Here are some instructions for you to follow:\n";
-	cout << " 1. Add Function: add CS meeting -from 1200 -to 1400 23/12\n";
-	cout << " 2. Display All Tasks Function: display all\n";
-	cout << " 3. Update Function: Update 1 -from 1300 -to 1500 23/12\n";
-	cout << " 4. Search Function: search CS meeting\n";
-	cout << " 5. Delete Function: delete 1\n";
-	cout << " 6. Display Floating Tasks Function: display floating\n";
-	cout << " 7. Display Static Tasks Function: display static\n";
-	cout << " 8. Display Deadline Tasks Function: display deadline\n";
-	cout << " 9. Display Unfinished Tasks Function: display unfinished\n";
-	cout << "10. Display Finished Tasks Function: display finished\n";
-	cout << "11. Display Today's Tasks Function: display today\n";
-	cout << "12. Undo Function: undo\n";
-	cout << "13. Redo Function: redo\n";
-	cout << "14. Exit Function: exit\n";
-
-	return "";
 }

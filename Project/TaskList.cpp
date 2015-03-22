@@ -27,11 +27,10 @@ string TaskList::addTask(string input){
 
 	Task newTask(input);
 	list.push_back(newTask);
-	string output = "Task added";
 
 	lastChangedTask = newTask;
 
-	return output;
+	return InterfaceOutput::MESSAGE_TASK_ADDED;
 }
 
 string TaskList::updateTask(string input){
@@ -55,8 +54,7 @@ string TaskList::updateTask(string input){
 		list[lastChangedTaskIndex].UpdateTask(taskInfo);
 
 		lastChangedTask = list[lastChangedTaskIndex];
-
-		output = "Task " + taskIndex + " updated";
+		output = "Task " + input + " updated";
 		return output;
 	}
 }

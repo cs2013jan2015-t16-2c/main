@@ -64,6 +64,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClInclude Include="..\..\Project\Interface.h" />
     <ClInclude Include="..\..\Project\Storage.h" />
     <ClInclude Include="..\..\Project\Task.h" />
@@ -74,6 +75,20 @@
     <ClCompile Include="..\..\Project\KeepTrack.cpp" />
     <ClCompile Include="..\..\Project\Storage.cpp" />
     <ClCompile Include="..\..\Project\Task.cpp" />
+=======
+    <ClInclude Include="..\..\Project\InterfaceInput.h" />
+    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\Task.h" />
+    <ClInclude Include="..\..\Project\InterfaceOutput.h" />
+    <ClInclude Include="..\..\Project\Storage.h" />
+    <ClInclude Include="..\..\Project\TaskList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Project\InterfaceInput.cpp" />
+    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\KeepTrack.cpp" />
+    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\Task.cpp" />
+    <ClCompile Include="..\..\Project\InterfaceOutput.cpp" />
+    <ClCompile Include="..\..\Project\Storage.cpp" />
+>>>>>>> 3d743c2abf64de0f8097ab8421c03976bba36abd
     <ClCompile Include="..\..\Project\TaskList.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

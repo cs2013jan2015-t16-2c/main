@@ -4,25 +4,33 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 
 using namespace std;
 
 class Task
 {
 public:
-	//vector<string> task;
 	Task();
-	Task(string input);
-	Task(string task, string input);
+	Task(string input); // for basic input fomat e.g. add hw1 -from 12:00 -to 13:00 13/3
 	~Task();
+	Task(string task, string input); // for advance format e.g. hw1 13/3 12:00 13:00
 	string ToString();
 	string getTaskname();
 	void UpdateTask(string input);
 	void markAsDone();
 	void markAsUndone();
-	bool isSame(Task input);
-	//void checkInputValidation();
-	
+	void checkInputValidation();
+	//V0.2
+	string getCertainTaskList(string type); // return certain task group
+	void setPriority(string input);
+	char gerPriority();
+	void changePriority(string request);
+	int charToASCII(char c);
+	char ASCIIToChar(int c);
+	//operator
+	bool operator == (const Task &task2);//const;
+
 private:
 	string taskname;
 	string task_type;
@@ -32,6 +40,9 @@ private:
 	string scheduled_date;
 	string deadline_date;
 	string status;
+	char priority[1];
+	string task_group;
+	string place;
 };
 
 #endif
