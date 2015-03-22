@@ -10,7 +10,19 @@ const string INVALID_DATE_MSG = "invalid date, please input a valid one";
 const string INVALID_TIME_MSG = "invalid time, please enter a valid one";
 const string INVALID_TIME_MSG2 = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 
-Task::Task(){}
+Task::Task(){
+	taskname = "";
+	task_type = "";
+	start_time = "";
+	end_time = "";
+	deadline_time = "";
+	scheduled_date = "";
+	deadline_date = "";
+	status = "";
+	priority[1] = NULL;
+	task_group = "";
+	place = "";
+}
 
 Task::Task(string input){
 	if (!input.empty()){
@@ -210,7 +222,7 @@ void Task::markAsDone(){
 }
 
 void Task::markAsUndone(){
-	status = "processing";
+	status = FINISHED_TASK_LABEL;
 }
 
 void Task::setPriority(string input){
@@ -363,55 +375,73 @@ string Task::getTaskType(){
 	return task_type;
 }
 
+//return true if a is before b
 bool Task::operator <(const Task &b){
-	int temp; //storing month, date, hr or min that was currently comparing
-	int temp_b; // storing information for b
-	string type_a;
-	string type_b;
-	std::size_t get_date = deadline_date.find("/");
-	std::size_t get_date_b = b.deadline_date.find("/");
-	if (( get_date  == std::string::npos ) && ( get_date_b  == std::string::npos )){
+	int mon_a; //storing month for a
+	int mon_b; // storing month for b
+	int date_a; // date for a
+	int date_b; // date for b
+	int hr_a; // hr for a
+	int hr_b; // hr for b
+	int min_a; // mins for a
+	int min_b; // mins for b
+	string type_a = task_type;
+	string type_b = b.task_type;
+
+	const string SCHEDULED_TASK_LABEL = "timed";
+	const string DEADLINE_TASK_LABEL = "deadline";
+	if (((type_a == FLOATING_TASK_LABEL) && (type_b == FLOATING_TASK_LABEL)) || (type_a == FLOATING_TASK_LABEL)){ // floating task rank first
 		return true;
-	}else if( get_date_b  == std::string::npos ){
+	}
+	//check a
+	if (type_a == SCHEDULED_TASK_LABEL){ // for scheduled task, we sort with the starting time
+		std::size_t get_date = scheduled_date.find("/");
+		mon_a = atoi(scheduled_date.substr(get_date + 1, 2).c_str());
+		date_a = atoi(scheduled_date.substr(0, get_date).c_str());
+		std::size_t get_start_time = start_time.find(":");
+		hr_a = atoi(start_time.substr(0, get_start_time).c_str());
+		min_a = atoi(start_time.substr(get_start_time + 1, 2).c_str());
+	}
+	else{
+		std::size_t get_date = deadline_date.find("/");
+		mon_a = atoi(deadline_date.substr(get_date + 1, 2).c_str());
+		date_a = atoi(deadline_date.substr(0, get_date).c_str());
+		std::size_t get_start_time = deadline_time.find(":");
+		hr_a = atoi(deadline_time.substr(0, get_start_time).c_str());
+		min_a = atoi(deadline_time.substr(get_start_time + 1, 2).c_str());
+	}
+	//check b
+	if (type_b == SCHEDULED_TASK_LABEL){ 
+		std::size_t get_date_b = b.scheduled_date.find("/");
+		mon_b = atoi(b.scheduled_date.substr(get_date_b + 1, 2).c_str());
+		date_b = atoi(b.scheduled_date.substr(0, get_date_b).c_str());
+		std::size_t get_start_time_b = b.start_time.find(":");
+		hr_b = atoi(b.start_time.substr(0, get_start_time_b).c_str());
+		min_b = atoi(b.start_time.substr(get_start_time_b + 1, 2).c_str());
+	}
+	else{
+		std::size_t get_date_b = b.deadline_date.find("/");
+		mon_b = atoi(b.deadline_date.substr(get_date_b + 1, 2).c_str());
+		date_b = atoi(b.deadline_date.substr(0, get_date_b).c_str());
+		std::size_t get_start_time_b = b.deadline_time.find(":");
+		hr_b = atoi(b.deadline_time.substr(0, get_start_time_b).c_str());
+		min_b = atoi(b.deadline_time.substr(get_start_time_b + 1, 2).c_str());
+	}
+
+	//compare a & b
+	if (mon_b < mon_a){
 		return false;
 	}
-	if (get_date != std::string::npos){
-		//check month
-		temp = atoi(deadline_date.substr(get_date + 1, 2).c_str());
-		temp_b = atoi(b.deadline_date.substr(get_date_b + 1, 2).c_str());
-		if ( temp_b < temp ){
-			return false;
-		}
-		//check date
-		temp = atoi(deadline_date.substr(0, get_date).c_str());
-		temp_b = atoi(b.deadline_date.substr(0, get_date_b).c_str());
-		if ( temp_b < temp ){
-			return false;
-		}
-
-		std::size_t get_start_time = start_time.find(":");
-		std::size_t get_start_time_b = b.start_time.find(":");
-
-		if (( get_start_time  == std::string::npos ) && ( get_start_time_b  == std::string::npos )){
-			return true;
-		}else if( get_start_time_b  == std::string::npos ){
-			return false;
-		}
-		if (get_start_time != std::string::npos){
-			//check hr
-			temp = atoi(start_time.substr(0, get_start_time).c_str());
-			temp_b = atoi(b.start_time.substr(0, get_start_time_b).c_str());
-			if ( temp_b < temp ){
-				return false;
-			}
-			//check mins
-			temp = atoi(start_time.substr(get_start_time + 1, 2).c_str());
-			temp_b = atoi(b.start_time.substr(get_start_time_b + 1, 2).c_str());
-			if ( temp_b < temp ){
-				return false;
-			}
-		}
+	if (date_b < date_a){
+		return false;
 	}
+	if (hr_b < hr_a){
+		return false;
+	}
+	if (min_b < min_a){
+		return false;
+	}
+
 	return true;
 	
 }
