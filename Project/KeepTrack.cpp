@@ -6,7 +6,15 @@
 
 int main() {
 	InterfaceOutput::showToUser(InterfaceOutput::displayWelcome());
-	cout << "================================================================================\n";
+    cout << "                       Today is ";
+    
+    time_t currentTime;
+    time (&currentTime);
+    struct tm * today= localtime(&currentTime);
+    cout << today -> tm_year+1900 << ' ' << m_months[today -> tm_mon + 1] << ' ' << today -> tm_mday << ".\n";
+	
+    cout << "================================================================================\n";
+    
 	while (true) {
 		string userCommand;
 		string output;
