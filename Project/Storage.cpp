@@ -36,22 +36,11 @@ string storage::archive(string fileName){
 	ofstream file;
 	string content;
 
-	if(fileName.find("\\")==false){
 	file.open(fileName);
 	content = TaskList::display();
 	file << content << endl;	
 	file.close();
-	}
-	else{
-		while (fileName.find("\\")==false){
-			size_t found = fileName.find("\\");
-			fileName.replace(found,1,"/");
-		}
-		file.open(fileName);
-		content = TaskList::display();
-		file << content << endl;	
-		file.close();
-	}
+	
 	string str = "Tasklist is successfully archived.";
 	return str;
 
