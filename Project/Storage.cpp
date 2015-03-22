@@ -43,7 +43,7 @@ string storage::archive(string fileName){
 	file.close();
 	}
 	else{
-		while (fileName.find("\\")==false){
+		while (fileName.find("\\")!=false){
 			size_t found = fileName.find("\\");
 			fileName.replace(found,1,"/");
 		}
