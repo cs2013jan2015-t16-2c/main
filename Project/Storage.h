@@ -21,7 +21,7 @@ public:
 	static void starting();
 	static void ending();
 	static vector<string> returnTask();
-	static void archive(string fileName){
+	static void archive(string fileName);
 };
 
 #endif
