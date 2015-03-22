@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS // to avoid warnings due to 'localtime'
 #include "InterfaceInput.h"
 #include "InterfaceOutput.h"
 #include "Task.h"

@@ -80,9 +80,6 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 	else if (commandTypeString == "done") {
 		return COMMAND_TYPE::MARK_DONE;
 	}
-	else if (commandTypeString == "sort") {
-		return COMMAND_TYPE::SORT;
-	}
 	else if (commandTypeString == "archive") {
 		return COMMAND_TYPE::ARCHIVE;
 	}
