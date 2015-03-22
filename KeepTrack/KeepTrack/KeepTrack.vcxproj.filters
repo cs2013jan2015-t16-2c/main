@@ -15,33 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\Interface.h">
+    <ClInclude Include="..\..\Project\Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\Storage.h">
+    <ClInclude Include="..\..\Project\Storage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\Task.h">
+    <ClInclude Include="..\..\Project\Task.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\TaskList.h">
+    <ClInclude Include="..\..\Project\TaskList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\Interface.cpp">
+    <ClCompile Include="..\..\Project\Interface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\KeepTrack.cpp">
+    <ClCompile Include="..\..\Project\KeepTrack.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\Storage.cpp">
+    <ClCompile Include="..\..\Project\Storage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\Task.cpp">
+    <ClCompile Include="..\..\Project\Task.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\TaskList.cpp">
+    <ClCompile Include="..\..\Project\TaskList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

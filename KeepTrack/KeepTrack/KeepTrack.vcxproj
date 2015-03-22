@@ -64,17 +64,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\Interface.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\Storage.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\Task.h" />
-    <ClInclude Include="..\..\..\..\..\Desktop\CSProject\main\Project\TaskList.h" />
+    <ClInclude Include="..\..\Project\Interface.h" />
+    <ClInclude Include="..\..\Project\Storage.h" />
+    <ClInclude Include="..\..\Project\Task.h" />
+    <ClInclude Include="..\..\Project\TaskList.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\Interface.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\KeepTrack.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\Storage.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\Task.cpp" />
-    <ClCompile Include="..\..\..\..\..\Desktop\CSProject\main\Project\TaskList.cpp" />
+    <ClCompile Include="..\..\Project\Interface.cpp" />
+    <ClCompile Include="..\..\Project\KeepTrack.cpp" />
+    <ClCompile Include="..\..\Project\Storage.cpp" />
+    <ClCompile Include="..\..\Project\Task.cpp" />
+    <ClCompile Include="..\..\Project\TaskList.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
