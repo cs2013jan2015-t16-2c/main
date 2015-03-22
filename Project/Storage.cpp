@@ -5,13 +5,13 @@ const string storage::FILENAME = "storage.txt";
 
 void storage::ending() {
 	ofstream file;
-	string currentLine;
+	string content;
 
 	remove(FILENAME.c_str());
 
 	file.open(FILENAME);
-	currentLine = TaskList::display();
-	file << currentLine << endl;	
+	content = TaskList::display();
+	file << content << endl;	
 	file.close();
 }
 
@@ -31,3 +31,14 @@ void storage::starting() {
 vector<string> storage::returnTask() {
 	return task;
 }
+
+void storage::archive(string fileName){
+	ofstream file;
+	string content;
+
+	file.open(fileName);
+	content = TaskList::display();
+	file << content << endl;	
+	file.close();
+
+} 
