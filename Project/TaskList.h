@@ -1,10 +1,12 @@
 #ifndef TASKLIST_H_
 #define TASKLIST_H_
 
+#include <stdio.h>
 #include <vector>
 #include <string>
 #include "Task.h"
 #include "Storage.h"
+#include "InterfaceOutput.h"
 using namespace std;
 
 class TaskList
