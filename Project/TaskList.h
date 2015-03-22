@@ -24,6 +24,7 @@ private:
 	static vector<string> splitText(string text);
 	static string printVector(vector<string> output);
 	static int  findTargetedTaskIndex(int displayedIndex);
+	static void addToDisplayedTaskList(string displayType);
 public:
 	static void copyFromStorage();
 	static void copyToStorage();
@@ -33,7 +34,6 @@ public:
 	static string deleteTask(string input);
 	static string search(string input);
 	static string display(string displayType);
-	static void addToDisplayedTaskList(string displayType);
 	static string markAsDone(string input);
 	
 	static string undo();

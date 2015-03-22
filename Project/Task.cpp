@@ -222,7 +222,7 @@ void Task::setPriority(string input){
 	}
 }
 
-char Task::gerPriority(){
+char Task::getPriority(){
 	return priority[1];
 }
 

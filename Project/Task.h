@@ -24,7 +24,7 @@ public:
 	//V0.2
 	string getTaskType();
 	void setPriority(string input);
-	char gerPriority();
+	char getPriority();
 	void changePriority(string request);
 	int charToASCII(char c);
 	char ASCIIToChar(int c);

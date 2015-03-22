@@ -15,6 +15,7 @@ public:
 	static int returnListSize();
 	static Task resturnTask(int index);
 	static void emptyList();
+	static void sort();
 };
 
 #endif
