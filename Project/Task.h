@@ -22,7 +22,7 @@ public:
 	void markAsUndone();
 	void checkInputValidation();
 	//V0.2
-	//string getCertainTaskList(string type); // return certain task group
+	string getTaskType();
 	void setPriority(string input);
 	char gerPriority();
 	void changePriority(string request);

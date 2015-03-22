@@ -107,18 +107,30 @@ string TaskList::search(string input){
 	}
 }
 
-string TaskList::display(){
+string TaskList::display(string displayType){
 	DisplayedTaskList::emptyList();
-	int size = list.size();
-	for (int i = 0; i < size; i++){
-		DisplayedTaskList::addTask(list[i]);
-	}
-
+	
+	addToDisplayedTaskList(displayType);
 	if (DisplayedTaskList::display() == "-1"){
-		return "TaskList is empty";
+		return "Required task list is empty";
 	}
 	else{
 		return DisplayedTaskList::display();
+	}
+}
+
+void TaskList::addToDisplayedTaskList(string displayType){
+	if (displayType == "all"){
+		for (unsigned int i = 0; i < list.size(); i++){
+			DisplayedTaskList::addTask(list[i]);
+		}
+	}
+	else{
+		for (unsigned int i = 0; i < list.size(); i++){
+			if ((list[i]).getTaskType() == displayType){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
 	}
 }
 

@@ -249,12 +249,6 @@ void Task::changePriority(string request){
 	}
 }
 
-/*string Task::getCertainTaskList(string type){
-	if (task_type == type){
-		return taskname;
-	}
-}*/
-
 void Task::checkInputValidation(){
 	//check for valid time frame
 	bool valid_time = false;
@@ -363,4 +357,8 @@ int Task::charToASCII(char c){
 
 char Task::ASCIIToChar(int c){
 	return char(c);
+}
+
+string Task::getTaskType(){
+	return task_type;
 }

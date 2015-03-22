@@ -32,7 +32,8 @@ public:
 	static string updateTask(string input);
 	static string deleteTask(string input);
 	static string search(string input);
-	static string display();
+	static string display(string displayType);
+	static void addToDisplayedTaskList(string displayType);
 	static string markAsDone(string input);
 	
 	static string undo();

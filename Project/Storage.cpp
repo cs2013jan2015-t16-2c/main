@@ -10,7 +10,7 @@ void storage::ending() {
 	remove(FILENAME.c_str());
 
 	file.open(FILENAME);
-	content = TaskList::display();
+	content = TaskList::display("all");
 	file << content << endl;	
 	file.close();
 }
@@ -37,7 +37,7 @@ string storage::archive(string fileName){
 	string content;
 
 	file.open(fileName);
-	content = TaskList::display();
+	content = TaskList::display("all");
 	file << content << endl;	
 	file.close();
 	
