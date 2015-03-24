@@ -25,14 +25,14 @@ public:
 	};
 
 private:
-	static COMMAND_TYPE determineCommandType(string commandTypeString);
+	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
 
 	static string getFirstWord(string userCommand);
 	static string removeFirstWord(string userCommand);
 
 public:
 	static string executeUserCommand(string userCommand);
-
+	static bool isValidDisplayChoice(string taskString);
 	static string getUserCommand();
 };
 #endif

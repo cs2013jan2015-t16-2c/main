@@ -22,7 +22,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	transform(commandTypeString.begin(), commandTypeString.end(), commandTypeString.begin(), ::tolower);
 	
 	COMMAND_TYPE commandType;
-	commandType = determineCommandType(commandTypeString);
+	commandType = determineCommandType(commandTypeString, taskString);
 
 	string str;
 
@@ -58,7 +58,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 }
 
 
-InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString) {
+InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString, string taskString) {
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
 	}
@@ -74,7 +74,7 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 	else if (commandTypeString == "search") {
 		return COMMAND_TYPE::SEARCH;
 	}
-	else if (commandTypeString == "display") {
+	else if (commandTypeString == "display" && InterfaceInput::isValidDisplayChoice(taskString)) {
 		return COMMAND_TYPE::DISPLAY_TASKS;
 	}
 	else if (commandTypeString == "done") {
@@ -103,4 +103,22 @@ string InterfaceInput::getFirstWord(string userCommand) {
 
 string InterfaceInput::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
+}
+
+bool InterfaceInput::isValidDisplayChoice(string taskString) {
+	if (taskString == "all") {
+		return true;
+	}
+	else if (taskString == "timed") {
+		return true;
+	}
+	else if (taskString == "deadline") {
+		return true;
+	}
+	else if (taskString == "floating") {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
