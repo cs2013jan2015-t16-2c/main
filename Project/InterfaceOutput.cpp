@@ -33,6 +33,15 @@ string InterfaceOutput::displayHelp() {
 	
 	return "";
 }
+
+void InterfaceOutput::displayTime() {
+	cout << "                       Today is ";
+
+	time_t t = time(0);
+	struct tm * now = localtime(&t);
+	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
+}
+
 void InterfaceOutput::showToUser(string text) {
 	cout << text << endl;
 }

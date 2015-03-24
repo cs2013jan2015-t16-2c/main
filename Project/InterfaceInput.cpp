@@ -57,7 +57,6 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	}
 }
 
-
 InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString, string taskString) {
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
@@ -121,4 +120,13 @@ bool InterfaceInput::isValidDisplayChoice(string taskString) {
 	else {
 		return false;
 	}
+}
+
+// for unit test
+string InterfaceInput::testGetFirstWord(string testString) {
+	return InterfaceInput::getFirstWord(testString);
+}
+
+string InterfaceInput::testRemoveFirstWord(string testString){
+	return InterfaceInput::testRemoveFirstWord(testString);
 }

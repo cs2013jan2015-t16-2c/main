@@ -34,5 +34,10 @@ public:
 	static string executeUserCommand(string userCommand);
 	static bool isValidDisplayChoice(string taskString);
 	static string getUserCommand();
+
+	// for unit test
+	static string testGetFirstWord(string testString);
+	static string testRemoveFirstWord(string testString);
+
 };
 #endif
