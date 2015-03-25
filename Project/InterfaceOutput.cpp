@@ -1,5 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "InterfaceOutput.h"
-
 
 const string InterfaceOutput::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string InterfaceOutput::MESSAGE_GOODBYE = "Goodbye!";
@@ -10,6 +10,14 @@ string InterfaceOutput::displayWelcome() {
 	storage::starting();
 	TaskList::copyFromStorage();
 	return InterfaceOutput::MESSAGE_WELCOME;
+}
+
+void InterfaceOutput::displayTime() {
+	cout << "                       Today is ";
+
+	time_t t = time(0);
+	struct tm * now = localtime(&t);
+	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
 }
 
 string InterfaceOutput::displayHelp() {
@@ -34,13 +42,8 @@ string InterfaceOutput::displayHelp() {
 	return "";
 }
 
-void InterfaceOutput::displayTime() {
-	cout << "                       Today is ";
 
-	time_t t = time(0);
-	struct tm * now = localtime(&t);
-	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
-}
+
 
 void InterfaceOutput::showToUser(string text) {
 	cout << text << endl;

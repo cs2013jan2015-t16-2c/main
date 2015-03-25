@@ -122,11 +122,11 @@ bool InterfaceInput::isValidDisplayChoice(string taskString) {
 	}
 }
 
-// for unit test
+// for unit test only
 string InterfaceInput::testGetFirstWord(string testString) {
 	return InterfaceInput::getFirstWord(testString);
 }
 
 string InterfaceInput::testRemoveFirstWord(string testString){
-	return InterfaceInput::testRemoveFirstWord(testString);
+	return InterfaceInput::removeFirstWord(testString);
 }
