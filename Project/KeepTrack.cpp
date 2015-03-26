@@ -5,11 +5,15 @@
 #include "TaskList.h"
 
 int main() {
+	InterfaceOutput::showToUser(storage::starting());
 	InterfaceOutput::showToUser(InterfaceOutput::displayWelcome());
 	InterfaceOutput::displayTime();
+	TaskList::copyFromStorage();
 	
-    cout << "================================================================================\n";
-    
+    cout << "================================================================================";
+	InterfaceOutput::showToUser(InterfaceOutput::displayTip());
+	cout << "================================================================================";
+
 	while (true) {
 		string userCommand;
 		string output;

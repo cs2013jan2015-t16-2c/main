@@ -15,9 +15,10 @@ void storage::ending() {
 	file.close();
 }
 
-void storage::starting() {
+string storage::starting() {
 	ifstream file;
 	string currentLine;
+	string outputString;
 
 	task.clear();
 	file.open(FILENAME);
@@ -26,6 +27,9 @@ void storage::starting() {
 		task.push_back(currentLine);
 	}
 	file.close();
+
+	outputString = "Programme started!";
+	return outputString;
 }
 
 vector<string> storage::returnTask() {

@@ -18,7 +18,7 @@ private:
 	static const string FILENAME;
 
 public:
-	static void starting();
+	static string starting();
 	static void ending();
 	static vector<string> returnTask();
 	static string archive(string fileName);

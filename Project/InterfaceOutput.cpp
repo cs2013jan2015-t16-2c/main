@@ -2,13 +2,12 @@
 #include "InterfaceOutput.h"
 
 const string InterfaceOutput::MESSAGE_WELCOME = "Welcome to KeepTrack";
+const string InterfaceOutput::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
 const string InterfaceOutput::MESSAGE_GOODBYE = "Goodbye!";
 
 const string InterfaceOutput::ERROR_INVALID_COMMAND = "Error: invalid command!";
 
 string InterfaceOutput::displayWelcome() {
-	storage::starting();
-	TaskList::copyFromStorage();
 	return InterfaceOutput::MESSAGE_WELCOME;
 }
 
@@ -43,7 +42,9 @@ string InterfaceOutput::displayHelp() {
 }
 
 
-
+string InterfaceOutput::displayTip() {
+	return InterfaceOutput::MESSAGE_TIP;
+}
 
 void InterfaceOutput::showToUser(string text) {
 	cout << text << endl;

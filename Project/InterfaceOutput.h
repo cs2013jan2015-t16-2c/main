@@ -22,6 +22,7 @@ using namespace std;
 class InterfaceOutput {
 public:
 	static const string MESSAGE_WELCOME;
+	static const string MESSAGE_TIP;
 	static const string MESSAGE_GOODBYE;
 
 	static const string ERROR_INVALID_COMMAND;
@@ -29,6 +30,7 @@ public:
 	static string displayHelp();
 	static string displayWelcome();
 	static void displayTime();
+	static string displayTip();
 	static void showToUser(string text);
 };
 #endif
