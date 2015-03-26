@@ -218,11 +218,11 @@ void Task::UpdateTask(string input){
 }
 
 void Task::markAsDone(){
-	status = "done";
+	status = FINISHED_TASK_LABEL;
 }
 
 void Task::markAsUndone(){
-	status = FINISHED_TASK_LABEL;
+	status = PROCESSING_TASK_LABEL;
 }
 
 void Task::setPriority(string input){
@@ -390,9 +390,23 @@ bool Task::operator <(const Task &b){
 
 	const string SCHEDULED_TASK_LABEL = "timed";
 	const string DEADLINE_TASK_LABEL = "deadline";
-	if (((type_a == FLOATING_TASK_LABEL) && (type_b == FLOATING_TASK_LABEL)) || (type_a == FLOATING_TASK_LABEL)){ // floating task rank first
+	
+	// floating task rank first
+	if (type_a == FLOATING_TASK_LABEL && type_b==FLOATING_TASK_LABEL){ 
+		if (taskname <= b.taskname){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+	else if (type_b == FLOATING_TASK_LABEL && type_a != FLOATING_TASK_LABEL){
+		return false;
+	}
+	else if (type_a == FLOATING_TASK_LABEL && type_b != FLOATING_TASK_LABEL){
 		return true;
 	}
+
 	//check a
 	if (type_a == SCHEDULED_TASK_LABEL){ // for scheduled task, we sort with the starting time
 		std::size_t get_date = scheduled_date.find("/");
@@ -432,16 +446,34 @@ bool Task::operator <(const Task &b){
 	if (mon_b < mon_a){
 		return false;
 	}
-	if (date_b < date_a){
-		return false;
+	else if (mon_b > mon_a){
+		return true;
 	}
-	if (hr_b < hr_a){
-		return false;
+	else {
+		if (date_b < date_a){
+			return false;
+		}
+		else if (date_b > date_a){
+			return true;
+		}
+		else{
+			if (hr_b < hr_a){
+				return false;
+			}
+			else if (hr_b > hr_a){
+				return true;
+			}
+			else{
+				if (min_b < min_a){
+					return false;
+				}
+				else if (mon_b > min_a){
+					return true;
+				}
+				else{
+					return true;
+				}
+			}
+		}
 	}
-	if (min_b < min_a){
-		return false;
-	}
-
-	return true;
-	
 }

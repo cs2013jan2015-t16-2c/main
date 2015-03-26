@@ -56,7 +56,7 @@ string TaskList::updateTask(string input){
 		list[lastChangedTaskIndex].UpdateTask(taskInfo);
 
 		lastChangedTask = list[lastChangedTaskIndex];
-		output = "Task " + input + " updated";
+		output = "Task " + taskIndex + " updated";
 		return output;
 	}
 }
@@ -88,22 +88,25 @@ string TaskList::search(string input){
 		return "Task list is empty";
 	}
 	else{
-		vector<string> output;
+		DisplayedTaskList::emptyList();
 		for (unsigned int i = 0; i < list.size(); i++){
 			string taskName = (list[i]).getTaskname();
 			vector<string> contents = splitText(taskName);
 
 			for (unsigned int j = 0; j < contents.size(); j++){
 				if (input == contents[j]){
-					ostringstream oss;
-					oss << i + 1 << "." << list[i].ToString() << endl;
-					string taskDisplay = oss.str();
-					output.push_back(taskDisplay);
+					DisplayedTaskList::addTask(list[i]);
 				}
 			}
 		}
 
-		return printVector(output);
+		string output = DisplayedTaskList::display();
+		if (output == "-1"){
+			return "No task containes the searched word";
+		}
+		else{
+			return output;
+		}
 	}
 }
 
@@ -228,4 +231,10 @@ int TaskList::findTargetedTaskIndex(int displayedIndex){
 		}
 	}
 	return -1;
+}
+
+void TaskList::empty(){
+	while (!list.empty()){
+		list.pop_back();
+	}
 }

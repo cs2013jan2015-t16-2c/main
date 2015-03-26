@@ -35,6 +35,7 @@ public:
 	static string search(string input);
 	static string display(string displayType);
 	static string markAsDone(string input);
+	static void empty();
 	
 	static string undo();
 	static string redo();
