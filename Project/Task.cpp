@@ -4,7 +4,7 @@ const int TASK_LEN = 256;
 const string SCHEDULED_TASK_LABEL = "timed";
 const string DEADLINE_TASK_LABEL = "deadline";
 const string FLOATING_TASK_LABEL = "floating";
-const string PROCESSING_TASK_LABEL = "progressing";
+const string PROCESSING_TASK_LABEL = "in progress";
 const string FINISHED_TASK_LABEL = "done";
 const string INVALID_DATE_MSG = "invalid date, please input a valid one";
 const string INVALID_TIME_MSG = "invalid time, please enter a valid one";
@@ -38,7 +38,7 @@ Task::Task(string input){
 			deadline_time = "";
 			scheduled_date = input.substr(get_date - 2, 5);
 			deadline_date = "";
-			status = "progressing";
+			status = PROCESSING_TASK_LABEL;
 		}
 		else if (deadlined_task != std::string::npos){
 			std::size_t get_date = input.find("/");
@@ -49,7 +49,7 @@ Task::Task(string input){
 			deadline_time = input.substr(deadlined_task + 4, 5);
 			scheduled_date = "";
 			deadline_date = input.substr(get_date - 2, 5);
-			status = "progressing";
+			status = PROCESSING_TASK_LABEL;
 		}
 		else{
 			task_type = FLOATING_TASK_LABEL;
@@ -59,7 +59,7 @@ Task::Task(string input){
 			deadline_time = "";
 			scheduled_date = "";
 			deadline_date = "";
-			status = "progressing";
+			status = PROCESSING_TASK_LABEL;
 		}
 
 		//V0.2 add task_gp and places
@@ -86,14 +86,14 @@ Task::~Task(){}
 Task::Task(string task, string input){
 	if (!task.empty()){
 		//store status
-		std::size_t find_status = task.find("progressing");
+		std::size_t find_status = task.find(PROCESSING_TASK_LABEL);
 		if (find_status != std::string::npos){
-			status = "progressing";
+			status = PROCESSING_TASK_LABEL;
 		}
 		else{
-			std::size_t find_status = task.find("done");
+			std::size_t find_status = task.find(FINISHED_TASK_LABEL);
 			if (find_status != std::string::npos){
-				status = "done";
+				status = FINISHED_TASK_LABEL;
 			}
 			else{
 				status = " ";
