@@ -31,7 +31,7 @@ string TaskList::addTask(string input){
 
 	lastChangedTask = newTask;
 
-	return "Task added";
+	return "Task added"; //change to magic string
 }
 
 string TaskList::updateTask(string input){
@@ -45,7 +45,7 @@ string TaskList::updateTask(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size|| index <= 0){
-		output = "Task " + taskIndex + " does not exit";
+		output = "Task " + taskIndex + " does not exit"; //change to magic string
 		return output;
 	}
 	else{
@@ -56,7 +56,7 @@ string TaskList::updateTask(string input){
 		list[lastChangedTaskIndex].UpdateTask(taskInfo);
 
 		lastChangedTask = list[lastChangedTaskIndex];
-		output = "Task " + taskIndex + " updated";
+		output = "Task " + taskIndex + " updated"; //change to magic string
 		return output;
 	}
 }
@@ -69,7 +69,7 @@ string TaskList::deleteTask(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size || index <= 0){
-		output = "Task " + input + " does not exit";
+		output = "Task " + input + " does not exit"; //change to magic string
 		return output;
 	}
 	else{
@@ -78,14 +78,14 @@ string TaskList::deleteTask(string input){
 		lastUnchangedTask = list[lastChangedTaskIndex];
 
 		list.erase(list.begin() + lastChangedTaskIndex);
-		string output = "Task " + input + " deleted";
+		string output = "Task " + input + " deleted"; //change to magic string
 		return output;
 	}
 }
 
 string TaskList::search(string input){
 	if (list.empty()){
-		return "Task list is empty";
+		return "Task list is empty"; //change to magic string
 	}
 	else{
 		DisplayedTaskList::emptyList();
@@ -102,7 +102,7 @@ string TaskList::search(string input){
 
 		string output = DisplayedTaskList::display();
 		if (output == "-1"){
-			return "No task containes the searched word";
+			return "No task containes the searched word"; //change to magic string
 		}
 		else{
 			return output;
@@ -115,7 +115,7 @@ string TaskList::display(string displayType){
 	
 	addToDisplayedTaskList(displayType);
 	if (DisplayedTaskList::display() == "-1"){
-		return "Required task list is empty";
+		return "Required task list is empty"; //change to magic string
 	}
 	else{
 		return DisplayedTaskList::display();
@@ -146,51 +146,51 @@ string TaskList::markAsDone(string input){
 	lastChangedTaskIndex = findTargetedTaskIndex(index);
 
 	list[lastChangedTaskIndex].markAsDone();
-	string output = "Task " + input + " marked as done";
+	string output = "Task " + input + " marked as done"; //change to magic string
 	return output;
 }
 
 string TaskList::undo(){
 	if (lastCommandType == "add"){
 		list.pop_back();
-		return "Adding command is undone";
+		return "Adding command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
-		return "Updating command is undone";
+		return "Updating command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "delete"){
 		list.insert(list.begin() + lastChangedTaskIndex, lastUnchangedTask);
-		return "Deleting command is undone";
+		return "Deleting command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsUndone();
-		return "MarkasDone command is undone";
+		return "MarkasDone command is undone"; //change to magic string
 	}
 	else{
-		return "Previous action cannot be undo";
+		return "Previous action cannot be undo"; //change to magic string
 	}
 }
 
 string TaskList::redo(){
 	if (lastCommandType == "add"){
 		list.push_back(lastChangedTask);
-		return "Adding command is redone";
+		return "Adding command is redone"; //change to magic string
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastChangedTask;
-		return "Updating command is redone";
+		return "Updating command is redone"; //change to magic string
 	}
 	else if (lastCommandType == "delete"){
 		list.erase(list.begin() + lastChangedTaskIndex);
-		return "Deleting command is redone";
+		return "Deleting command is redone"; //change to magic string
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsDone();
-		return "MarkasDone command is redone";
+		return "MarkasDone command is redone"; //change to magic string
 	}
 	else{
-		return "previous action cannot be redo";
+		return "previous action cannot be redo"; //change to magic string
 	}
 }
 
