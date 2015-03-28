@@ -27,7 +27,6 @@ public:
 
 	static const string ERROR_INVALID_COMMAND;
 public:
-	static string displayHelp();
 	static string displayWelcome();
 	static void displayTime();
 	static string displayTip();

@@ -11,6 +11,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <sstream>
+#include "Help.h"
 #include "Storage.h"
 #include "TaskList.h"
 #include "InterfaceOutput.h"

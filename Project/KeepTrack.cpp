@@ -21,7 +21,7 @@ int main() {
 		userCommand = InterfaceInput::getUserCommand();
 		output = InterfaceInput::executeUserCommand(userCommand);
 		InterfaceOutput::showToUser(output);
-		cout << "\n================================================================================\n";
+		cout << "================================================================================";
     }
 
 	return 0;

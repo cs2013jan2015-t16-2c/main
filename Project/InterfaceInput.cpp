@@ -6,7 +6,7 @@
 string InterfaceInput::getUserCommand() {
 	string userCommand;
 
-	cout << "command: ";
+	cout << "Command: ";
 	getline(cin, userCommand);
 
 	return userCommand;
@@ -28,7 +28,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 
 	switch (commandType) {
 	case HELP:
-		return InterfaceOutput::displayHelp();
+		return Help::executeHelpCommand();
 	case ADD_TASK:
 		return TaskList::addTask(taskString);
 	case SEARCH:
@@ -49,7 +49,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		return TaskList::redo();
 	case EXIT:
 		storage::ending();
-		cout << InterfaceOutput::MESSAGE_GOODBYE << endl;;
+		cout << InterfaceOutput::MESSAGE_GOODBYE << endl;
 		exit(0);
 	case OTHERS:
 	default:
@@ -123,6 +123,7 @@ bool InterfaceInput::isValidDisplayChoice(string taskString) {
 }
 
 // for unit test only
+// to call private functions
 string InterfaceInput::testGetFirstWord(string testString) {
 	return InterfaceInput::getFirstWord(testString);
 }
