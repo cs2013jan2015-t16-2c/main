@@ -37,5 +37,17 @@ const string UPDATE_REDO = "Updating command is redone";
 const string DELETE_REDO = "Deleting command is redone";
 const string MARK_REDO = "MarkasDone command is redone";
 const string REDO_INABLE = "previous action cannot be redone";
-
+//keepTrack
+const string DIVIDER = "================================================================================";
+//help
+const string HELP_MAIN = "Please select the function you would like to know\n
+						  1.  Add a task\n
+						  2.  Display tasks\n
+						  3.  Delete a task\n
+						  4.  Update a task\n
+						  5.  Undo the last action\n
+						  6.  Redo the last action\n
+						  7.  Archive your task list to another file\n
+						  8.  How to exit KeepTrack\n
+						  00. Get back to KeepTrack\n";
 

@@ -45,6 +45,11 @@ public:
 	static const string MARK_REDO;
 	static const string REDO_INABLE;
 
+	//keppTrack
+	static const string DIVIDER;
+	//help
+	static const string HELP_MAIN;
+
 };
 
 #endif
