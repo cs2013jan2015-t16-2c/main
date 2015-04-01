@@ -1,4 +1,7 @@
 #include "task.h"
+#include "concol.h""
+using namespace std;
+using namespace eku;
 
 const int TASK_LEN = 256;
 const string SCHEDULED_TASK_LABEL = "timed";
@@ -262,6 +265,7 @@ void Task::changePriority(string request){
 }
 
 void Task::checkInputValidation(){
+	
 	//check for valid time frame
 	bool valid_time = false;
 	int start_hour; //deadline task use this to store time
@@ -476,4 +480,11 @@ bool Task::operator <(const Task &b){
 			}
 		}
 	}
+}
+
+bool Task::taskDone(){
+	if (status == FINISHED_TASK_LABEL){
+		return true;
+	}
+	return false;
 }
