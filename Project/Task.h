@@ -34,6 +34,7 @@ public:
 	bool operator <(const Task &b);
 	//V0.3
 	bool taskDone(); // return true if task status is done
+	string getTodayDate();
 
 private:
 	string taskname;
