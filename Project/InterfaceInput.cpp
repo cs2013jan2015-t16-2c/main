@@ -73,7 +73,7 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 	else if (commandTypeString == "search") {
 		return COMMAND_TYPE::SEARCH;
 	}
-	else if (commandTypeString == "display" && InterfaceInput::isValidDisplayChoice(taskString)) {
+	else if (commandTypeString == "display") {
 		return COMMAND_TYPE::DISPLAY_TASKS;
 	}
 	else if (commandTypeString == "done") {
@@ -102,24 +102,6 @@ string InterfaceInput::getFirstWord(string userCommand) {
 
 string InterfaceInput::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
-}
-
-bool InterfaceInput::isValidDisplayChoice(string taskString) {
-	if (taskString == "all") {
-		return true;
-	}
-	else if (taskString == "timed") {
-		return true;
-	}
-	else if (taskString == "deadline") {
-		return true;
-	}
-	else if (taskString == "floating") {
-		return true;
-	}
-	else {
-		return false;
-	}
 }
 
 // for unit test only

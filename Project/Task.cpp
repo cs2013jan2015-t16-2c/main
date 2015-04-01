@@ -31,6 +31,9 @@ Task::Task(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find("-from");
 		std::size_t deadlined_task = input.find("-by");
+
+		std::size_t get_group = input.find("#");
+		std::size_t get_place = input.find("@");
 		if (timed_task != std::string::npos){
 			std::size_t ending_time = input.find("-to");
 			std::size_t get_date = input.find("/");
@@ -56,28 +59,37 @@ Task::Task(string input){
 		}
 		else{
 			task_type = FLOATING_TASK_LABEL;
-			taskname = input;
 			start_time = "";
 			end_time = "";
 			deadline_time = "";
 			scheduled_date = "";
 			deadline_date = "";
 			status = PROCESSING_TASK_LABEL;
+			if ((get_group != std::string::npos) && (get_place != std::string::npos)){
+				taskname = input.substr(0, get_group - 1);
+			}
+			else if (get_group != std::string::npos){
+				taskname = input.substr(0, get_group - 1);
+			}
+			else if (get_place != std::string::npos){
+				taskname = input.substr(0, get_place - 1);
+			}
+			else{
+				taskname = input;
+			}			
 		}
 
 		//V0.2 add task_gp and places
 		//assume at current stage there can be only one places and group added for each task
-		std::size_t get_group = input.find("#");
-		std::size_t get_place = input.find("@");
 		if ((get_group != std::string::npos) && (get_place != std::string::npos)){
-			task_group = input.substr(get_group + 2, get_place - 1);
-			place = input.substr(get_place + 2);
+			task_group = input.substr(get_group + 1, get_place - 1);
+			place = input.substr(get_place + 1);
 		}
 		else if (get_group != std::string::npos){
-			task_group = input.substr(get_group + 2);
+			task_group = input.substr(get_group + 1);
 		}
 		else if (get_place != std::string::npos){
-			place = input.substr(get_place + 2);
+			place = input.substr(get_place + 1);
 		}
 
 	}
@@ -103,22 +115,25 @@ Task::Task(string task, string input){
 			}
 		}
 
+		std::size_t get_group = input.find("#");
+		std::size_t get_place = input.find("@");
 		//classify tasks into scheduled, deadlined or floating
 		std::size_t find_date = task.find("/");
 		string temp_date;
 		string temp;	//to store remaining part of the task arguement to check whether there is a time included there
 		if (find_date != std::string::npos){	//date found, task is either scheduled or deadlined.
 			//if (task[find_date - 2] == " "){	//check date is in single digit or double
-				//taskname = task.substr(0, find_date - 2);
-				//temp_date = task.substr(find_date - 1, 4);
+			//taskname = task.substr(0, find_date - 2);
+			//temp_date = task.substr(find_date - 1, 4);
 			//}
 			//else{
-				taskname = task.substr(0, find_date - 2);
-				temp_date = task.substr(find_date - 2, 5);
+			taskname = task.substr(0, find_date - 2);
+			temp_date = task.substr(find_date - 2, 5);
 			//}
-			std::size_t find_time = task.find(":"); 
+			std::size_t find_time = task.find(":");
 			temp = task.substr(find_time + 2);
 			std::size_t find_ending_time = temp.find(":");	//check if there's an ending time ie. seperate deadlined task and scheduled task
+
 			if ((find_time != std::string::npos) && (find_ending_time != std::string::npos)){
 				task_type = SCHEDULED_TASK_LABEL;
 				start_time = task.substr(find_time - 2, 5);
@@ -139,27 +154,37 @@ Task::Task(string task, string input){
 		}
 		else{
 			task_type = FLOATING_TASK_LABEL;
-			taskname = task.substr(0, find_status - 1);
+			if ((get_group != std::string::npos) && (get_place != std::string::npos)){
+				taskname = input.substr(0, get_group - 1);
+			}
+			else if (get_group != std::string::npos){
+				taskname = input.substr(0, get_group - 1);
+			}
+			else if (get_place != std::string::npos){
+				taskname = input.substr(0, get_place - 1);
+			}
+			else{
+				taskname = input;
+			}
 			start_time = "";
 			end_time = "";
 			deadline_time = "";
 			scheduled_date = "";
 			deadline_date = "";
 		}
+
+		if ((get_group != std::string::npos) && (get_place != std::string::npos)){
+			task_group = input.substr(get_group + 1, get_place - 1);
+			place = input.substr(get_place + 1);
+		}
+		else if (get_group != std::string::npos){
+			task_group = input.substr(get_group + 1);
+		}
+		else if (get_place != std::string::npos){
+			place = input.substr(get_place + 1);
+		}
+		checkInputValidation();
 	}
-	std::size_t get_group = input.find("#");
-	std::size_t get_place = input.find("@");
-	if ((get_group != std::string::npos) && (get_place != std::string::npos)){
-		task_group = input.substr(get_group + 2, get_place - 1);
-		place = input.substr(get_place + 2);
-	}
-	else if (get_group != std::string::npos){
-		task_group = input.substr(get_group + 2);
-	}
-	else if (get_place != std::string::npos){
-		place = input.substr(get_place + 2);
-	}
-	checkInputValidation();
 }
 
 string Task::ToString(){
@@ -171,6 +196,16 @@ string Task::ToString(){
 		strcat_s(task, " ");
 		strcat_s(task, deadline_time.c_str());
 		strcat_s(task, " ");
+		if (task_group != ""){
+			strcat_s(task, "#");
+			strcat_s(task, task_group.c_str());
+			strcat_s(task, " ");
+		}
+		if (place != ""){
+			strcat_s(task, "@");
+			strcat_s(task, place.c_str());
+			strcat_s(task, " ");
+		}
 		strcat_s(task, status.c_str());
 	}
 	else if (task_type == SCHEDULED_TASK_LABEL){
@@ -181,10 +216,30 @@ string Task::ToString(){
 		strcat_s(task, " ");
 		strcat_s(task, end_time.c_str());
 		strcat_s(task, " ");
+		if (task_group != ""){
+			strcat_s(task, "#");
+			strcat_s(task, task_group.c_str());
+			strcat_s(task, " ");
+		}
+		if (place != ""){
+			strcat_s(task, "@");
+			strcat_s(task, place.c_str());
+			strcat_s(task, " ");
+		}
 		strcat_s(task, status.c_str());
 	}
 	else if (task_type == FLOATING_TASK_LABEL){
 		strcat_s(task, " ");
+		if (task_group != ""){
+			strcat_s(task, "#");
+			strcat_s(task, task_group.c_str());
+			strcat_s(task, " ");
+		}
+		if (place != ""){
+			strcat_s(task, "@");
+			strcat_s(task, place.c_str());
+			strcat_s(task, " ");
+		}
 		strcat_s(task, status.c_str());
 	}
 	return task;

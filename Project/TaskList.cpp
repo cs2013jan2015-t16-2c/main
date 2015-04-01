@@ -132,7 +132,7 @@ void TaskList::addToDisplayedTaskList(string displayType){
 			DisplayedTaskList::addTask(list[i]);
 		}
 	}
-	else if(displayType=="timed"||"deadline"||"floating"){
+	else if (displayType == "timed" || displayType == "deadline" || displayType == "floating"){
 		for (unsigned int i = 0; i < list.size(); i++){
 			if ((list[i]).getTaskType() == displayType){
 				DisplayedTaskList::addTask(list[i]);
@@ -262,20 +262,28 @@ void TaskList::empty(){
 
 void TaskList::addTaskGroup(Task newTask){
 	string group = newTask.getTaskGroup();
-	if (!isExist(taskGroup, group)){
-		taskGroup.push_back(group);
+	if (group != ""){
+		if (!isExist(taskGroup, group)){
+			taskGroup.push_back(group);
+		}
 	}
 }
 
 void TaskList::addPlace(Task newTask){
 	string place = newTask.getPlace();
-	if (!isExist(taskPlace, place)){
-		taskPlace.push_back(place);
+	if (place != ""){
+		if (!isExist(taskPlace, place)){
+			taskPlace.push_back(place);
+		}
 	}
 }
 
 bool TaskList::isExist(vector<string> list, string input){
 	bool isExist = false;
+	if (list.empty()){
+		return false;
+	}
+	
 	while (!isExist)
 	{
 		for (int i = 0; i < list.size(); i++){
