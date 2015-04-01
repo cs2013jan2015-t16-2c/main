@@ -147,39 +147,39 @@ string Help::executeHelpCommand() {
 	string userInput;
 
 	while (getline(cin, userInput)) {
-		if (Help::isInMainHelpPage && userInput == Help::ADD_HELP_PAGE_INDEX) {
+		if (Help::isInMainHelpPage && userInput == MagicString::ADD_HELP_PAGE_INDEX) {
 			Help::addHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (Help::isInMainHelpPage && userInput == Help::DISPLAY_HELP_PAGE_INDEX) {
+		else if (Help::isInMainHelpPage && userInput == MagicString::DISPLAY_HELP_PAGE_INDEX) {
 			Help::displayHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (Help::isInMainHelpPage && userInput == Help::DELETE_HELP_PAGE_INDEX) {
+		else if (Help::isInMainHelpPage && userInput == MagicString::DELETE_HELP_PAGE_INDEX) {
 			Help::deleteHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (Help::isInMainHelpPage && userInput == Help::UPDATE_HELP_PAGE_INDEX) {
+		else if (Help::isInMainHelpPage && userInput == MagicString::UPDATE_HELP_PAGE_INDEX) {
 			Help::updateHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (Help::isInMainHelpPage && userInput == Help::UNDO_HELP_PAGE_INDEX) {
+		else if (Help::isInMainHelpPage && userInput == MagicString::UNDO_HELP_PAGE_INDEX) {
 			Help::undoHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (Help::isInMainHelpPage && userInput == Help::REDO_HELP_PAGE_INDEX) {
+		else if (Help::isInMainHelpPage && userInput == MagicString::REDO_HELP_PAGE_INDEX) {
 			Help::redoHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (Help::isInMainHelpPage && userInput == Help::ARCHIVE_HELP_PAGE_INDEX) {
+		else if (Help::isInMainHelpPage && userInput == MagicString::ARCHIVE_HELP_PAGE_INDEX) {
 			Help::archiveHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (Help::isInMainHelpPage && userInput == Help::EXIT_HELP_PAGE_INDEX) {
+		else if (Help::isInMainHelpPage && userInput == MagicString::EXIT_HELP_PAGE_INDEX) {
 			Help::exitHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (!Help::isInMainHelpPage && userInput == Help::REUTRN_TO_MAIN_HELP_PAGE) {
+		else if (!Help::isInMainHelpPage && userInput == MagicString::REUTRN_TO_MAIN_HELP_PAGE) {
 			Help::mainHelpPage();
 			Help::isInMainHelpPage = true;
 		}
