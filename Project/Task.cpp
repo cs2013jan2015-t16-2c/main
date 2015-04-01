@@ -1,10 +1,13 @@
 #include "task.h"
+#include "concol.h""
+using namespace std;
+using namespace eku;
 
 const int TASK_LEN = 256;
 const string SCHEDULED_TASK_LABEL = "timed";
 const string DEADLINE_TASK_LABEL = "deadline";
 const string FLOATING_TASK_LABEL = "floating";
-const string PROCESSING_TASK_LABEL = "progressing";
+const string PROCESSING_TASK_LABEL = "in progress";
 const string FINISHED_TASK_LABEL = "done";
 const string INVALID_DATE_MSG = "invalid date, please input a valid one";
 const string INVALID_TIME_MSG = "invalid time, please enter a valid one";
@@ -38,7 +41,7 @@ Task::Task(string input){
 			deadline_time = "";
 			scheduled_date = input.substr(get_date - 2, 5);
 			deadline_date = "";
-			status = "progressing";
+			status = PROCESSING_TASK_LABEL;
 		}
 		else if (deadlined_task != std::string::npos){
 			std::size_t get_date = input.find("/");
@@ -49,7 +52,7 @@ Task::Task(string input){
 			deadline_time = input.substr(deadlined_task + 4, 5);
 			scheduled_date = "";
 			deadline_date = input.substr(get_date - 2, 5);
-			status = "progressing";
+			status = PROCESSING_TASK_LABEL;
 		}
 		else{
 			task_type = FLOATING_TASK_LABEL;
@@ -59,7 +62,7 @@ Task::Task(string input){
 			deadline_time = "";
 			scheduled_date = "";
 			deadline_date = "";
-			status = "progressing";
+			status = PROCESSING_TASK_LABEL;
 		}
 
 		//V0.2 add task_gp and places
@@ -86,14 +89,14 @@ Task::~Task(){}
 Task::Task(string task, string input){
 	if (!task.empty()){
 		//store status
-		std::size_t find_status = task.find("progressing");
+		std::size_t find_status = task.find(PROCESSING_TASK_LABEL);
 		if (find_status != std::string::npos){
-			status = "progressing";
+			status = PROCESSING_TASK_LABEL;
 		}
 		else{
-			std::size_t find_status = task.find("done");
+			std::size_t find_status = task.find(FINISHED_TASK_LABEL);
 			if (find_status != std::string::npos){
-				status = "done";
+				status = FINISHED_TASK_LABEL;
 			}
 			else{
 				status = " ";
@@ -262,6 +265,7 @@ void Task::changePriority(string request){
 }
 
 void Task::checkInputValidation(){
+	concolinit();
 	//check for valid time frame
 	bool valid_time = false;
 	int start_hour; //deadline task use this to store time
@@ -282,7 +286,8 @@ void Task::checkInputValidation(){
 				valid_time = true;
 			}
 			else{
-				cout << INVALID_TIME_MSG2 << endl;
+				cout << red << INVALID_TIME_MSG2 << endl;
+				settextcolor(deftextcol);
 				cout << "starting time:";
 				cin >> start_time;
 				cout << "ending time:";
@@ -294,7 +299,8 @@ void Task::checkInputValidation(){
 			errorlog.open("errorlog.txt");
 			errorlog << INVALID_TIME_MSG << endl;
 			errorlog.close();
-			cout << INVALID_TIME_MSG << endl;
+			cout << red << INVALID_TIME_MSG << endl;
+			settextcolor(deftextcol);
 			cout << "starting time:";
 			cin >> start_time;
 			cout << "ending time:";
@@ -315,7 +321,8 @@ void Task::checkInputValidation(){
 			errorlog.open("errorlog.txt");
 			errorlog << INVALID_TIME_MSG << endl;
 			errorlog.close();
-			cout << INVALID_TIME_MSG << endl;
+			cout << red << INVALID_TIME_MSG << endl;
+			settextcolor(deftextcol);
 			cout << "deadline time:";
 			cin >> deadline_time;
 		}
@@ -339,7 +346,8 @@ void Task::checkInputValidation(){
 			errorlog.open("errorlog.txt");
 			errorlog << INVALID_DATE_MSG << endl;
 			errorlog.close();
-			cout << INVALID_DATE_MSG << endl;
+			cout << red << INVALID_DATE_MSG << endl;
+			settextcolor(deftextcol);
 			cin >> deadline_date;
 		}
 	}
@@ -357,7 +365,8 @@ void Task::checkInputValidation(){
 			errorlog.open("errorlog.txt");
 			errorlog << INVALID_DATE_MSG << endl;
 			errorlog.close();
-			cout << INVALID_DATE_MSG << endl;
+			cout << red << INVALID_DATE_MSG << endl;
+			settextcolor(deftextcol);
 			cin >> scheduled_date;
 		}
 	}
@@ -485,3 +494,11 @@ string Task::getTaskGroup(){
 string Task::getPlace(){
 	return place;
 }
+
+bool Task::taskDone(){
+	if (status == FINISHED_TASK_LABEL){
+		return true;
+	}
+	return false;
+}
+

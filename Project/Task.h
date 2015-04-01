@@ -32,6 +32,8 @@ public:
 	char ASCIIToChar(int c);
 	//operator
 	bool operator <(const Task &b);
+	//V0.3
+	bool taskDone(); // return true if task status is done
 
 private:
 	string taskname;
