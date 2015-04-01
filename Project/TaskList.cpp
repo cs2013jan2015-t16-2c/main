@@ -1,9 +1,11 @@
 #include <sstream>
 #include <assert.h>
 #include "TaskList.h"
-#include "MagicString"
+
 
 vector<Task> TaskList::list;
+vector<string> TaskList::taskGroup;
+vector<string> TaskList::taskPlace;
 string TaskList::lastCommandType;
 int TaskList::lastChangedTaskIndex;
 Task TaskList::lastChangedTask;
@@ -31,7 +33,9 @@ string TaskList::addTask(string input){
 
 	lastChangedTask = newTask;
 
-	return MagicString::TASK_ADDED; //change to magic string
+	addTaskGroup(newTask);
+	addPlace(newTask);
+	return "Task added";
 }
 
 string TaskList::updateTask(string input){
@@ -45,7 +49,7 @@ string TaskList::updateTask(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size|| index <= 0){
-		output = MagicString::TASK + taskIndex + MagicString::NON_EXISTENCE; //change to magic string
+		output = "Task " + taskIndex + " does not exit"; //change to magic string
 		return output;
 	}
 	else{
@@ -56,7 +60,7 @@ string TaskList::updateTask(string input){
 		list[lastChangedTaskIndex].UpdateTask(taskInfo);
 
 		lastChangedTask = list[lastChangedTaskIndex];
-		output = MagicString::TASK + taskIndex + MagicString::UPDATE; //change to magic string
+		output = "Task " + taskIndex + " updated"; //change to magic string
 		return output;
 	}
 }
@@ -69,7 +73,7 @@ string TaskList::deleteTask(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size || index <= 0){
-		output = MagicString::TASK  + input + MagicString::NON_EXISTENCE; //change to magic string
+		output = "Task " + input + " does not exit"; //change to magic string
 		return output;
 	}
 	else{
@@ -78,14 +82,14 @@ string TaskList::deleteTask(string input){
 		lastUnchangedTask = list[lastChangedTaskIndex];
 
 		list.erase(list.begin() + lastChangedTaskIndex);
-		string output = MagicString::TASK + input + MagicString::DELETE; //change to magic string
+		string output = "Task " + input + " deleted"; //change to magic string
 		return output;
 	}
 }
 
 string TaskList::search(string input){
 	if (list.empty()){
-		return MagicString::TASK_EMPTY; //change to magic string
+		return "Task list is empty"; //change to magic string
 	}
 	else{
 		DisplayedTaskList::emptyList();
@@ -102,7 +106,7 @@ string TaskList::search(string input){
 
 		string output = DisplayedTaskList::display();
 		if (output == "-1"){
-			return MagicString::SEARCH_NOT_FOUND; //change to magic string
+			return "No task containes the searched word"; //change to magic string
 		}
 		else{
 			return output;
@@ -115,7 +119,7 @@ string TaskList::display(string displayType){
 	
 	addToDisplayedTaskList(displayType);
 	if (DisplayedTaskList::display() == "-1"){
-		return MagicString::TASK_EMPTY2; //change to magic string
+		return "Required task list is empty"; //change to magic string
 	}
 	else{
 		return DisplayedTaskList::display();
@@ -128,12 +132,29 @@ void TaskList::addToDisplayedTaskList(string displayType){
 			DisplayedTaskList::addTask(list[i]);
 		}
 	}
-	else{
+	else if(displayType=="timed"||"deadline"||"floating"){
 		for (unsigned int i = 0; i < list.size(); i++){
 			if ((list[i]).getTaskType() == displayType){
 				DisplayedTaskList::addTask(list[i]);
 			}
 		}
+	}
+	else if (isExist(taskGroup, displayType)){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if ((list[i]).getTaskGroup() == displayType){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+	}
+	else if (isExist(taskPlace, displayType)){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if ((list[i]).getPlace() == displayType){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+	}
+	else{
+		cout << "Invalid display command."<<endl;
 	}
 }
 
@@ -146,51 +167,51 @@ string TaskList::markAsDone(string input){
 	lastChangedTaskIndex = findTargetedTaskIndex(index);
 
 	list[lastChangedTaskIndex].markAsDone();
-	string output = MagicString::TASK + input + MagicString::MARK_AS_DONE; //change to magic string
+	string output = "Task " + input + " marked as done"; //change to magic string
 	return output;
 }
 
 string TaskList::undo(){
 	if (lastCommandType == "add"){
 		list.pop_back();
-		return MagicString::ADD_UNDO; //change to magic string
+		return "Adding command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
-		return MagicString::UPDATE_UNDO; //change to magic string
+		return "Updating command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "delete"){
 		list.insert(list.begin() + lastChangedTaskIndex, lastUnchangedTask);
-		return MagicString::DELETE_UNDO; //change to magic string
+		return "Deleting command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsUndone();
-		return MagicString::MARK_UNDO; //change to magic string
+		return "MarkasDone command is undone"; //change to magic string
 	}
 	else{
-		return MagicString::UNDO_INABLE; //change to magic string
+		return "Previous action cannot be undo"; //change to magic string
 	}
 }
 
 string TaskList::redo(){
 	if (lastCommandType == "add"){
 		list.push_back(lastChangedTask);
-		return MagicString::ADD_REDO; //change to magic string
+		return "Adding command is redone"; //change to magic string
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastChangedTask;
-		return MagicString::UPDATE_REDO; //change to magic string
+		return "Updating command is redone"; //change to magic string
 	}
 	else if (lastCommandType == "delete"){
 		list.erase(list.begin() + lastChangedTaskIndex);
-		return MagicString::DELETE_REDO; //change to magic string
+		return "Deleting command is redone"; //change to magic string
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsDone();
-		return MagicString::MARK_REDO; //change to magic string
+		return "MarkasDone command is redone"; //change to magic string
 	}
 	else{
-		return MagicString::REDO_INABLE; //change to magic string
+		return "previous action cannot be redo"; //change to magic string
 	}
 }
 
@@ -237,4 +258,32 @@ void TaskList::empty(){
 	while (!list.empty()){
 		list.pop_back();
 	}
+}
+
+void TaskList::addTaskGroup(Task newTask){
+	string group = newTask.getTaskGroup();
+	if (!isExist(taskGroup, group)){
+		taskGroup.push_back(group);
+	}
+}
+
+void TaskList::addPlace(Task newTask){
+	string place = newTask.getPlace();
+	if (!isExist(taskPlace, place)){
+		taskPlace.push_back(place);
+	}
+}
+
+bool TaskList::isExist(vector<string> list, string input){
+	bool isExist = false;
+	while (!isExist)
+	{
+		for (int i = 0; i < list.size(); i++){
+			if (input == list[i]){
+				return true;
+			}
+		}
+	}
+
+	return isExist;
 }

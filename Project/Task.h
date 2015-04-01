@@ -17,6 +17,8 @@ public:
 	Task(string task, string input); // for advance format e.g. hw1 13/3 12:00 13:00
 	string ToString();
 	string getTaskname();
+	string getTaskGroup();
+	string getPlace();
 	void UpdateTask(string input);
 	void markAsDone();
 	void markAsUndone();
@@ -32,6 +34,7 @@ public:
 	bool operator <(const Task &b);
 	//V0.3
 	bool taskDone(); // return true if task status is done
+	string getTodayDate();
 
 private:
 	string taskname;
