@@ -26,8 +26,8 @@ public:
 	//V0.2
 	string getTaskType();
 	void setPriority(string input);
-	char getPriority();
-	void changePriority(string request);
+	string getPriority();
+	//void changePriority(string request);
 	int charToASCII(char c);
 	char ASCIIToChar(int c);
 	//operator
@@ -45,7 +45,7 @@ private:
 	string scheduled_date;
 	string deadline_date;
 	string status;
-	char priority[1];
+	string priority;
 	string task_group;
 	string place;
 };

@@ -42,12 +42,14 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		return TaskList::display(taskString);
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
+	case SET_PRIORITY:
+		return TaskList::setPriority(taskString);
 	case ARCHIVE:
 		return storage::archive(taskString);
 	case UNDO:
 		return TaskList::undo();
 	case REDO:
-		return TaskList::redo();
+		return TaskList::redo();	
 	case EXIT:
 		storage::ending();
 		cout << MagicString::MESSAGE_GOODBYE << endl;
@@ -79,6 +81,9 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 	}
 	else if (commandTypeString == "done") {
 		return COMMAND_TYPE::MARK_DONE;
+	}
+	else if (commandTypeString == "set"){
+		return COMMAND_TYPE::SET_PRIORITY;
 	}
 	else if (commandTypeString == "archive") {
 		return COMMAND_TYPE::ARCHIVE;

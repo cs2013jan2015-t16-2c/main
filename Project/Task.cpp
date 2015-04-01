@@ -25,7 +25,7 @@ Task::Task(){
 	scheduled_date = "";
 	deadline_date = "";
 	status = "";
-	priority[1] = NULL;
+	priority = "";
 	task_group = "";
 	place = "";
 }
@@ -105,7 +105,7 @@ Task::Task(string input){
 		//V0.2 add task_gp and places
 		//assume at current stage there can be only one places and group added for each task
 		if ((get_group != std::string::npos) && (get_place != std::string::npos)){
-			task_group = input.substr(get_group + 1, get_place - 1);
+			task_group = input.substr(get_group + 1, get_place - get_group - 2);
 			place = input.substr(get_place + 1);
 		}
 		else if (get_group != std::string::npos){
@@ -197,7 +197,7 @@ Task::Task(string task, string input){
 		}
 
 		if ((get_group != std::string::npos) && (get_place != std::string::npos)){
-			task_group = input.substr(get_group + 1, get_place - 1);
+			task_group = input.substr(get_group + 1, get_place - get_group - 2);
 			place = input.substr(get_place + 1);
 		}
 		else if (get_group != std::string::npos){
@@ -205,6 +205,11 @@ Task::Task(string task, string input){
 		}
 		else if (get_place != std::string::npos){
 			place = input.substr(get_place + 1);
+		}
+
+		std::size_t get_priority = input.find("priority");
+		if (get_priority != std::string::npos){
+			priority = input.substr(get_priority + 9, 1);
 		}
 		checkInputValidation();
 	}
@@ -265,6 +270,11 @@ string Task::ToString(){
 		}
 		strcat_s(task, status.c_str());
 	}
+
+	if (priority != ""){
+		strcat_s(task, " priority ");
+		strcat_s(task, priority.c_str());
+	}
 	return task;
 }
 
@@ -307,19 +317,18 @@ void Task::markAsUndone(){
 }
 
 void Task::setPriority(string input){
-	string tmp_priority = "";
 	std::size_t find_priority = input.find("priority");
 	if (find_priority != std::string::npos){
-		tmp_priority = input.substr(find_priority + 9, find_priority + 10);
-		strncpy_s(priority, tmp_priority.c_str(), 1);
+		priority = input.substr(find_priority + 9, 1);
 	}
 }
 
-char Task::getPriority(){
-	return priority[1];
+string Task::getPriority(){
+	return priority;
 }
 
-void Task::changePriority(string request){
+//no need for change priority function
+/*void Task::changePriority(string request){
 	int temp; //stroe the ASCII value of current priority
 	char temp_char[1];
 	std::size_t first_priority = request.find("++");
@@ -340,7 +349,7 @@ void Task::changePriority(string request){
 		temp_char[1] = ASCIIToChar(temp);
 		priority[1] = temp_char[1];
 	}
-}
+}*/
 
 void Task::checkInputValidation(){
 	concolinit();

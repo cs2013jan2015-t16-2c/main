@@ -171,6 +171,33 @@ string TaskList::markAsDone(string input){
 	return output;
 }
 
+string TaskList::setPriority(string input){
+	string taskIndex = getFirstWord(input);
+	string taskInfo = removeFirstWord(input);
+
+	int index;
+	istringstream in(taskIndex);
+	in >> index;
+
+	string output;
+	int size = DisplayedTaskList::returnListSize();
+	if (index > size || index <= 0){
+		output = "Task " + taskIndex + " does not exit"; //change to magic string
+		return output;
+	}
+	else{
+		lastCommandType = "setPriority";
+		lastChangedTaskIndex = findTargetedTaskIndex(index);
+		lastUnchangedTask = list[lastChangedTaskIndex];
+
+		list[lastChangedTaskIndex].setPriority(taskInfo);
+
+		lastChangedTask = list[lastChangedTaskIndex];
+		output = "Task " + taskIndex + " is prioritised"; //change to magic string
+		return output;
+	}	
+}
+
 string TaskList::undo(){
 	if (lastCommandType == "add"){
 		list.pop_back();
