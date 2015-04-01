@@ -477,3 +477,11 @@ bool Task::operator <(const Task &b){
 		}
 	}
 }
+
+string Task::getTaskGroup(){
+	return task_group;
+}
+
+string Task::getPlace(){
+	return place;
+}

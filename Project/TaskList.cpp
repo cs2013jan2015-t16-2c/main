@@ -4,6 +4,8 @@
 
 
 vector<Task> TaskList::list;
+vector<string> TaskList::taskGroup;
+vector<string> TaskList::taskPlace;
 string TaskList::lastCommandType;
 int TaskList::lastChangedTaskIndex;
 Task TaskList::lastChangedTask;
@@ -30,7 +32,8 @@ string TaskList::addTask(string input){
 	list.push_back(newTask);
 
 	lastChangedTask = newTask;
-
+	addTaskGroup(newTask);
+	addPlace(newTask);
 	return "Task added";
 }
 
@@ -128,12 +131,29 @@ void TaskList::addToDisplayedTaskList(string displayType){
 			DisplayedTaskList::addTask(list[i]);
 		}
 	}
-	else{
+	else if(displayType=="timed"||"deadline"||"floating"){
 		for (unsigned int i = 0; i < list.size(); i++){
 			if ((list[i]).getTaskType() == displayType){
 				DisplayedTaskList::addTask(list[i]);
 			}
 		}
+	}
+	else if (isExist(taskGroup, displayType)){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if ((list[i]).getTaskGroup() == displayType){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+	}
+	else if (isExist(taskPlace, displayType)){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if ((list[i]).getPlace() == displayType){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+	}
+	else{
+		cout << "Invalid display command."<<endl;
 	}
 }
 
@@ -237,4 +257,32 @@ void TaskList::empty(){
 	while (!list.empty()){
 		list.pop_back();
 	}
+}
+
+void TaskList::addTaskGroup(Task newTask){
+	string group = newTask.getTaskGroup();
+	if (!isExist(taskGroup, group)){
+		taskGroup.push_back(group);
+	}
+}
+
+void TaskList::addPlace(Task newTask){
+	string place = newTask.getPlace();
+	if (!isExist(taskPlace, place)){
+		taskPlace.push_back(place);
+	}
+}
+
+bool TaskList::isExist(vector<string> list, string input){
+	bool isExist = false;
+	while (!isExist)
+	{
+		for (int i = 0; i < list.size(); i++){
+			if (input == list[i]){
+				return true;
+			}
+		}
+	}
+
+	return isExist;
 }

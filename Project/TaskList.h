@@ -14,6 +14,8 @@ class TaskList
 {
 private:
 	static vector<Task> list;
+	static vector<string> taskGroup;
+	static vector<string> taskPlace;
 	static string lastCommandType;
 	static int lastChangedTaskIndex;
 	static Task lastUnchangedTask;
@@ -25,6 +27,9 @@ private:
 	static string printVector(vector<string> output);
 	static int  findTargetedTaskIndex(int displayedIndex);
 	static void addToDisplayedTaskList(string displayType);
+	static void addTaskGroup(Task newtask);
+	static void addPlace(Task newtask);
+	static bool isExist(vector<string> checkingList, string input);
 public:
 	static void copyFromStorage();
 	static void copyToStorage();
