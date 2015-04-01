@@ -118,24 +118,6 @@ void Help::exitHelpPage () {
 	return;
 }
 
-//const string Help::ADD_HELP_PAGE_INDEX = "1";
-//const string Help::DISPLAY_HELP_PAGE_INDEX = "2";
-//const string Help::DELETE_HELP_PAGE_INDEX = "3";
-//const string Help::UPDATE_HELP_PAGE_INDEX = "4";
-//const string Help::UNDO_HELP_PAGE_INDEX = "5";
-//const string Help::REDO_HELP_PAGE_INDEX = "6";
-//const string Help::ARCHIVE_HELP_PAGE_INDEX = "7";
-//const string Help::EXIT_HELP_PAGE_INDEX = "8";
-//const string Help::REUTRN_TO_MAIN_HELP_PAGE = "0";
-//const string Help::EXIT_HELP = "00";
-
-//const string Help::MESSAGE_INVALID_INDEX = "Error: invalid input!";
-
-//const string Help::MESSAGE_NEXT_ACTION = "You may select the following actions";
-//const string Help::MESSAGE_RETURN_TO_MAIN = "0:  return to the main help page";
-//const string Help::MESSAGE_EXIT_HELP =      "00: get back to KeepTrack!";
-//const string Help::MESSAGE_COMMAND = "Command: ";
-
 bool Help::isInMainHelpPage = true;
 
 void Help::showHelp(string helpText) {
