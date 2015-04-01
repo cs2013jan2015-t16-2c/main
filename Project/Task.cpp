@@ -1,5 +1,8 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "task.h"
 #include "concol.h""
+#include <ctime>
+
 using namespace std;
 using namespace eku;
 
@@ -27,19 +30,36 @@ Task::Task(){
 	place = "";
 }
 
+string Task::getTodayDate(){
+	time_t rawtime;
+	struct tm * timeinfo;
+	char tmp[40];
+
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+
+	strftime(tmp, 80, "%d/%m", timeinfo);
+	std::string str(tmp);
+	return str;
+}
+
 Task::Task(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find("-from");
 		std::size_t deadlined_task = input.find("-by");
 		if (timed_task != std::string::npos){
 			std::size_t ending_time = input.find("-to");
-			std::size_t get_date = input.find("/");
+			std::size_t get_date = input.find("today");
+			if (get_date != std::string::npos){
+				scheduled_date = getTodayDate();
+			}
+			//std::size_t get_date = input.find("/");
 			task_type = SCHEDULED_TASK_LABEL;
 			taskname = input.substr(0, timed_task - 1);
 			start_time = input.substr(timed_task + 6, 5);
 			end_time = input.substr(ending_time + 4, 5);
 			deadline_time = "";
-			scheduled_date = input.substr(get_date - 2, 5);
+			//scheduled_date = input.substr(get_date - 2, 5);
 			deadline_date = "";
 			status = PROCESSING_TASK_LABEL;
 		}
