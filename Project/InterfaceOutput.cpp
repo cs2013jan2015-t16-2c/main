@@ -2,12 +2,6 @@
 #include "InterfaceOutput.h"
 #include "MagicString.h"
 
-//const string InterfaceOutput::MESSAGE_WELCOME = "Welcome to KeepTrack";
-//const string InterfaceOutput::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
-//const string InterfaceOutput::MESSAGE_GOODBYE = "Goodbye!";
-
-//const string InterfaceOutput::ERROR_INVALID_COMMAND = "Error: invalid command!";
-
 string InterfaceOutput::displayWelcome() {
 	return MagicString::MESSAGE_WELCOME;
 }
