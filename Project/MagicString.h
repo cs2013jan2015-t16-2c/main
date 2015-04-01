@@ -12,6 +12,7 @@ public:
 	static const string MESSAGE_TIP;
 	static const string MESSAGE_GOODBYE;
 	static const string ERROR_INVALID_COMMAND;
+	static const string TODAY;
 	//storage
 	static const string PROGRAM_START;
 	static const string ARCHIVE_SUCCESS;

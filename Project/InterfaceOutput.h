@@ -21,8 +21,8 @@ using namespace std;
 
 class InterfaceOutput {
 public:
-	static const string MESSAGE_WELCOME;
-	static const string MESSAGE_TIP;
+	//static const string MESSAGE_WELCOME;
+	//static const string MESSAGE_TIP;
 	static const string MESSAGE_GOODBYE;
 
 	static const string ERROR_INVALID_COMMAND;

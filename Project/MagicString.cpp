@@ -5,6 +5,7 @@ const string MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
 const string MESSAGE_GOODBYE = "Goodbye!";
 const string ERROR_INVALID_COMMAND = "Error: invalid command";
+const string TODAY = "                       Today is ";
 //Storage
 const string PROGRAM_START = "Data has been successfully loaded";
 const string ARCHIVE_SUCCESS = "Tasklist is successfully archived";

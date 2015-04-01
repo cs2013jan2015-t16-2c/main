@@ -1,18 +1,19 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "InterfaceOutput.h"
+#include "MagicString.h"
 
-const string InterfaceOutput::MESSAGE_WELCOME = "Welcome to KeepTrack";
-const string InterfaceOutput::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
-const string InterfaceOutput::MESSAGE_GOODBYE = "Goodbye!";
+//const string InterfaceOutput::MESSAGE_WELCOME = "Welcome to KeepTrack";
+//const string InterfaceOutput::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
+//const string InterfaceOutput::MESSAGE_GOODBYE = "Goodbye!";
 
-const string InterfaceOutput::ERROR_INVALID_COMMAND = "Error: invalid command!";
+//const string InterfaceOutput::ERROR_INVALID_COMMAND = "Error: invalid command!";
 
 string InterfaceOutput::displayWelcome() {
-	return InterfaceOutput::MESSAGE_WELCOME;
+	return MagicString::MESSAGE_WELCOME;
 }
 
 void InterfaceOutput::displayTime() {
-	cout << "                       Today is ";
+	cout << MagicString::TODAY;
 
 	time_t t = time(0);
 	struct tm * now = localtime(&t);
@@ -20,7 +21,7 @@ void InterfaceOutput::displayTime() {
 }
 
 string InterfaceOutput::displayTip() {
-	return InterfaceOutput::MESSAGE_TIP;
+	return MagicString::MESSAGE_TIP;
 }
 
 void InterfaceOutput::showToUser(string text) {
