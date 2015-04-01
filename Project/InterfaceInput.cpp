@@ -2,6 +2,7 @@
 // Interface.cpp
 
 #include "InterfaceInput.h"
+#include "MagicString.h"
 
 string InterfaceInput::getUserCommand() {
 	string userCommand;
@@ -49,11 +50,11 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		return TaskList::redo();
 	case EXIT:
 		storage::ending();
-		cout << InterfaceOutput::MESSAGE_GOODBYE << endl;
+		cout << MagicString::MESSAGE_GOODBYE << endl;
 		exit(0);
 	case OTHERS:
 	default:
-		return InterfaceOutput::ERROR_INVALID_COMMAND;
+		return MagicString::ERROR_INVALID_COMMAND;
 	}
 }
 

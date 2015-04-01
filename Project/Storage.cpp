@@ -1,4 +1,5 @@
 #include "storage.h"
+#include "MagicString.h"
 
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
@@ -18,7 +19,6 @@ void storage::ending() {
 string storage::starting() {
 	ifstream file;
 	string currentLine;
-	string outputString;
 
 	task.clear();
 	file.open(FILENAME);
@@ -28,8 +28,7 @@ string storage::starting() {
 	}
 	file.close();
 
-	outputString = "Programme started!";
-	return outputString;
+	return MagicString::PROGRAM_START;
 }
 
 vector<string> storage::returnTask() {
@@ -45,7 +44,6 @@ string storage::archive(string fileName){
 	file << content << endl;	
 	file.close();
 	
-	string str = "Tasklist is successfully archived.";
-	return str;
+	return MagicString::ARCHIVE_SUCCESS;
 
 } 
