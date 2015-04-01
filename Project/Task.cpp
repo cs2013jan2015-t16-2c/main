@@ -265,7 +265,7 @@ void Task::changePriority(string request){
 }
 
 void Task::checkInputValidation(){
-	
+	concolinit();
 	//check for valid time frame
 	bool valid_time = false;
 	int start_hour; //deadline task use this to store time
@@ -286,7 +286,8 @@ void Task::checkInputValidation(){
 				valid_time = true;
 			}
 			else{
-				cout << INVALID_TIME_MSG2 << endl;
+				cout << red << INVALID_TIME_MSG2 << endl;
+				settextcolor(deftextcol);
 				cout << "starting time:";
 				cin >> start_time;
 				cout << "ending time:";
@@ -298,7 +299,8 @@ void Task::checkInputValidation(){
 			errorlog.open("errorlog.txt");
 			errorlog << INVALID_TIME_MSG << endl;
 			errorlog.close();
-			cout << INVALID_TIME_MSG << endl;
+			cout << red << INVALID_TIME_MSG << endl;
+			settextcolor(deftextcol);
 			cout << "starting time:";
 			cin >> start_time;
 			cout << "ending time:";
@@ -319,7 +321,8 @@ void Task::checkInputValidation(){
 			errorlog.open("errorlog.txt");
 			errorlog << INVALID_TIME_MSG << endl;
 			errorlog.close();
-			cout << INVALID_TIME_MSG << endl;
+			cout << red << INVALID_TIME_MSG << endl;
+			settextcolor(deftextcol);
 			cout << "deadline time:";
 			cin >> deadline_time;
 		}
@@ -343,7 +346,8 @@ void Task::checkInputValidation(){
 			errorlog.open("errorlog.txt");
 			errorlog << INVALID_DATE_MSG << endl;
 			errorlog.close();
-			cout << INVALID_DATE_MSG << endl;
+			cout << red << INVALID_DATE_MSG << endl;
+			settextcolor(deftextcol);
 			cin >> deadline_date;
 		}
 	}
@@ -361,7 +365,8 @@ void Task::checkInputValidation(){
 			errorlog.open("errorlog.txt");
 			errorlog << INVALID_DATE_MSG << endl;
 			errorlog.close();
-			cout << INVALID_DATE_MSG << endl;
+			cout << red << INVALID_DATE_MSG << endl;
+			settextcolor(deftextcol);
 			cin >> scheduled_date;
 		}
 	}
