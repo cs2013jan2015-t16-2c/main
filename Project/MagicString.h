@@ -48,7 +48,62 @@ public:
 	//keppTrack
 	static const string DIVIDER;
 	//help
-	static const string HELP_MAIN;
+	static const string HELP_MAIN_L1;
+	static const string HELP_MAIN_L2;
+	static const string HELP_MAIN_L3;
+	static const string HELP_MAIN_L4;
+	static const string HELP_MAIN_L5;
+	static const string HELP_MAIN_L6;
+	static const string HELP_MAIN_L7;
+	static const string HELP_MAIN_L8;
+	static const string HELP_MAIN_L9;
+	static const string HELP_MAIN_L10;
+
+	static const string ADD_HELP_PAGE_INDEX;
+	static const string DISPLAY_HELP_PAGE_INDEX;
+	static const string DELETE_HELP_PAGE_INDEX;
+	static const string UPDATE_HELP_PAGE_INDEX;
+	static const string UNDO_HELP_PAGE_INDEX;
+	static const string REDO_HELP_PAGE_INDEX;
+	static const string ARCHIVE_HELP_PAGE_INDEX;
+	static const string EXIT_HELP_PAGE_INDEX;
+	static const string REUTRN_TO_MAIN_HELP_PAGE;
+	static const string EXIT_HELP;
+	static const string MESSAGE_INVALID_INDEX;
+	static const string MESSAGE_NEXT_ACTION;
+	static const string MESSAGE_RETURN_TO_MAIN;
+	static const string MESSAGE_EXIT_HELP;
+	static const string MESSAGE_COMMAND;
+
+	static const string ADD_INSTRUCTION;
+	static const string ADD_INSTRUCTION_FLOATING;
+	static const string ADD_INSTRUCTION_DEADLINE;
+	static const string ADD_INSTRUCTION_TIMED;
+
+	static const string DISPLAY_INSTRUCTION;
+	static const string DISPLAY_INSTRUCTION_ALL;
+	static const string DISPLAY_INSTRUCTION_FLOATING;
+	static const string DISPLAY_INSTRUCTION_DEADLINE;
+	static const string DISPLAY_INSTRUCTION_TIMED;
+
+	static const string COMMON_INSTRUCTION;
+	
+	static const string DELETE_INSTRUCTION;
+	static const string DELETE_INSTRUCTION_EXP;
+
+	static const string UPDATE_INSTRUCTION;
+	static const string UPDATE_INSTRUCTION_EXP;
+
+	static const string UNDO_INSTRUCTION;
+	static const string REDO_INSTRUCTION;
+
+	static const string ARCHIVE_INSTRUCTION;
+	static const string ARCHIVE_INSTRUCTION_EXP1;
+	static const string ARCHIVE_INSTRUCTION_EXP2;
+
+	static const string EXIT_INSTRUCTION;
+
+	static const string HELP_INDEX;
 
 };
 
