@@ -183,12 +183,12 @@ string Help::executeHelpCommand() {
 			Help::mainHelpPage();
 			Help::isInMainHelpPage = true;
 		}
-		else if (userInput == Help::EXIT_HELP) {
+		else if (userInput == MagicString::EXIT_HELP) {
 			Help::isInMainHelpPage = true;
 			return "";
 		}
 		else {
-			Help::showHelp(Help::MESSAGE_INVALID_INDEX);
+			Help::showHelp(MagicString::MESSAGE_INVALID_INDEX);
 			cout << endl;
 			cout << MagicString::DIVIDER;
 			Help::mainHelpPage();
