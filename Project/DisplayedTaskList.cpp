@@ -51,11 +51,9 @@ void DisplayedTaskList::sort(){
 				minIndex = j;
 			}
 
-			if (minIndex != i){
-				Task temp = displayedTaskList[minIndex];
-				displayedTaskList[minIndex] = displayedTaskList[i];
-				displayedTaskList[i] = temp;
-			}
+			Task temp = displayedTaskList[minIndex];
+			displayedTaskList[minIndex] = displayedTaskList[i];
+			displayedTaskList[i] = temp;
 		}
 	}
 }
