@@ -9,7 +9,7 @@ void DisplayedTaskList::addTask(Task input){
 
 string DisplayedTaskList::display(){
 	if (displayedTaskList.empty()){
-		return "-1";
+		return MagicString::MESSAGE_EMPTY;
 	}
 	else{
 		sort();
