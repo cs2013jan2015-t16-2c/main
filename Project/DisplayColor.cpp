@@ -5,6 +5,13 @@
 #include "concol.h"
 using namespace eku;
 
+const string DisplayColor::SYMBOL_NEW_LINE = "\n";
+const string DisplayColor::SYMBOL_PRIORITY_A = "(A)";
+const string DisplayColor::SYMBOL_PRIORITY_B = "(B)";
+const string DisplayColor::SYMBOL_PRIORITY_C = "(C)";
+const string DisplayColor::STATUS_IN_PROGRESS = "in progress";
+const string DisplayColor::STATUS_DONE = "done";
+
 string DisplayColor::displayColor(string displayText) {
 	concolinit();
 
@@ -16,16 +23,16 @@ string DisplayColor::displayColor(string displayText) {
 	size_t foundInProcessOrDone = 0;
 
 	while (foundNewLineEnd != string::npos) {
-		foundNewLineEnd = displayText.find("\n", foundNewLineStart);
+		foundNewLineEnd = displayText.find(DisplayColor::SYMBOL_NEW_LINE, foundNewLineStart);
 		string currentLine = displayText.substr(foundNewLineStart, foundNewLineEnd - foundNewLineStart);
 
-		if (currentLine.find("(A)") != string::npos) {
+		if (currentLine.find(DisplayColor::SYMBOL_PRIORITY_A) != string::npos) {
 			settextcolor(red);
 		}
-		else if (currentLine.find("(B)") != string::npos) {
+		else if (currentLine.find(DisplayColor::SYMBOL_PRIORITY_B) != string::npos) {
 			settextcolor(yellow);
 		}
-		else if (currentLine.find("(C)") != string::npos) {
+		else if (currentLine.find(DisplayColor::SYMBOL_PRIORITY_C) != string::npos) {
 			settextcolor(cyan);
 		}
 		else {
@@ -60,12 +67,12 @@ string DisplayColor::displayColor(string displayText) {
 			cout << currentLine.substr(foundAt, foundSpace - foundAt) << endl;
 		}
 		else {
-			if (currentLine.find("done") != string::npos) {
-				foundInProcessOrDone = currentLine.find("done");
+			if (currentLine.find(DisplayColor::STATUS_DONE) != string::npos) {
+				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_DONE);
 				cout << currentLine.substr(0, foundInProcessOrDone) << endl;
 			}
 			else {
-				foundInProcessOrDone = currentLine.find("in process");
+				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_IN_PROGRESS);
 				cout << currentLine.substr(0, foundInProcessOrDone) << endl;
 			}
 		}
