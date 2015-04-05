@@ -42,7 +42,8 @@ private:
 	string start_time;
 	string end_time;
 	string deadline_time;
-	string scheduled_date;
+	string scheduled_start_date;
+	string scheduled_end_date;
 	string deadline_date;
 	string status;
 	string priority;

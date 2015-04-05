@@ -22,7 +22,8 @@ Task::Task(){
 	start_time = "";
 	end_time = "";
 	deadline_time = "";
-	scheduled_date = "";
+	scheduled_start_date = "";
+	scheduled_end_date = "";
 	deadline_date = "";
 	status = "";
 	priority = "";
@@ -57,27 +58,63 @@ Task::Task(string input){
 			//if (get_date != std::string::npos){
 			//	scheduled_date = getTodayDate();
 			//}
-			std::size_t get_date = input.find("/");
 			task_type = SCHEDULED_TASK_LABEL;
 			taskname = input.substr(0, timed_task - 1);
-			start_time = input.substr(timed_task + 6, 5);
-			end_time = input.substr(ending_time + 4, 5);
-			deadline_time = "";
-			if (get_date != std::string::npos){
-				scheduled_date = input.substr(get_date - 2, 5);
+
+			string timeInfo = input.substr(timed_task);
+			string endTimeInfo = input.substr(ending_time);
+
+			std::size_t get_start_date = timeInfo.find("/");
+			std::size_t get_end_date = endTimeInfo.find("/");
+			if (get_start_date != std::string::npos && get_end_date != std::string::npos){
+				scheduled_start_date = timeInfo.substr(get_start_date - 2, 5);
+				scheduled_end_date = endTimeInfo.substr(get_end_date - 2, 5);
 			}
+			else if (get_start_date != std::string::npos && get_end_date == std::string::npos){
+				scheduled_start_date = timeInfo.substr(get_start_date - 2, 5);
+				scheduled_end_date = scheduled_start_date;
+			}
+
+			std::size_t get_start_time = timeInfo.find(":");
+			std::size_t get_end_time = endTimeInfo.find(":");
+			if (get_start_time != std::string::npos && get_end_time != std::string::npos){
+				start_time = timeInfo.substr(get_start_time - 2, 5);
+				end_time = endTimeInfo.substr(get_end_time - 2, 5);
+			}
+			else{
+				start_time = "";
+				end_time = "";
+			}
+			
+			deadline_time = "";
 			deadline_date = "";
+			priority = "";
 			status = PROCESSING_TASK_LABEL;
 		}
 		else if (deadlined_task != std::string::npos){
-			std::size_t get_date = input.find("/");
 			task_type = DEADLINE_TASK_LABEL;
 			taskname = input.substr(0, deadlined_task - 1);
+			
+			string timeInfo = input.substr(deadlined_task);
+			std::size_t get_date = timeInfo.find("/");
+			std::size_t get_time = timeInfo.find(":");
+
+			if (get_date != std::string::npos){
+				deadline_date = timeInfo.substr(get_date - 2, 5);
+			}
+			
+			if (get_time != std::string::npos){
+				deadline_time = timeInfo.substr(get_time - 2, 5);
+			}
+			else{
+				deadline_time = "";
+			}
+			
 			start_time = "";
 			end_time = "";
-			deadline_time = input.substr(deadlined_task + 4, 5);
-			scheduled_date = "";
-			deadline_date = input.substr(get_date - 2, 5);
+			scheduled_start_date = "";
+			scheduled_end_date = "";
+			priority = "";
 			status = PROCESSING_TASK_LABEL;
 		}
 		else{
@@ -85,8 +122,10 @@ Task::Task(string input){
 			start_time = "";
 			end_time = "";
 			deadline_time = "";
-			scheduled_date = "";
+			scheduled_start_date = "";
+			scheduled_end_date = "";
 			deadline_date = "";
+			priority = "";
 			status = PROCESSING_TASK_LABEL;
 			if ((get_group != std::string::npos) && (get_place != std::string::npos)){
 				taskname = input.substr(0, get_group - 1);
@@ -110,13 +149,14 @@ Task::Task(string input){
 		}
 		else if (get_group != std::string::npos){
 			task_group = input.substr(get_group + 1);
+			place = "";
 		}
 		else if (get_place != std::string::npos){
 			place = input.substr(get_place + 1);
+			task_group = "";
 		}
-
 	}
-	checkInputValidation();
+	//checkInputValidation();
 }
 
 Task::~Task(){}
@@ -134,46 +174,59 @@ Task::Task(string task, string input){
 				status = FINISHED_TASK_LABEL;
 			}
 			else{
-				status = " ";
+				status = "";
 			}
 		}
 
+		std::size_t get_priority = task.find("(");
+		
+		if (get_priority != std::string::npos){
+			priority = task.substr(get_priority + 1, 1);
+			
+		}
+		else{
+			priority = "";
+		}
+
+		std::size_t get_taskname = task.find(")") + 2;
+		std::size_t get_starting_timeInfo = task.find("[");
+		std::size_t get_ending_timeInfo = task.find("to", get_starting_timeInfo);
 		std::size_t get_group = task.find("#");
 		std::size_t get_place = task.find("@");
-		//classify tasks into scheduled, deadlined or floating
-		std::size_t find_date = task.find("/");
-		string temp_date;
-		string temp;	//to store remaining part of the task arguement to check whether there is a time included there
-		if (find_date != std::string::npos){	//date found, task is either scheduled or deadlined.
-			//if (task[find_date - 2] == " "){	//check date is in single digit or double
-			//taskname = task.substr(0, find_date - 2);
-			//temp_date = task.substr(find_date - 1, 4);
-			//}
-			//else{
-			taskname = task.substr(0, find_date - 3);
-			temp_date = task.substr(find_date - 2, 5);
-			//}
-			std::size_t find_time = task.find(":");
-			temp = task.substr(find_time + 2);
-			std::size_t find_ending_time = temp.find(":");	//check if there's an ending time ie. seperate deadlined task and scheduled task
-
-			if ((find_time != std::string::npos) && (find_ending_time != std::string::npos)){
+		
+		if (get_starting_timeInfo != std::string::npos){
+			taskname = task.substr(get_taskname, get_starting_timeInfo - get_taskname - 1);
+			if (get_ending_timeInfo != std::string::npos){
 				task_type = SCHEDULED_TASK_LABEL;
-				start_time = task.substr(find_time - 2, 5);
-				end_time = temp.substr(find_ending_time - 2, 5);
-				deadline_time = "";
-				scheduled_date = temp_date;
-				deadline_date = "";
-			}
-			else if (find_time != std::string::npos){
-				task_type = DEADLINE_TASK_LABEL;
-				start_time = "";
-				end_time = "";
-				deadline_time = task.substr(find_time - 2, 5);
-				scheduled_date = "";
-				deadline_date = temp_date;
-			}
+				std::size_t get_start_date = task.find("/", get_starting_timeInfo);
+				scheduled_start_date = task.substr(get_start_date - 2, 5);
+				std::size_t get_end_date = task.find("/", get_ending_timeInfo);
+				scheduled_end_date = task.substr(get_end_date - 2, 5);
 
+				std::size_t get_start_time = task.find(":", get_starting_timeInfo);
+				std::size_t get_end_time = task.find(":", get_ending_timeInfo);
+				if (get_start_time != std::string::npos){
+					start_time = task.substr(get_start_time - 2, 5);
+					end_time = task.substr(get_end_time - 2, 5);
+				}
+				else{
+					start_time = "";
+					end_time = "";
+				}
+			}
+			else{
+				task_type = DEADLINE_TASK_LABEL;
+				std::size_t get_deadline_date = task.find("/", get_starting_timeInfo);
+				deadline_date = task.substr(get_deadline_date - 2, 5);
+
+				std::size_t get_deadline_time = task.find(":", get_starting_timeInfo);
+				if (get_deadline_time != std::string::npos){
+					deadline_time = task.substr(get_deadline_date - 2, 5);
+				}
+				else{
+					deadline_time = "";
+				}
+			}
 		}
 		else{
 			task_type = FLOATING_TASK_LABEL;
@@ -192,7 +245,8 @@ Task::Task(string task, string input){
 			start_time = "";
 			end_time = "";
 			deadline_time = "";
-			scheduled_date = "";
+			scheduled_start_date = "";
+			scheduled_end_date = "";
 			deadline_date = "";
 		}
 
@@ -202,28 +256,32 @@ Task::Task(string task, string input){
 		}
 		else if (get_group != std::string::npos){
 			task_group = task.substr(get_group + 1);
+			place = "";
 		}
 		else if (get_place != std::string::npos){
 			place = task.substr(get_place + 1);
+			task_group = "";
 		}
-
-		std::size_t get_priority = task.find("priority");
-		if (get_priority != std::string::npos){
-			priority = task.substr(get_priority + 9, 1);
-		}
-		checkInputValidation();
 	}
 }
 
 string Task::ToString(){
 	char task[TASK_LEN];
+	if (priority != ""){
+		strcpy_s(task, "(");
+		strcpy_s(task, priority.c_str());
+		strcpy_s(task, ") ");
+	}
+
 	strcpy_s(task, taskname.c_str());
 	if (task_type == DEADLINE_TASK_LABEL){
-		strcat_s(task, " ");
+		strcat_s(task, " [");
 		strcat_s(task, deadline_date.c_str());
 		strcat_s(task, " ");
-		strcat_s(task, deadline_time.c_str());
-		strcat_s(task, " ");
+		if (deadline_time != ""){
+			strcat_s(task, deadline_time.c_str());
+		}
+		strcat_s(task, "] ");
 		if (task_group != ""){
 			strcat_s(task, "#");
 			strcat_s(task, task_group.c_str());
@@ -234,16 +292,22 @@ string Task::ToString(){
 			strcat_s(task, place.c_str());
 			strcat_s(task, " ");
 		}
-		strcat_s(task, status.c_str());
 	}
 	else if (task_type == SCHEDULED_TASK_LABEL){
+		strcat_s(task, " [");
+		strcat_s(task, scheduled_start_date.c_str());
 		strcat_s(task, " ");
-		strcat_s(task, scheduled_date.c_str());
+		if (start_time != ""){
+			strcat_s(task, start_time.c_str());
+		}
+		strcat_s(task, "] to [");
+		strcat_s(task, scheduled_end_date.c_str());
 		strcat_s(task, " ");
-		strcat_s(task, start_time.c_str());
-		strcat_s(task, " ");
-		strcat_s(task, end_time.c_str());
-		strcat_s(task, " ");
+		if (end_time != ""){
+			strcat_s(task, end_time.c_str());
+		}
+		strcat_s(task, "] ");
+
 		if (task_group != ""){
 			strcat_s(task, "#");
 			strcat_s(task, task_group.c_str());
@@ -254,7 +318,6 @@ string Task::ToString(){
 			strcat_s(task, place.c_str());
 			strcat_s(task, " ");
 		}
-		strcat_s(task, status.c_str());
 	}
 	else if (task_type == FLOATING_TASK_LABEL){
 		strcat_s(task, " ");
@@ -268,13 +331,10 @@ string Task::ToString(){
 			strcat_s(task, place.c_str());
 			strcat_s(task, " ");
 		}
-		strcat_s(task, status.c_str());
 	}
 
-	if (priority != ""){
-		strcat_s(task, " priority ");
-		strcat_s(task, priority.c_str());
-	}
+	strcat_s(task, status.c_str());
+
 	return task;
 }
 
@@ -286,28 +346,62 @@ void Task::UpdateTask(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find("-from");
 		std::size_t deadlined_task = input.find("-by");
+
 		if (timed_task != std::string::npos){
 			std::size_t ending_time = input.find("-to");
-			std::size_t get_date = input.find("/");
+
 			task_type = SCHEDULED_TASK_LABEL;
-			start_time = input.substr(timed_task + 6, 5);
-			end_time = input.substr(ending_time + 4, 5);
+
+			string timeInfo = input.substr(timed_task);
+			string endTimeInfo = input.substr(ending_time);
+
+			std::size_t get_start_date = timeInfo.find("/");
+			std::size_t get_end_date = endTimeInfo.find("/");
+			if (get_start_date != std::string::npos && get_end_date != std::string::npos){
+				scheduled_start_date = timeInfo.substr(get_start_date - 2, 5);
+				scheduled_end_date = endTimeInfo.substr(get_end_date - 2, 5);
+			}
+			else if (get_start_date != std::string::npos && get_end_date == std::string::npos){
+				scheduled_start_date = timeInfo.substr(get_start_date - 2, 5);
+				scheduled_end_date = scheduled_start_date;
+			}
+
+			std::size_t get_start_time = timeInfo.find(":");
+			std::size_t get_end_time = endTimeInfo.find(":");
+			if (get_start_time != std::string::npos && get_end_time != std::string::npos){
+				start_time = timeInfo.substr(get_start_time - 2, 5);
+				end_time = endTimeInfo.substr(get_end_time - 2, 5);
+			}
+			else{
+				start_time = "";
+				end_time = "";
+			}
+
 			deadline_time = "";
 			deadline_date = "";
-			if (get_date != std::string::npos){
-				scheduled_date = input.substr(get_date - 2, 5);
-			}
 		}
 		else if (deadlined_task != std::string::npos){
-			std::size_t get_date = input.find("/");
 			task_type = DEADLINE_TASK_LABEL;
-			deadline_time = input.substr(deadlined_task + 4, 5);
+
+			string timeInfo = input.substr(deadlined_task);
+			std::size_t get_date = timeInfo.find("/");
+			std::size_t get_time = timeInfo.find(":");
+
+			if (get_date != std::string::npos){
+				deadline_date = timeInfo.substr(get_date - 2, 5);
+			}
+
+			if (get_time != std::string::npos){
+				deadline_time = timeInfo.substr(get_time - 2, 5);
+			}
+			else{
+				deadline_time = "";
+			}
+
 			start_time = "";
 			end_time = "";
-			scheduled_date = "";
-			if (get_date != std::string::npos){
-				deadline_date = input.substr(get_date - 2, 5);
-			}
+			scheduled_start_date = "";
+			scheduled_end_date = "";
 		}
 	}
 	//checkInputValidation();
@@ -356,7 +450,7 @@ string Task::getPriority(){
 	}
 }*/
 
-void Task::checkInputValidation(){
+/*void Task::checkInputValidation(){
 	concolinit();
 	//check for valid time frame
 	bool valid_time = false;
@@ -462,7 +556,7 @@ void Task::checkInputValidation(){
 			cin >> scheduled_date;
 		}
 	}
-}
+}*/
 
 int Task::charToASCII(char c){
 	return int(c);
@@ -517,38 +611,53 @@ bool Task::isEarlier(const Task b){
 	}
 
 	//check a
+	string sortingDate_a;
+	string sortingTime_a;
 	if (type_a == SCHEDULED_TASK_LABEL){ // for scheduled task, we sort with the starting time
-		std::size_t get_date = scheduled_date.find("/");
-		mon_a = atoi(scheduled_date.substr(get_date + 1, 2).c_str());
-		date_a = atoi(scheduled_date.substr(0, 2).c_str());
-		std::size_t get_start_time = start_time.find(":");
-		hr_a = atoi(start_time.substr(0, 2).c_str());
-		min_a = atoi(start_time.substr(get_start_time + 1, 2).c_str());
+		sortingDate_a = scheduled_start_date;
+		sortingTime_a = start_time;
+	}
+	else if (type_a == DEADLINE_TASK_LABEL){
+		sortingDate_a = deadline_date;
+		sortingTime_a = deadline_time;
+	}
+			
+	std::size_t get_date_a = sortingDate_a.find("/");
+	mon_a = atoi(sortingDate_a.substr(get_date_a + 1, 2).c_str());
+	date_a = atoi(sortingDate_a.substr(0, 2).c_str());
+	if (sortingTime_a == ""){
+		hr_a = 24;
+		min_a = 0;
 	}
 	else{
-		std::size_t get_date = deadline_date.find("/");
-		mon_a = atoi(deadline_date.substr(get_date + 1, 2).c_str());
-		date_a = atoi(deadline_date.substr(0, 2).c_str());
-		std::size_t get_start_time = deadline_time.find(":");
-		hr_a = atoi(deadline_time.substr(0, 2).c_str());
-		min_a = atoi(deadline_time.substr(get_start_time + 1, 2).c_str());
+		std::size_t get_start_time_a = sortingTime_a.find(":");
+		hr_a = atoi(sortingTime_a.substr(0, 2).c_str());
+		min_a = atoi(sortingTime_a.substr(get_start_time_a + 1, 2).c_str());
 	}
+
 	//check b
-	if (type_b == SCHEDULED_TASK_LABEL){ 
-		std::size_t get_date_b = b.scheduled_date.find("/");
-		mon_b = atoi(b.scheduled_date.substr(get_date_b + 1, 2).c_str());
-		date_b = atoi(b.scheduled_date.substr(0, 2).c_str());
-		std::size_t get_start_time_b = b.start_time.find(":");
-		hr_b = atoi(b.start_time.substr(0, 2).c_str());
-		min_b = atoi(b.start_time.substr(get_start_time_b + 1, 2).c_str());
+	string sortingDate_b;
+	string sortingTime_b;
+	if (type_b == SCHEDULED_TASK_LABEL){ // for scheduled task, we sort with the starting time
+		sortingDate_b = b.scheduled_start_date;
+		sortingTime_b = b.start_time;
+	}
+	else if (type_b == DEADLINE_TASK_LABEL){
+		sortingDate_b = b.deadline_date;
+		sortingTime_b = b.deadline_time;
+	}
+
+	std::size_t get_date_b = sortingDate_b.find("/");
+	mon_b = atoi(sortingDate_b.substr(get_date_b + 1, 2).c_str());
+	date_b = atoi(sortingDate_b.substr(0, 2).c_str());
+	if (sortingTime_b == ""){
+		hr_b = 24;
+		min_b = 0;
 	}
 	else{
-		std::size_t get_date_b = b.deadline_date.find("/");
-		mon_b = atoi(b.deadline_date.substr(get_date_b + 1, 2).c_str());
-		date_b = atoi(b.deadline_date.substr(0, 2).c_str());
-		std::size_t get_start_time_b = b.deadline_time.find(":");
-		hr_b = atoi(b.deadline_time.substr(0, 2).c_str());
-		min_b = atoi(b.deadline_time.substr(get_start_time_b + 1, 2).c_str());
+		std::size_t get_start_time_b = sortingTime_b.find(":");
+		hr_b = atoi(sortingTime_b.substr(0, 2).c_str());
+		min_b = atoi(sortingTime_b.substr(get_start_time_b + 1, 2).c_str());
 	}
 
 	//compare a & b
