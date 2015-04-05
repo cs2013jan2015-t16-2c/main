@@ -15,16 +15,18 @@ public:
 	static const string TODAY;
 	//storage
 	static const string PROGRAM_START;
-	static const string ARCHIVE_SUCCESS;
+	static const string SUCCESS_ARCHIVE;
+	static const string FILE_RUBBISH;
+	static const string FILE_CHECK;
 	//task
-	static const string SCHEDULED_TASK_LABEL;
-	static const string DEADLINE_TASK_LABEL;
-	static const string FLOATING_TASK_LABEL;
-	static const string PROCESSING_TASK_LABEL;
-	static const string FINISHED_TASK_LABEL;
-	static const string INVALID_DATE_MSG;
-	static const string INVALID_TIME_MSG;
-	static const string INVALID_TIME_MSG2;
+	static const string LABEL_SCHEDULED_LABEL;
+	static const string LABEL_DEADLINE_TASK;
+	static const string LABEL_FLOATING_TASK;
+	static const string LABEL_PROCESSING_TASK;
+	static const string LABEL_FINISHED_TASK;
+	static const string MESSAGE_INVALID_DATE;
+	static const string MESSAGE_INVALID_TIME;
+	static const string MESSAGE2_INVALID_TIME;
 	//taskList
 	static const string TASK_ADDED;
 	static const string TASK_EMPTY;
@@ -76,33 +78,33 @@ public:
 	static const string MESSAGE_EXIT_HELP;
 	static const string MESSAGE_COMMAND;
 
-	static const string ADD_INSTRUCTION;
-	static const string ADD_INSTRUCTION_FLOATING;
-	static const string ADD_INSTRUCTION_DEADLINE;
-	static const string ADD_INSTRUCTION_TIMED;
+	static const string INSTRUCTION_ADD;
+	static const string INSTRUCTION_ADD_FLOATING;
+	static const string INSTRUCTION_ADD_DEADLINE;
+	static const string INSTRUCTION_ADD_TIMED;
 
-	static const string DISPLAY_INSTRUCTION;
-	static const string DISPLAY_INSTRUCTION_ALL;
-	static const string DISPLAY_INSTRUCTION_FLOATING;
-	static const string DISPLAY_INSTRUCTION_DEADLINE;
-	static const string DISPLAY_INSTRUCTION_TIMED;
+	static const string INSTRUCTION_DISPLAY;
+	static const string INSTRUCTION_DISPLAY_ALL;
+	static const string INSTRUCTION_DISPLAY_FLOATING;
+	static const string INSTRUCTION_DISPLAY_DEADLINE;
+	static const string INSTRUCTION_DISPLAY_TIMED;
 
-	static const string COMMON_INSTRUCTION;
+	static const string INSTRUCTION_COMMON;
 	
-	static const string DELETE_INSTRUCTION;
-	static const string DELETE_INSTRUCTION_EXP;
+	static const string INSTRUCTION_DELETE;
+	static const string INSTRUCTION_DELETE_EXP;
 
-	static const string UPDATE_INSTRUCTION;
-	static const string UPDATE_INSTRUCTION_EXP;
+	static const string INSTRUCTION_UPDATE;
+	static const string INSTRUCTION_UPDATE_EXP;
 
-	static const string UNDO_INSTRUCTION;
-	static const string REDO_INSTRUCTION;
+	static const string INSTRUCTION_UNDO;
+	static const string INSTRUCTION_REDO;
 
-	static const string ARCHIVE_INSTRUCTION;
-	static const string ARCHIVE_INSTRUCTION_EXP1;
-	static const string ARCHIVE_INSTRUCTION_EXP2;
+	static const string INSTRUCTION_ARCHIVE;
+	static const string INSTRUCTION_ARCHIVE_EXP1;
+	static const string INSTRUCTION_ARCHIVE_EXP2;
 
-	static const string EXIT_INSTRUCTION;
+	static const string INSTRUCTION_EXIT;
 
 	static const string HELP_INDEX;
 

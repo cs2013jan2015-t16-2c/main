@@ -18,10 +18,10 @@ void Help::mainHelpPage() {
 }
 
 void Help::addHelpPage() {
-	cout << MagicString::ADD_INSTRUCTION << endl;
-	cout << MagicString::ADD_INSTRUCTION_FLOATING << endl;
-	cout << MagicString::ADD_INSTRUCTION_DEADLINE << endl;
-	cout << MagicString::ADD_INSTRUCTION_TIMED << endl;
+	cout << MagicString::INSTRUCTION_ADD << endl;
+	cout << MagicString::NSTRUCTION_ADD_FLOATING << endl;
+	cout << MagicString::INSTRUCTION_ADD_DEADLINE << endl;
+	cout << MagicString::INSTRUCTION_ADD_TIMED << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
@@ -32,11 +32,11 @@ void Help::addHelpPage() {
 }
 
 void Help::displayHelpPage() {
-	cout << MagicString::DISPLAY_INSTRUCTION << endl;
-	cout << MagicString::DISPLAY_INSTRUCTION_ALL << endl;
-	cout << MagicString::DISPLAY_INSTRUCTION_FLOATING << endl;
-	cout << MagicString::DISPLAY_INSTRUCTION_DEADLINE << endl;
-	cout << MagicString::DISPLAY_INSTRUCTION_TIMED << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_ALL << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_FLOATING << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_DEADLINE << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_TIMED << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
@@ -47,9 +47,9 @@ void Help::displayHelpPage() {
 }
 
 void Help::deleteHelpPage() {
-	cout << MagicString::COMMON_INSTRUCTION << endl;
-	cout << MagicString::DELETE_INSTRUCTION << endl;
-	cout << MagicString::DELETE_INSTRUCTION_EXP << endl;
+	cout << MagicString::INSTRUCTION_COMMON << endl;
+	cout << MagicString::INSTRUCTION_DELETE << endl;
+	cout << MagicString::INSTRUCTION_DELETE_EXP << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
@@ -60,9 +60,9 @@ void Help::deleteHelpPage() {
 }
 
 void Help::updateHelpPage() {
-	cout << MagicString::COMMON_INSTRUCTION << endl;
-	cout << MagicString::UPDATE_INSTRUCTION << endl;
-	cout << MagicString::UPDATE_INSTRUCTION_EXP << endl;
+	cout << MagicString::INSTRUCTION_COMMON << endl;
+	cout << MagicString::INSTRUCTION_UPDATE << endl;
+	cout << MagicString::INSTRUCTION_UPDATE_EXP << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
@@ -73,7 +73,7 @@ void Help::updateHelpPage() {
 }
 
 void Help::undoHelpPage() {
-	cout << MagicString::UNDO_INSTRUCTION << endl;
+	cout << MagicString::INSTRUCTION_UNDO << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
@@ -84,7 +84,7 @@ void Help::undoHelpPage() {
 }
 
 void Help::redoHelpPage() {
-	cout << MagicString::REDO_INSTRUCTION << endl;
+	cout << MagicString::INSTRUCTION_REDO << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
@@ -95,9 +95,9 @@ void Help::redoHelpPage() {
 }
 
 void Help::archiveHelpPage() {
-	cout << MagicString::ARCHIVE_INSTRUCTION << endl;
-	cout << MagicString::ARCHIVE_INSTRUCTION_EXP1 << endl;
-	cout << MagicString::ARCHIVE_INSTRUCTION_EXP2 << endl;
+	cout << MagicString::INSTRUCTION_ARCHIVE << endl;
+	cout << MagicString::INSTRUCTION_ARCHIVE_EXP1 << endl;
+	cout << MagicString::INSTRUCTION_ARCHIVE_EXP2 << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
@@ -108,7 +108,7 @@ void Help::archiveHelpPage() {
 }
 
 void Help::exitHelpPage () {
-	cout << MagicString::EXIT_INSTRUCTION << endl;
+	cout << MagicString::INSTRUCTION_EXIT << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;

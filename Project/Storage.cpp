@@ -44,6 +44,33 @@ string storage::archive(string fileName){
 	file << content << endl;	
 	file.close();
 	
-	return MagicString::ARCHIVE_SUCCESS;
-
+	return MagicString::SUCCESS_ARCHIVE;
 } 
+
+string storage::checkEmpty(){
+	ifstream file;
+	string firstLine;
+
+	file.open(FILENAME);
+	getline(file,firstLine);
+
+	if (firstLine.substr(0,1) != 1){
+		remove(FILENAME.c_str);
+		return MagicString::FILE_RUBBISH;
+	}
+	else {
+		return MagicString::FILE_CHECK;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
