@@ -8,10 +8,7 @@ void DisplayedTaskList::addTask(Task input){
 }
 
 string DisplayedTaskList::display(){
-	if (displayedTaskList.empty()){
-		return "-1";
-	}
-	else{
+	if (!displayedTaskList.empty()){
 		sort();
 		ostringstream overallOss;
 		for (unsigned int i = 0; i < displayedTaskList.size() - 1; i++){
@@ -24,6 +21,9 @@ string DisplayedTaskList::display(){
 		int size = displayedTaskList.size();
 		overallOss << size << ". " << displayedTaskList[size - 1].ToString();
 		return overallOss.str();
+	}
+	else{
+		return "";
 	}
 }
 

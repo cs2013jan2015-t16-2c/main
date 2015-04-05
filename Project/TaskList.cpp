@@ -13,6 +13,8 @@ Task TaskList::lastChangedTask;
 Task TaskList::lastUnchangedTask;
 
 void TaskList::copyFromStorage(){
+	storage::backup();
+	//storage::checkRubbish();
 	vector<string> taskList = storage::returnTask();
 
 	for (unsigned int i = 0; i < taskList.size(); i++){
@@ -24,6 +26,7 @@ void TaskList::copyFromStorage(){
 
 void TaskList::copyToStorage(){
 	storage::ending();
+	storage::deleteTemp();
 }
 
 string TaskList::addTask(string input){	
@@ -36,6 +39,8 @@ string TaskList::addTask(string input){
 
 	addTaskGroup(newTask);
 	addPlace(newTask);
+
+	storage::tempFile();
 	return "Task added";
 }
 
@@ -62,6 +67,8 @@ string TaskList::updateTask(string input){
 
 		lastChangedTask = list[lastChangedTaskIndex];
 		output = "Task " + taskIndex + " updated"; //change to magic string
+
+		storage::tempFile();
 		return output;
 	}
 }
@@ -84,6 +91,8 @@ string TaskList::deleteTask(string input){
 
 		list.erase(list.begin() + lastChangedTaskIndex);
 		string output = "Task " + input + " deleted"; //change to magic string
+
+		storage::tempFile();
 		return output;
 	}
 }
@@ -178,6 +187,8 @@ string TaskList::markAsDone(string input){
 
 	list[lastChangedTaskIndex].markAsDone();
 	string output = "Task " + input + " marked as done"; //change to magic string
+
+	storage::tempFile();
 	return output;
 }
 
@@ -204,6 +215,8 @@ string TaskList::setPriority(string input){
 
 		lastChangedTask = list[lastChangedTaskIndex];
 		output = "Task " + taskIndex + " is prioritised"; //change to magic string
+
+		storage::tempFile();
 		return output;
 	}	
 }
@@ -212,26 +225,31 @@ string TaskList::undo(){
 	if (lastCommandType == "add"){
 		list.pop_back();
 		isLastCommandUndo = true;
+		storage::tempFile();
 		return "Adding command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
 		isLastCommandUndo = true;
+		storage::tempFile();
 		return "Updating command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "delete"){
 		list.insert(list.begin() + lastChangedTaskIndex, lastUnchangedTask);
 		isLastCommandUndo = true;
+		storage::tempFile();
 		return "Deleting command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsUndone();
 		isLastCommandUndo = true;
+		storage::tempFile();
 		return "MarkasDone command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "setPriority"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
 		isLastCommandUndo = true;
+		storage::tempFile();
 		return "SetPriority command is undone";
 	}
 	else{
@@ -262,6 +280,7 @@ string TaskList::redo(){
 			return "SetPriority command is redone";
 		}
 		isLastCommandUndo = false;
+		storage::tempFile();
 	}
 	else{
 		return "No undo action is done previously"; //change to magic string

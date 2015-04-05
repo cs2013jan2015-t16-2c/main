@@ -2,6 +2,8 @@
 #include "InterfaceOutput.h"
 #include "MagicString.h"
 
+string InterfaceOutput::TodayDate;
+
 string InterfaceOutput::displayWelcome() {
 	return MagicString::MESSAGE_WELCOME;
 }
@@ -11,7 +13,33 @@ void InterfaceOutput::displayTime() {
 
 	time_t t = time(0);
 	struct tm * now = localtime(&t);
+	int month = now->tm_mon + 1;
+	int day = now->tm_mday;
+	
+	ostringstream mon;
+	if (month < 10){
+		mon << "0" << month;
+	}
+	else{
+		mon << month;
+	}
+	string month_s = mon.str();
+	
+	ostringstream date;
+	if (day < 10){
+		date << "0" << day;
+	}
+	else{
+		date << day;
+	}
+	string day_s = date.str();
+
+	TodayDate = day_s + "/" + month_s;
 	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
+}
+
+string InterfaceOutput::returnTodayDate(){
+	return TodayDate;
 }
 
 string InterfaceOutput::displayTip() {

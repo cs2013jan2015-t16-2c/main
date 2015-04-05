@@ -55,7 +55,7 @@ string storage::archive(string fileName){
 	return MagicString::SUCCESS_ARCHIVE;
 } 
 
-string storage::checkRubbish(){
+void storage::checkRubbish(){
 	ifstream file;
 	string firstLine;
 
@@ -64,10 +64,6 @@ string storage::checkRubbish(){
 
 	if (firstLine.substr(0,1) != "1"){
 		remove(FILENAME.c_str());
-		return MagicString::FILE_RUBBISH;
-	}
-	else {
-		return MagicString::FILE_CHECK;
 	}
 }
 
@@ -75,6 +71,7 @@ void storage::tempFile(){ //call by every command
 	ofstream temporary;
 	string content;
 
+	remove(TEMP.c_str());
 	temporary.open(TEMP);
 	content = TaskList::display("all");
 	temporary << content << endl;	
@@ -89,7 +86,7 @@ void storage::deleteTemp(){ //call if exit is exeucited
 	remove(TEMP.c_str());
 }
 
-void storage::backup(){ //call before startin function
+void storage::backup(){ //call before starting function
 	ifstream temporary;
 	ofstream file;
 	string line;

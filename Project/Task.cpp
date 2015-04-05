@@ -1,6 +1,7 @@
 //#define _CRT_SECURE_NO_WARNINGS
 #include "task.h"
 #include "concol.h""
+#include "InterfaceOutput.h"
 //#include <ctime>
 
 using namespace std;
@@ -31,20 +32,6 @@ Task::Task(){
 	place = "";
 }
 
-/*string Task::getTodayDate(){
-	time_t rawtime;
-	struct tm * timeinfo;
-	char tmp[40];
-
-	time(&rawtime);
-	timeinfo = localtime(&rawtime);
-
-	strftime(tmp, 80, "%d/%m", timeinfo);
-	std::string str(tmp);
-	return str;
-}
-*/
-
 Task::Task(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find("-from");
@@ -54,10 +41,6 @@ Task::Task(string input){
 		std::size_t get_place = input.find("@");
 		if (timed_task != std::string::npos){
 			std::size_t ending_time = input.find("-to");
-			//std::size_t get_date = input.find("today");
-			//if (get_date != std::string::npos){
-			//	scheduled_date = getTodayDate();
-			//}
 			task_type = SCHEDULED_TASK_LABEL;
 			taskname = input.substr(0, timed_task - 1);
 
@@ -74,11 +57,27 @@ Task::Task(string input){
 				scheduled_start_date = timeInfo.substr(get_start_date - 2, 5);
 				scheduled_end_date = scheduled_start_date;
 			}
+			else if (get_start_date != std::string::npos && get_end_date == std::string::npos){
+				scheduled_start_date = InterfaceOutput::returnTodayDate();
+				scheduled_end_date = endTimeInfo.substr(get_end_date - 2, 5);
+			}
+			else if (get_start_date == std::string::npos && get_end_date == std::string::npos){
+				scheduled_start_date = InterfaceOutput::returnTodayDate();
+				scheduled_end_date = scheduled_start_date;
+			}
 
 			std::size_t get_start_time = timeInfo.find(":");
 			std::size_t get_end_time = endTimeInfo.find(":");
 			if (get_start_time != std::string::npos && get_end_time != std::string::npos){
 				start_time = timeInfo.substr(get_start_time - 2, 5);
+				end_time = endTimeInfo.substr(get_end_time - 2, 5);
+			}
+			else if (get_start_time != std::string::npos){
+				start_time = timeInfo.substr(get_start_time - 2, 5);
+				end_time = "";
+			}
+			else if (get_end_time != std::string::npos){
+				start_time = "";
 				end_time = endTimeInfo.substr(get_end_time - 2, 5);
 			}
 			else{
@@ -101,6 +100,9 @@ Task::Task(string input){
 
 			if (get_date != std::string::npos){
 				deadline_date = timeInfo.substr(get_date - 2, 5);
+			}
+			else{
+				deadline_date = InterfaceOutput::returnTodayDate();
 			}
 			
 			if (get_time != std::string::npos){
@@ -155,6 +157,10 @@ Task::Task(string input){
 			place = input.substr(get_place + 1);
 			task_group = "";
 		}
+		else{
+			place = "";
+			task_group = "";
+		}
 	}
 	//checkInputValidation();
 }
@@ -205,8 +211,16 @@ Task::Task(string task, string input){
 
 				std::size_t get_start_time = task.find(":", get_starting_timeInfo);
 				std::size_t get_end_time = task.find(":", get_ending_timeInfo);
-				if (get_start_time != std::string::npos){
+				if (get_start_time != std::string::npos && get_end_time != std::string::npos){
 					start_time = task.substr(get_start_time - 2, 5);
+					end_time = task.substr(get_end_time - 2, 5);
+				}
+				else if (get_start_time != std::string::npos){
+					start_time = task.substr(get_start_time - 2, 5);
+					end_time = "";
+				}
+				else if (get_end_time != std::string::npos){
+					start_time = "";
 					end_time = task.substr(get_end_time - 2, 5);
 				}
 				else{
@@ -262,12 +276,16 @@ Task::Task(string task, string input){
 			place = task.substr(get_place + 1);
 			task_group = "";
 		}
+		else{
+			place = "";
+			task_group = "";
+		}
 	}
 }
 
 string Task::ToString(){
 	char task[TASK_LEN];
-	if (priority != ""){
+	if (priority == "A" || priority == "B" || priority == "C"){
 		strcpy_s(task, "(");
 		strcpy_s(task, priority.c_str());
 		strcpy_s(task, ") ");
@@ -365,11 +383,27 @@ void Task::UpdateTask(string input){
 				scheduled_start_date = timeInfo.substr(get_start_date - 2, 5);
 				scheduled_end_date = scheduled_start_date;
 			}
+			else if (get_start_date != std::string::npos && get_end_date == std::string::npos){
+				scheduled_start_date = InterfaceOutput::returnTodayDate();
+				scheduled_end_date = endTimeInfo.substr(get_end_date - 2, 5);
+			}
+			else if (get_start_date == std::string::npos && get_end_date == std::string::npos){
+				scheduled_start_date = InterfaceOutput::returnTodayDate();
+				scheduled_end_date = scheduled_start_date;
+			}
 
 			std::size_t get_start_time = timeInfo.find(":");
 			std::size_t get_end_time = endTimeInfo.find(":");
 			if (get_start_time != std::string::npos && get_end_time != std::string::npos){
 				start_time = timeInfo.substr(get_start_time - 2, 5);
+				end_time = endTimeInfo.substr(get_end_time - 2, 5);
+			}
+			else if (get_start_time != std::string::npos){
+				start_time = timeInfo.substr(get_start_time - 2, 5);
+				end_time = "";
+			}
+			else if (get_end_time != std::string::npos){
+				start_time = "";
 				end_time = endTimeInfo.substr(get_end_time - 2, 5);
 			}
 			else{
@@ -389,6 +423,9 @@ void Task::UpdateTask(string input){
 
 			if (get_date != std::string::npos){
 				deadline_date = timeInfo.substr(get_date - 2, 5);
+			}
+			else{
+				deadline_date = InterfaceOutput::returnTodayDate();
 			}
 
 			if (get_time != std::string::npos){
@@ -416,39 +453,13 @@ void Task::markAsUndone(){
 }
 
 void Task::setPriority(string input){
-	std::size_t find_priority = input.find("priority");
-	if (find_priority != std::string::npos){
-		priority = input.substr(find_priority + 9, 1);
-	}
+	priority = input;
 }
 
 string Task::getPriority(){
 	return priority;
 }
 
-//no need for change priority function
-/*void Task::changePriority(string request){
-	int temp; //stroe the ASCII value of current priority
-	char temp_char[1];
-	std::size_t first_priority = request.find("++");
-	std::size_t higher_priority = request.find("+");
-	std::size_t lower_priority = request.find("-");
-	if (first_priority != std::string::npos){
-		strncpy_s(priority, "A", 1);
-	}
-	else if (higher_priority != std::string::npos){
-		temp = charToASCII(priority[1]);
-		temp--;
-		temp_char[1] = ASCIIToChar(temp);
-		priority[1] = temp_char[1];
-	}
-	else if (lower_priority != std::string::npos){
-		temp = charToASCII(priority[1]);
-		temp++;
-		temp_char[1] = ASCIIToChar(temp);
-		priority[1] = temp_char[1];
-	}
-}*/
 
 /*void Task::checkInputValidation(){
 	concolinit();
