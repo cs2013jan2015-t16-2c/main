@@ -8,16 +8,16 @@ const string MagicString::ERROR_INVALID_COMMAND = "Error: invalid command";
 const string MagicString::TODAY = "                       Today is ";
 //Storage
 const string MagicString::PROGRAM_START = "Data has been successfully loaded";
-const string MagicString::ARCHIVE_SUCCESS = "Tasklist is successfully archived";
+const string MagicString::SUCCESS_ARCHIVE = "Tasklist is successfully archived";
 //Task
-const string MagicString::SCHEDULED_TASK_LABEL = "timed";
-const string MagicString::DEADLINE_TASK_LABEL = "deadline";
-const string MagicString::FLOATING_TASK_LABEL = "floating";
-const string MagicString::PROCESSING_TASK_LABEL = "in progress";
-const string MagicString::FINISHED_TASK_LABEL = "done";
-const string MagicString::INVALID_DATE_MSG = "invalid date, please input a valid one";
-const string MagicString::INVALID_TIME_MSG = "invalid time, please enter a valid one";
-const string MagicString::INVALID_TIME_MSG2 = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
+const string MagicString::LABEL_SCHEDULED_TASK = "timed";
+const string MagicString::LABEL_DEADLINE_TASK = "deadline";
+const string MagicString::LABEL_FLOATING_TASK = "floating";
+const string MagicString::LABEL_PROCESSING_TASK = "in progress";
+const string MagicString::LABEL_FINISHED_TASK = "done";
+const string MagicString::MESSAGE_INVALID_DATE = "invalid date, please input a valid one";
+const string MagicString::MESSAGE_INVALID_TIME = "invalid time, please enter a valid one";
+const string MagicString::MESSAGE2_INVALID_TIME = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 //TaskList
 const string MagicString::TASK_ADDED = "Task added";
 const string MagicString::TASK_EMPTY = "Task list is empty";
@@ -68,33 +68,33 @@ const string MagicString::MESSAGE_RETURN_TO_MAIN = "0:  return to the main help 
 const string MagicString::MESSAGE_EXIT_HELP =      "00: get back to KeepTrack!";
 const string MagicString::MESSAGE_COMMAND = "Command: ";
 
-const string MagicString::ADD_INSTRUCTION = "You can add three types of tasks";
-const string MagicString::ADD_INSTRUCTION_FLOATING = "Floating task: add do assignment 1";
-const string MagicString::ADD_INSTRUCTION_DEADLINE = "Deadline:      add finish assignment 1 -by 14:00 13/4";
-const string MagicString::ADD_INSTRUCTION_TIMED = "Timed task:    add do assignment 1 -from 9:00 -to 11:00 12/4";
+const string MagicString::INSTRUCTION_ADD = "You can add three types of tasks";
+const string MagicString::INSTRUCTION_ADD_FLOATING = "Floating task: add do assignment 1";
+const string MagicString::INSTRUCTION_ADD_DEADLINE = "Deadline:      add finish assignment 1 -by 14:00 13/4";
+const string MagicString::INSTRUCTION_ADD_TIMED = "Timed task:    add do assignment 1 -from 9:00 -to 11:00 12/4";
 
-const string MagicString::DISPLAY_INSTRUCTION = "You can display your task list in the following ways: ";
-const string MagicString::DISPLAY_INSTRUCTION_ALL = "All the tasks:          display all";
-const string MagicString::DISPLAY_INSTRUCTION_FLOATING = "All the floating tasks: display floating";
-const string MagicString::DISPLAY_INSTRUCTION_DEADLINE = "All the deadlines:      display deadline";
-const string MagicString::DISPLAY_INSTRUCTION_TIMED = "All the timed task:     display timed";
+const string MagicString::INSTRUCTION_DISPLAY = "You can display your task list in the following ways: ";
+const string MagicString::INSTRUCTION_DISPLAY_ALL = "All the tasks:          display all";
+const string MagicString::INSTRUCTION_DISPLAY_FLOATING = "All the floating tasks: display floating";
+const string MagicString::INSTRUCTION_DISPLAY_DEADLINE = "All the deadlines:      display deadline";
+const string MagicString::INSTRUCTION_DISPLAY_TIMED = "All the timed task:     display timed";
 
-const string MagicString::COMMON_INSTRUCTION = "After displaying tasks";
+const string MagicString::INSTRUCTION_COMMON = "After displaying tasks";
 
-const string MagicString::DELETE_INSTRUCTION = "you can delete a task by its index";
-const string MagicString::DELETE_INSTRUCTION_EXP = "Example: delete 2";
+const string MagicString::INSTRUCTION_DELETE = "you can delete a task by its index";
+const string MagicString::INSTRUCTION_DELETE_EXP = "Example: delete 2";
 
-const string MagicString::UPDATE_INSTRUCTION = "you can select the task by its index and input the updated task information";
-const string MagicString::UPDATE_INSTRUCTION_EXP = "Example: update Update 1 -from 1300 -to 1500 23/12";
+const string MagicString::INSTRUCTION_UPDATE = "you can select the task by its index and input the updated task information";
+const string MagicString::INSTRUCTION_UPDATE_EXP = "Example: update Update 1 -from 1300 -to 1500 23/12";
 
-const string MagicString::UNDO_INSTRUCTION = "You can unoo your last action by simply entering 'undo'";
-const string MagicString::REDO_INSTRUCTION = "You can reoo your last action by simply entering 'redo'";
+const string MagicString::INSTRUCTION_UNDO = "You can unoo your last action by simply entering 'undo'";
+const string MagicString::INSTRUCTION_REDO = "You can reoo your last action by simply entering 'redo'";
 
-const string MagicString::ARCHIVE_INSTRUCTION = "You can archive your task list in the following ways: ";
-const string MagicString::ARCHIVE_INSTRUCTION_EXP1 = "Archive in the program folder: archive myText.txt";
-const string MagicString::ARCHIVE_INSTRUCTION_EXP2 = "Archive in another folder:     archive C:/Users/USER/Desktop/myText.txt";
+const string MagicString::INSTRUCTION_ARCHIVE = "You can archive your task list in the following ways: ";
+const string MagicString::INSTRUCTION_ARCHIVE_EXP1 = "Archive in the program folder: archive myText.txt";
+const string MagicString::INSTRUCTION_ARCHIVE_EXP2 = "Archive in another folder:     archive C:/Users/USER/Desktop/myText.txt";
 
-const string MagicString::EXIT_INSTRUCTION = "You can exit KeepTrack by simply entering 'exit'";
+const string MagicString::INSTRUCTION_EXIT = "You can exit KeepTrack by simply entering 'exit'";
 
 const string MagicString::HELP_INDEX = "Help Index: ";
 

@@ -44,6 +44,6 @@ string storage::archive(string fileName){
 	file << content << endl;	
 	file.close();
 	
-	return MagicString::ARCHIVE_SUCCESS;
+	return MagicString::SUCCESS_ARCHIVE;
 
 } 
