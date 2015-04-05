@@ -2,9 +2,8 @@
 // DisplayColor.cpp
 
 #include "DisplayColor.h"
-#include "../Project/concol.h"
+#include "concol.h"
 using namespace eku;
-
 
 string DisplayColor::displayColor(string displayText) {
 	concolinit();
@@ -72,5 +71,6 @@ string DisplayColor::displayColor(string displayText) {
 		}
 		foundNewLineStart = foundNewLineEnd + 1;
 	}
+	settextcolor(deftextcol);
 	return "";
 }

@@ -1,10 +1,10 @@
 //#define _CRT_SECURE_NO_WARNINGS
 #include "task.h"
-#include "concol.h""
+//#include "concol.h""
 //#include <ctime>
 
 using namespace std;
-using namespace eku;
+//using namespace eku;
 
 const int TASK_LEN = 256;
 const string SCHEDULED_TASK_LABEL = "timed";
