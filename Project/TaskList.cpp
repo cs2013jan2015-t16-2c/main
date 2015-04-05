@@ -118,7 +118,7 @@ string TaskList::display(string displayType){
 	DisplayedTaskList::emptyList();
 	
 	addToDisplayedTaskList(displayType);
-	if (DisplayedTaskList::display() == "-1"){
+	if (DisplayedTaskList::returnListSize == 0){
 		return "Required task list is empty"; //change to magic string
 	}
 	else{

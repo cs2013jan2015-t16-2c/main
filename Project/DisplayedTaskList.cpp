@@ -47,10 +47,12 @@ void DisplayedTaskList::sort(){
 	for (int i = 0; i < size - 1; i++){
 		minIndex = i;
 		for (int j = i + 1; j < size; j++){
-			if (displayedTaskList[j] < displayedTaskList[i]){
+			if ((displayedTaskList[j]).isEarlier(displayedTaskList[minIndex])){
 				minIndex = j;
 			}
+		}
 
+		if (minIndex != i){
 			Task temp = displayedTaskList[minIndex];
 			displayedTaskList[minIndex] = displayedTaskList[i];
 			displayedTaskList[i] = temp;

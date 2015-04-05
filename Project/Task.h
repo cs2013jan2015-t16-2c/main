@@ -31,7 +31,7 @@ public:
 	int charToASCII(char c);
 	char ASCIIToChar(int c);
 	//operator
-	bool operator <(const Task &b);
+	bool isEarlier(const Task b);
 	//V0.3
 	bool taskDone(); // return true if task status is done
 	string getTodayDate();
