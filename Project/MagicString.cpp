@@ -9,6 +9,9 @@ const string MagicString::TODAY = "                       Today is ";
 //Storage
 const string MagicString::PROGRAM_START = "Data has been successfully loaded";
 const string MagicString::SUCCESS_ARCHIVE = "Tasklist is successfully archived";
+const string MagicString::FILE_RUBBISH = "Rubbish has been cleaned in storage file";
+const string MagicString::FILE_CHECK = "Storage file has been checked, and it is ready to use";
+
 //Task
 const string MagicString::LABEL_SCHEDULED_TASK = "timed";
 const string MagicString::LABEL_DEADLINE_TASK = "deadline";

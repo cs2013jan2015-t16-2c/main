@@ -22,6 +22,7 @@ public:
 	static void ending();
 	static vector<string> returnTask();
 	static string archive(string fileName);
+	static string checkEmpty();
 };
 
 #endif

@@ -16,6 +16,8 @@ public:
 	//storage
 	static const string PROGRAM_START;
 	static const string SUCCESS_ARCHIVE;
+	static const string FILE_RUBBISH;
+	static const string FILE_CHECK;
 	//task
 	static const string LABEL_SCHEDULED_LABEL;
 	static const string LABEL_DEADLINE_TASK;
