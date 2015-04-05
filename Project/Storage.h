@@ -22,7 +22,10 @@ public:
 	static void ending();
 	static vector<string> returnTask();
 	static string archive(string fileName);
-	static string checkEmpty();
+	static string checkRubbish();
+	static void tempFile();
+	static void deleteTemp();
+	static void backup();
 };
 
 #endif

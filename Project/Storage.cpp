@@ -3,6 +3,7 @@
 
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
+const string storage::TEMP = "temp.txt";
 
 void storage::ending() {
 	ofstream file;
@@ -13,6 +14,9 @@ void storage::ending() {
 	file.open(FILENAME);
 	content = TaskList::display("all");
 	file << content << endl;	
+
+	content = TaskList::display("done");
+	file << content << endl;
 	file.close();
 }
 
@@ -41,13 +45,17 @@ string storage::archive(string fileName){
 
 	file.open(fileName);
 	content = TaskList::display("all");
-	file << content << endl;	
+	file << content << endl;
+
+	content = TaskList::display("done");
+	file << content << endl;
+
 	file.close();
 	
 	return MagicString::SUCCESS_ARCHIVE;
 } 
 
-string storage::checkEmpty(){
+string storage::checkRubbish(){
 	ifstream file;
 	string firstLine;
 
@@ -63,6 +71,50 @@ string storage::checkEmpty(){
 	}
 }
 
+void storage::tempFile(){ //call by every command
+	ofstream temporary;
+	string content;
+
+	temporary.open(TEMP);
+	content = TaskList::display("all");
+	temporary << content << endl;	
+
+	content = TaskList::display("done");
+	temporary << content << endl;
+
+	temporary.close();
+}
+
+void storage::deleteTemp(){ //call if exit is exeucited
+	remove(TEMP.c_str);
+}
+
+void storage::backup(){ //call before startin function
+	ifstream temporary;
+	ofstream file;
+	string line;
+	string tempLine;
+
+	temporary.open(TEMP);
+	getline(temporary,line);
+
+	if(line.size()!= 0){
+		remove(FILENAME.c_str());
+		file.open(FILENAME);
+		
+		while(!temporary.eof()){
+			getline(temporary,tempLine);
+			file << tempLine << endl;
+		}
+		file.close();
+		temporary.close();
+		remove(TEMP.c_str);
+	}
+	else{
+		temporary.close();
+		remove(TEMP.c_str);
+	}
+}
 
 
 
