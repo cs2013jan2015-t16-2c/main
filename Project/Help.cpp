@@ -19,7 +19,7 @@ void Help::mainHelpPage() {
 
 void Help::addHelpPage() {
 	cout << MagicString::INSTRUCTION_ADD << endl;
-	cout << MagicString::NSTRUCTION_ADD_FLOATING << endl;
+	cout << MagicString::INSTRUCTION_ADD_FLOATING << endl;
 	cout << MagicString::INSTRUCTION_ADD_DEADLINE << endl;
 	cout << MagicString::INSTRUCTION_ADD_TIMED << endl;
 	cout << MagicString::DIVIDER;
