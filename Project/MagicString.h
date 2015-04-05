@@ -7,6 +7,8 @@ using namespace std;
 
 class MagicString{
 public:
+	//display taskList
+	static const string MESSAGE_EMPTY;
 	//interfaceoutput
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_TIP;

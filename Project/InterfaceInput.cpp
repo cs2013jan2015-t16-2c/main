@@ -2,7 +2,6 @@
 // Interface.cpp
 
 #include "InterfaceInput.h"
-#include "MagicString.h"
 
 string InterfaceInput::getUserCommand() {
 	string userCommand;
@@ -25,7 +24,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	COMMAND_TYPE commandType;
 	commandType = determineCommandType(commandTypeString, taskString);
 
-	string str;
+	string displayText;
 
 	switch (commandType) {
 	case HELP:
@@ -39,7 +38,8 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case DELETE_TASK:
 		return TaskList::deleteTask(taskString);
 	case DISPLAY_TASKS:
-		return TaskList::display(taskString);
+		displayText = TaskList::display(taskString);
+		return DisplayColor::displayColor(displayText);
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
 	case SET_PRIORITY:

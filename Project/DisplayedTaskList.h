@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Task.h"
+#include "MagicString.h"
 
 class DisplayedTaskList
 {
