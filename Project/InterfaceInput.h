@@ -15,6 +15,8 @@
 #include "Storage.h"
 #include "TaskList.h"
 #include "InterfaceOutput.h"
+#include "MagicString.h"
+#include "DisplayColor.h"
 
 using namespace std;
 
