@@ -62,8 +62,8 @@ string storage::checkRubbish(){
 	file.open(FILENAME);
 	getline(file,firstLine);
 
-	if (firstLine.substr(0,1) != 1){
-		remove(FILENAME.c_str);
+	if (firstLine.substr(0,1) != "1"){
+		remove(FILENAME.c_str());
 		return MagicString::FILE_RUBBISH;
 	}
 	else {
@@ -86,7 +86,7 @@ void storage::tempFile(){ //call by every command
 }
 
 void storage::deleteTemp(){ //call if exit is exeucited
-	remove(TEMP.c_str);
+	remove(TEMP.c_str());
 }
 
 void storage::backup(){ //call before startin function
@@ -108,11 +108,11 @@ void storage::backup(){ //call before startin function
 		}
 		file.close();
 		temporary.close();
-		remove(TEMP.c_str);
+		remove(TEMP.c_str());
 	}
 	else{
 		temporary.close();
-		remove(TEMP.c_str);
+		remove(TEMP.c_str());
 	}
 }
 

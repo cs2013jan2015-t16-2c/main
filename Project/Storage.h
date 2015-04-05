@@ -16,6 +16,7 @@ class storage{
 private:
 	static vector<string> task;
 	static const string FILENAME;
+	static const string TEMP;
 
 public:
 	static string starting();
