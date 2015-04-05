@@ -16,6 +16,7 @@ private:
 	static vector<Task> list;
 	static vector<string> taskGroup;
 	static vector<string> taskPlace;
+	static bool isLastCommandUndo;
 	static string lastCommandType;
 	static int lastChangedTaskIndex;
 	static Task lastUnchangedTask;

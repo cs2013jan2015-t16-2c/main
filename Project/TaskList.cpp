@@ -6,6 +6,7 @@
 vector<Task> TaskList::list;
 vector<string> TaskList::taskGroup;
 vector<string> TaskList::taskPlace;
+bool TaskList::isLastCommandUndo = false;
 string TaskList::lastCommandType;
 int TaskList::lastChangedTaskIndex;
 Task TaskList::lastChangedTask;
@@ -129,7 +130,16 @@ string TaskList::display(string displayType){
 void TaskList::addToDisplayedTaskList(string displayType){
 	if (displayType == "all"){
 		for (unsigned int i = 0; i < list.size(); i++){
-			DisplayedTaskList::addTask(list[i]);
+			if (!list[i].taskDone()){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+	}
+	else if (displayType == "done"){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if (list[i].taskDone()){
+				DisplayedTaskList::addTask(list[i]);
+			}
 		}
 	}
 	else if (displayType == "timed" || displayType == "deadline" || displayType == "floating"){
@@ -201,19 +211,28 @@ string TaskList::setPriority(string input){
 string TaskList::undo(){
 	if (lastCommandType == "add"){
 		list.pop_back();
+		isLastCommandUndo = true;
 		return "Adding command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
+		isLastCommandUndo = true;
 		return "Updating command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "delete"){
 		list.insert(list.begin() + lastChangedTaskIndex, lastUnchangedTask);
+		isLastCommandUndo = true;
 		return "Deleting command is undone"; //change to magic string
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsUndone();
+		isLastCommandUndo = true;
 		return "MarkasDone command is undone"; //change to magic string
+	}
+	else if (lastCommandType == "setPriority"){
+		list[lastChangedTaskIndex] = lastUnchangedTask;
+		isLastCommandUndo = true;
+		return "SetPriority command is undone";
 	}
 	else{
 		return "Previous action cannot be undo"; //change to magic string
@@ -221,24 +240,31 @@ string TaskList::undo(){
 }
 
 string TaskList::redo(){
-	if (lastCommandType == "add"){
-		list.push_back(lastChangedTask);
-		return "Adding command is redone"; //change to magic string
-	}
-	else if (lastCommandType == "update"){
-		list[lastChangedTaskIndex] = lastChangedTask;
-		return "Updating command is redone"; //change to magic string
-	}
-	else if (lastCommandType == "delete"){
-		list.erase(list.begin() + lastChangedTaskIndex);
-		return "Deleting command is redone"; //change to magic string
-	}
-	else if (lastCommandType == "done"){
-		list[lastChangedTaskIndex].markAsDone();
-		return "MarkasDone command is redone"; //change to magic string
+	if (isLastCommandUndo){
+		if (lastCommandType == "add"){
+			list.push_back(lastChangedTask);
+			return "Adding command is redone"; //change to magic string
+		}
+		else if (lastCommandType == "update"){
+			list[lastChangedTaskIndex] = lastChangedTask;
+			return "Updating command is redone"; //change to magic string
+		}
+		else if (lastCommandType == "delete"){
+			list.erase(list.begin() + lastChangedTaskIndex);
+			return "Deleting command is redone"; //change to magic string
+		}
+		else if (lastCommandType == "done"){
+			list[lastChangedTaskIndex].markAsDone();
+			return "MarkasDone command is redone"; //change to magic string
+		}
+		else if (lastCommandType == "setPriority"){
+			list[lastChangedTaskIndex] = lastChangedTask;
+			return "SetPriority command is redone";
+		}
+		isLastCommandUndo = false;
 	}
 	else{
-		return "previous action cannot be redo"; //change to magic string
+		return "No undo action is done previously"; //change to magic string
 	}
 }
 
@@ -313,7 +339,7 @@ bool TaskList::isExist(vector<string> list, string input){
 	
 	while (!isExist)
 	{
-		for (int i = 0; i < list.size(); i++){
+		for (unsigned int i = 0; i < list.size(); i++){
 			if (input == list[i]){
 				return true;
 			}
