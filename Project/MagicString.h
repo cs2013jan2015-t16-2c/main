@@ -20,6 +20,8 @@ public:
 	static const string SUCCESS_ARCHIVE;
 	static const string FILE_RUBBISH;
 	static const string FILE_CHECK;
+	static const string DONE_TASK_SAVED;
+	static const string IN_PROGRESS_TASK_SAVED;
 	//task
 	static const string LABEL_SCHEDULED_TASK;
 	static const string LABEL_DEADLINE_TASK;
