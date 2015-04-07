@@ -56,7 +56,6 @@ private:
 	string getDate(int add);
 	int getDayDiff(string day);
 	void addRepeatTask(int repeat_time, string repeat_type);
-	string addDay(string date,int day);
 };
 
 #endif

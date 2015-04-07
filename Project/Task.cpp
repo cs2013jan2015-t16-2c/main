@@ -800,32 +800,13 @@ string Task::getDate(string input){
 	}
 }
 
-string Task::addDay(string date, int day){
-	time_t rawtime;
-	tm * timeinfo;
-	time(&rawtime); 
-	timeinfo = localtime(&rawtime);
-	std::size_t separate_date = date.find("/");
-	int mday = atoi(date.substr(0, separate_date).c_str());
-	int mon = atoi(date.substr(separate_date + 1).c_str());
-	timeinfo->tm_mon = mon;
-	timeinfo->tm_mday = mday;
-	// modify
-	timeinfo->tm_mday += day;
-	// show result
-	mon = timeinfo->tm_mon;
-	mday = timeinfo->tm_mday;
-	string mon_s = to_string(mon);
-	string day_s = to_string(mday);
-	return day_s + "/" + mon_s;
-}
-
 void Task::addRepeatTask(int repeat_time, string repeat_type){
 	string add_task;
 	if (repeat_type == "day"){
 		for (int i = 0; i < repeat_time; i++){
-			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date,1+i) + " -to " + end_time + " " + addDay(scheduled_end_date,1+i);
-			TaskList::addTask(input);
+			string input = "add " + taskname + " -from " + start_time + " " + scheduled_start_date + " -to " + end_time + " " + scheduled_end_date;
+			cout << input << endl;
+			//TaskList::addTask(input);
 		}
 	}
 }
