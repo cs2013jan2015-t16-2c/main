@@ -46,6 +46,10 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		return TaskList::setPriority(taskString);
 	case ARCHIVE:
 		return storage::archive(taskString);
+	case SAVE_DONE:
+		return storage::saveDone();
+	case SAVE_IN_PROGRESS:
+		return storage::saveProgress();
 	case UNDO:
 		return TaskList::undo();
 	case REDO:
@@ -88,6 +92,17 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 	}
 	else if (commandTypeString == "archive") {
 		return COMMAND_TYPE::ARCHIVE;
+	}
+	else if (commandTypeString == "save") {
+		if (taskString == "done") {
+			return COMMAND_TYPE::SAVE_DONE;
+		}
+		else if (taskString == "progress") {
+			return COMMAND_TYPE::SAVE_IN_PROGRESS;
+		}
+		else {
+			return COMMAND_TYPE::OTHERS;
+		}
 	}
 	else if (commandTypeString == "undo") {
 		return COMMAND_TYPE::UNDO;

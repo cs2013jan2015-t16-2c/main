@@ -17,13 +17,15 @@ private:
 	static vector<string> task;
 	static const string FILENAME;
 	static const string TEMP;
+	static const string DONE;
+	static const string PROGRESS;
 
 public:
 	static string starting();
 	static void ending();
 	static vector<string> returnTask();
-	static void saveDone();
-	static void saveProgress();
+	static string saveDone();
+	static string saveProgress();
 	static string archive(string fileName);
 	static void checkRubbish();
 	static void tempFile();
