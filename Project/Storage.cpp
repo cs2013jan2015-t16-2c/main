@@ -18,9 +18,12 @@ void storage::ending() {
 	content = TaskList::display("done");
 	
 	if(content != MagicString::MESSAGE_EMPTY){
-	file << content << endl;
+		file << content << endl;
+		file.close();
 	}
-	file.close();
+	else{
+		file.close();
+	}
 }
 
 string storage::starting() {
@@ -83,6 +86,10 @@ void storage::tempFile(){ //call by every command
 
 	content = TaskList::display("done");
 	temporary << content << endl;
+	
+	if (content != MagicString::MESSAGE_EMPTY) {
+		temporary << content << endl;
+	}
 
 	temporary.close();
 }
@@ -94,13 +101,12 @@ void storage::deleteTemp(){ //call if exit is exeucited
 void storage::backup(){ //call before starting function
 	ifstream temporary;
 	ofstream file;
-	string line;
 	string tempLine;
 
 	temporary.open(TEMP);
-	getline(temporary,line);
+	getline(temporary,tempLine);
 
-	if(line.size()!= 0){
+	if(tempLine.size()!= 0){
 		remove(FILENAME.c_str());
 		file.open(FILENAME);
 		
