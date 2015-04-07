@@ -4,6 +4,8 @@
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
 const string storage::TEMP = "temp.txt";
+const string storage::DONE = "done.txt";
+const string storage::PROGRESS = "progress.txt";
 
 void storage::ending() {
 	ofstream file;
@@ -43,6 +45,28 @@ string storage::starting() {
 
 vector<string> storage::returnTask() {
 	return task;
+}
+
+string storage::saveDone(){
+	ofstream file;
+	string content;
+
+	remove(DONE.c_str());
+
+	file.open(DONE);
+	content = TaskList::display("done");
+	file.close();
+}
+
+string storage::saveProgress(){
+	ofstream file;
+	string content;
+
+	remove(PROGRESS.c_str());
+
+	file.open(PROGRESS);
+	content = TaskList::display("all");
+	file.close();
 }
 
 string storage::archive(string fileName){

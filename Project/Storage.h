@@ -22,6 +22,8 @@ public:
 	static string starting();
 	static void ending();
 	static vector<string> returnTask();
+	static void saveDone();
+	static void saveProgress();
 	static string archive(string fileName);
 	static void checkRubbish();
 	static void tempFile();
