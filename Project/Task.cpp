@@ -181,6 +181,14 @@ Task::Task(string input){
 				repeat_time = atoi(input.substr(repeat_format + 3).c_str());
 				addRepeatTask(repeat_time, repeat_type);
 			}
+			else{
+				std::size_t repeat_format = input.find("month");
+				if (repeat_format != std::string::npos){
+					repeat_type = "month";
+					repeat_time = atoi(input.substr(repeat_format + 5).c_str());
+					addRepeatTask(repeat_time, repeat_type);
+				}
+			}
 		}
 	}
 	//checkInputValidation();
@@ -805,7 +813,13 @@ void Task::addRepeatTask(int repeat_time, string repeat_type){
 	if (repeat_type == "day"){
 		for (int i = 0; i < repeat_time; i++){
 			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 1 + i) + " -to " + end_time + " " + addDay(scheduled_end_date,1+i);
-			cout << input << endl;
+			//cout << input << endl;
+			TaskList::addTask(input);
+		}
+	}
+	else if (repeat_type == "month"){
+		for (int i = 1; i <= repeat_time; i++){
+			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 30 * i) + " -to " + end_time + " " + addDay(scheduled_end_date, 30 * i);
 			TaskList::addTask(input);
 		}
 	}
@@ -819,7 +833,12 @@ string Task::addDay(string date, int day){
 	t.tm_mon = mon;
 	t.tm_mday = mday;
 	// modify
-	t.tm_mday += day; 
+	if (day % 30 == 0){
+		t.tm_mon += (day/30) - 1;
+	}
+	else{
+		t.tm_mday += day;
+	}
 	string mon_s = to_string(t.tm_mon);
 	string day_s = to_string(t.tm_mday);
 	return day_s + "/" + mon_s;
