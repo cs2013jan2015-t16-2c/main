@@ -1,8 +1,8 @@
-//#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include "task.h"
 //#include "concol.h""
 #include "InterfaceOutput.h"
-//#include <ctime>
+#include <ctime>
 
 using namespace std;
 //using namespace eku;
@@ -34,6 +34,7 @@ Task::Task(){
 
 Task::Task(string input){
 	if (!input.empty()){
+		cout << getDay();
 		std::size_t timed_task = input.find("-from");
 		std::size_t deadlined_task = input.find("-by");
 
@@ -62,8 +63,14 @@ Task::Task(string input){
 				scheduled_end_date = endTimeInfo.substr(get_end_date - 2, 5);
 			}
 			else if (get_start_date == std::string::npos && get_end_date == std::string::npos){
-				scheduled_start_date = InterfaceOutput::returnTodayDate();
-				scheduled_end_date = scheduled_start_date;
+				if (timeInfo != "" && endTimeInfo != ""){
+					scheduled_start_date = getDate(timeInfo);
+					scheduled_end_date = getDate(endTimeInfo);
+				}
+				else{
+					scheduled_start_date = InterfaceOutput::returnTodayDate();
+					scheduled_end_date = scheduled_start_date;
+				}
 			}
 
 			std::size_t get_start_time = timeInfo.find(":");
@@ -721,3 +728,40 @@ bool Task::taskDone(){
 	}
 	return false;
 }
+
+string Task::getDay(){
+	const string DAY[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+	time_t rawtime;
+	tm * timeinfo;
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	int wday = timeinfo->tm_wday;
+	return DAY[wday];
+}
+
+string Task::getDate(int add){
+	{
+		time_t rawtime;
+		tm * timeinfo;
+		time(&rawtime);
+		timeinfo = localtime(&rawtime);
+		int mon = 1 + timeinfo->tm_mon;
+		int day = add + timeinfo->tm_mday;
+		string mon_s = to_string(mon);
+		string day_s = to_string(day);
+		return day_s + "/" + mon_s;
+
+	}
+}
+
+string Task::getDate(string input){
+	std::size_t getdate = input.find("today");
+	if (getdate != std::string::npos){
+		return getDate(0);
+	}
+	getdate = input.find("tmr");
+	if (getdate != std::string::npos){
+		return getDate(1);
+	}
+}
+
