@@ -102,7 +102,7 @@ void storage::backup(){ //call before starting function
 	ifstream temporary;
 	ofstream file;
 	string tempLine;
-	sting line
+	string line;
 
 	temporary.open(TEMP);
 	getline(temporary,line);
