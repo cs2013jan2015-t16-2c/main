@@ -16,7 +16,10 @@ void storage::ending() {
 	file << content << endl;	
 
 	content = TaskList::display("done");
+	
+	if(content != MagicString::MESSAGE_EMPTY){
 	file << content << endl;
+	}
 	file.close();
 }
 
@@ -48,8 +51,10 @@ string storage::archive(string fileName){
 	file << content << endl;
 
 	content = TaskList::display("done");
-	file << content << endl;
 
+	if(content != MagicString::MESSAGE_EMPTY){
+	file << content << endl;
+	}
 	file.close();
 	
 	return MagicString::SUCCESS_ARCHIVE;
