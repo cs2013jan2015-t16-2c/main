@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "task.h"
+//#include "TaskList.cpp"
 //#include "concol.h""
 #include "InterfaceOutput.h"
 #include <ctime>
@@ -166,6 +167,20 @@ Task::Task(string input){
 		else{
 			place = "";
 			task_group = "";
+		}
+		//V0.4
+		std::size_t repeat = input.find("-every");
+		if (repeat != std::string::npos){
+			//task repeat every day
+			int repeat_time = 0;
+			string repeat_type = "";
+			input = input.substr(repeat + 6);
+			std::size_t repeat_format = input.find("day");
+			if (repeat_format != std::string::npos){
+				repeat_type = "day";
+				repeat_time = atoi(input.substr(repeat_format + 3).c_str());
+				addRepeatTask(repeat_time, repeat_type);
+			}
 		}
 	}
 	//checkInputValidation();
@@ -785,3 +800,13 @@ string Task::getDate(string input){
 	}
 }
 
+void Task::addRepeatTask(int repeat_time, string repeat_type){
+	string add_task;
+	if (repeat_type == "day"){
+		for (int i = 0; i < repeat_time; i++){
+			string input = "add " + taskname + " -from " + start_time + " " + scheduled_start_date + " -to " + end_time + " " + scheduled_end_date;
+			cout << input << endl;
+			//TaskList::addTask(input);
+		}
+	}
+}
