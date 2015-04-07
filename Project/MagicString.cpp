@@ -12,6 +12,8 @@ const string MagicString::PROGRAM_START = "Data has been successfully loaded";
 const string MagicString::SUCCESS_ARCHIVE = "Tasklist is successfully archived";
 const string MagicString::FILE_RUBBISH = "Rubbish has been cleaned in storage file";
 const string MagicString::FILE_CHECK = "Storage file has been checked, and it is ready to use";
+const string MagicString::DONE_TASK_SAVED = "Done tasks have been saved into the file";
+const string MagicString::IN_PROGRESS_TASK_SAVED = "In progress tasks have been saved into the file";
 
 //Task
 const string MagicString::LABEL_SCHEDULED_TASK = "timed";

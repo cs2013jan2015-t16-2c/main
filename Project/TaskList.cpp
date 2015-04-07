@@ -29,18 +29,44 @@ void TaskList::copyToStorage(){
 }
 
 string TaskList::addTask(string input){	
-	lastCommandType = "add";
+	std::size_t repeat = input.find("-every");
+	if (repeat != std::string::npos){
+		string taskInfo = input.substr(0, repeat - 1);
+		string repeatInfo = input.substr(repeat + 6);
+		string repeat_type = getFirstWord(repeatInfo);
+		int repeat_time = atoi((removeFirstWord(repeatInfo)).c_str());
+		addRepeatTask(taskInfo, repeat_type, repeat_time);
 
-	Task newTask(input);
-	list.push_back(newTask);
+		return "Recurring tasks added";
+	}
+	else{
+		lastCommandType = "add";
 
-	lastChangedTask = newTask;
+		Task newTask(input);
+		list.push_back(newTask);
 
-	addTaskGroup(newTask);
-	addPlace(newTask);
+		lastChangedTask = newTask;
 
+		addTaskGroup(newTask);
+		addPlace(newTask);
+	}
+	
 	//storage::tempFile();
 	return "Task added";
+}
+
+void TaskList::addRepeatTask(string taskInfo, string repeat_type, int repeat_time){
+	Task newTask(taskInfo);
+	Task *newPtr = new Task;
+	*newPtr = newTask;
+	list.push_back(*newPtr);
+
+	for (int i = 1; i <= repeat_time; i++){
+		Task *ptr = new Task;
+		newTask.recurringAdd(repeat_type);
+		*ptr = newTask;
+		list.push_back(*ptr);
+	}
 }
 
 string TaskList::updateTask(string input){

@@ -24,10 +24,20 @@ using namespace std;
 class InterfaceInput {
 public:
 	enum COMMAND_TYPE {
-		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, SET_PRIORITY, ARCHIVE, UNDO, REDO, EXIT, OTHERS
+		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, SET_PRIORITY, 
+		ARCHIVE, SAVE_DONE, SAVE_IN_PROGRESS, UNDO, REDO, EXIT, OTHERS
 	};
 
 private:
+	static const string SHORTENED_COMMAND_UPDATE;
+	static const string SHORTENED_COMMAND_DELETE;
+	static const string SHORTENED_COMMAND_DISPLAY;
+	static const string SHORTENED_COMMAND_SEARCH;
+	static const string SHORTENED_COMMAND_ARCHIVE;
+	static const string SHORTENED_COMMAND_UNDO;
+	static const string SHORTENED_COMMAND_REDO;
+	static const string SHORTENED_COMMAND_EXIT;
+
 	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
 
 	static string getFirstWord(string userCommand);

@@ -3,6 +3,15 @@
 
 #include "InterfaceInput.h"
 
+const string InterfaceInput::SHORTENED_COMMAND_UPDATE = "up";
+const string InterfaceInput::SHORTENED_COMMAND_DELETE = "del";
+const string InterfaceInput::SHORTENED_COMMAND_DISPLAY = "dis";
+const string InterfaceInput::SHORTENED_COMMAND_SEARCH = "se";
+const string InterfaceInput::SHORTENED_COMMAND_ARCHIVE = "arc";
+const string InterfaceInput::SHORTENED_COMMAND_UNDO = "un";
+const string InterfaceInput::SHORTENED_COMMAND_REDO = "re";
+const string InterfaceInput::SHORTENED_COMMAND_EXIT = "q";
+
 string InterfaceInput::getUserCommand() {
 	string userCommand;
 
@@ -46,6 +55,10 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		return TaskList::setPriority(taskString);
 	case ARCHIVE:
 		return storage::archive(taskString);
+	case SAVE_DONE:
+		return storage::saveDone();
+	case SAVE_IN_PROGRESS:
+		return storage::saveProgress();
 	case UNDO:
 		return TaskList::undo();
 	case REDO:
@@ -68,16 +81,16 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 	else if (commandTypeString == "add") {
 		return COMMAND_TYPE::ADD_TASK;
 	}
-	else if (commandTypeString == "update") {
+	else if (commandTypeString == "update" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_UPDATE) {
 		return COMMAND_TYPE::UPDATE;
 	}
-	else if (commandTypeString == "delete") {
+	else if (commandTypeString == "delete" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_DELETE) {
 		return COMMAND_TYPE::DELETE_TASK;
 	}
-	else if (commandTypeString == "search") {
+	else if (commandTypeString == "search" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_SEARCH) {
 		return COMMAND_TYPE::SEARCH;
 	}
-	else if (commandTypeString == "display") {
+	else if (commandTypeString == "display" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_DISPLAY) {
 		return COMMAND_TYPE::DISPLAY_TASKS;
 	}
 	else if (commandTypeString == "done") {
@@ -86,16 +99,27 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 	else if (commandTypeString == "set"){
 		return COMMAND_TYPE::SET_PRIORITY;
 	}
-	else if (commandTypeString == "archive") {
+	else if (commandTypeString == "archive" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_DISPLAY) {
 		return COMMAND_TYPE::ARCHIVE;
 	}
-	else if (commandTypeString == "undo") {
+	else if (commandTypeString == "save") {
+		if (taskString == "done") {
+			return COMMAND_TYPE::SAVE_DONE;
+		}
+		else if (taskString == "progress") {
+			return COMMAND_TYPE::SAVE_IN_PROGRESS;
+		}
+		else {
+			return COMMAND_TYPE::OTHERS;
+		}
+	}
+	else if (commandTypeString == "undo" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_UNDO) {
 		return COMMAND_TYPE::UNDO;
 	}
-	else if (commandTypeString == "redo") {
+	else if (commandTypeString == "redo" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_REDO) {
 		return COMMAND_TYPE::REDO;
 	}
-	else if (commandTypeString == "exit") {
+	else if (commandTypeString == "exit" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_EXIT) {
 		return COMMAND_TYPE::EXIT;
 	}
 	else{

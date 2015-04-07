@@ -1,6 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "task.h"
-#include "InterfaceOutput.h"
 #include <ctime>
 
 using namespace std;
@@ -773,24 +772,8 @@ string Task::getDate(int add){
 	timeinfo = localtime(&rawtime);
 	int mon = 1 + timeinfo->tm_mon;
 	int day = add + timeinfo->tm_mday;
-	ostringstream month;
-	if (mon < 10){
-		month << "0" << mon;
-	}
-	else{
-		month << mon;
-	}
-	string month_s = month.str();
-
-	ostringstream date;
-	if (day < 10){
-		date << "0" << day;
-	}
-	else{
-		date << day;
-	}
-	string day_s = date.str();
-	return day_s + "/" + month_s;
+	
+	return returnDate(mon, day);
 }
 
 string Task::getDate(string input){
@@ -816,3 +799,96 @@ string Task::getDate(string input){
 	}
 }
 
+void Task::addRepeatTask(int repeat_time, string repeat_type){
+	string add_task;
+	if (repeat_type == "day"){
+		for (int i = 0; i < repeat_time; i++){
+			string input = "add " + taskname + " -from " + start_time + " " + scheduled_start_date + " -to " + end_time + " " + scheduled_end_date;
+			cout << input << endl;
+			//TaskList::addTask(input);
+		}
+	}
+}
+
+void Task::recurringAdd(string repeat_type){
+	if (task_type == SCHEDULED_TASK_LABEL){
+		int mon_start = atoi((scheduled_start_date.substr(0, 2)).c_str());
+		int day_start = atoi((scheduled_start_date.substr(3, 2)).c_str());
+		int mon_end = atoi((scheduled_end_date.substr(0, 2)).c_str());
+		int day_end = atoi((scheduled_end_date.substr(3, 2)).c_str());
+
+		if (repeat_type == "day"){
+			day_start++;
+			day_end++;
+		}
+		else if (repeat_type == "week"){
+			day_start = day_start + 7;
+			day_end = day_end + 7;
+		}
+		else if (repeat_type == "month"){
+			mon_start++;
+			mon_end++;
+		}
+
+		scheduled_start_date = returnDate(mon_start, day_start);
+		scheduled_end_date = returnDate(mon_end, day_end);
+	}
+	else if (task_type == DEADLINE_TASK_LABEL){
+		int mon = atoi((deadline_date.substr(0, 2)).c_str());
+		int day = atoi((deadline_date.substr(3, 2)).c_str());
+		
+		if (repeat_type == "day"){
+			day++;
+		}
+		else if (repeat_type == "week"){
+			day = day + 7;
+		}
+		else if (repeat_type == "month"){
+			mon++;
+		}
+		deadline_date = returnDate(mon, day);
+	}
+}
+
+string Task::returnDate(int month, int day){
+	if (month == 1 || 3 || 5 || 7 || 8 || 10 || 12){
+		if (day > 30){
+			day = day % 30;
+			month = month + day / 30;
+			month = month % 12;
+		}
+	}
+	else if (month == 4 || 6 || 9 || 11){
+		if (day > 31){
+			day = day % 31;
+			month = month + day / 31;
+			month = month % 12;
+		}
+	}
+	else{
+		if (day > 28){
+			day = day % 28;
+			month = month + day / 28;
+			month = month % 12;
+		}
+	}
+
+	ostringstream mon;
+	if (month < 10){
+		mon << "0" << month;
+	}
+	else{
+		mon << month;
+	}
+	string month_s = mon.str();
+
+	ostringstream date;
+	if (day < 10){
+		date << "0" << day;
+	}
+	else{
+		date << day;
+	}
+	string day_s = date.str();
+	return day_s + "/" + month_s;
+}

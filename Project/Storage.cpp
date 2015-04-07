@@ -4,6 +4,8 @@
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
 const string storage::TEMP = "temp.txt";
+const string storage::DONE = "done.txt";
+const string storage::PROGRESS = "progress.txt";
 
 void storage::ending() {
 	ofstream file;
@@ -17,7 +19,8 @@ void storage::ending() {
 
 	content = TaskList::display("done");
 	
-	if(content != MagicString::MESSAGE_EMPTY){
+	if((content != MagicString::MESSAGE_EMPTY) or (content.size() != 0)){
+		file << endl;
 		file << content;
 		file.close();
 	}
@@ -45,6 +48,36 @@ vector<string> storage::returnTask() {
 	return task;
 }
 
+string storage::saveDone(){
+	ofstream file;
+	string content;
+
+	remove(DONE.c_str());
+
+	file.open(DONE);
+	content = TaskList::display("done");
+	file << content;
+	
+	file.close();
+
+	return MagicString::DONE_TASK_SAVED;
+}
+
+string storage::saveProgress(){
+	ofstream file;
+	string content;
+
+	remove(PROGRESS.c_str());
+
+	file.open(PROGRESS);
+	content = TaskList::display("all");
+	file << content;
+
+	file.close();
+
+	return MagicString::IN_PROGRESS_TASK_SAVED;
+}
+
 string storage::archive(string fileName){
 	ofstream file;
 	string content;
@@ -55,7 +88,8 @@ string storage::archive(string fileName){
 
 	content = TaskList::display("done");
 
-	if(content != MagicString::MESSAGE_EMPTY){
+	if((content != MagicString::MESSAGE_EMPTY) or (content.size() != 0)){
+	file << endl;
 	file << content;
 	}
 	file.close();
@@ -85,9 +119,9 @@ void storage::tempFile(){ //call by every command
 	temporary << content;	
 
 	content = TaskList::display("done");
-	temporary << content;
 	
-	if (content != MagicString::MESSAGE_EMPTY) {
+	if ((content != MagicString::MESSAGE_EMPTY) or (content.size() != 0)) {
+		file << endl;
 		temporary << content;
 	}
 
@@ -102,17 +136,20 @@ void storage::backup(){ //call before starting function
 	ifstream temporary;
 	ofstream file;
 	string tempLine;
+	string line;
 
 	temporary.open(TEMP);
-	getline(temporary,tempLine);
+	getline(temporary,line);
 
-	if(tempLine.size()!= 0){
+	if(line.size()!= 0){
 		remove(FILENAME.c_str());
 		file.open(FILENAME);
 		
+		file << line << endl;
+
 		while(!temporary.eof()){
-			file << tempLine << endl;
 			getline(temporary,tempLine);
+			file << tempLine << endl;
 		}
 		file.close();
 		temporary.close();

@@ -35,6 +35,8 @@ public:
 	//V0.3
 	bool taskDone(); // return true if task status is done
 	string getTodayDate();
+
+	void recurringAdd(string repear_type);
 	
 
 private:
@@ -55,6 +57,9 @@ private:
 	string getDate(string input);
 	string getDate(int add);
 	int getDayDiff(string day);
+	void addRepeatTask(int repeat_time, string repeat_type);
+	
+	string returnDate(int month, int day);
 };
 
 #endif

@@ -31,6 +31,8 @@ private:
 	static void addTaskGroup(Task newtask);
 	static void addPlace(Task newtask);
 	static bool isExist(vector<string> checkingList, string input);
+	static void addRepeatTask(string taskInfo, string repear_type, int repeat_time);
+
 public:
 	static void copyFromStorage();
 	static void copyToStorage();
