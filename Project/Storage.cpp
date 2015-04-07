@@ -105,8 +105,8 @@ void storage::backup(){ //call before starting function
 		file.open(FILENAME);
 		
 		while(!temporary.eof()){
-			getline(temporary,tempLine);
 			file << tempLine << endl;
+			getline(temporary,tempLine);
 		}
 		file.close();
 		temporary.close();
