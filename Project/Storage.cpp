@@ -13,11 +13,17 @@ void storage::ending() {
 
 	file.open(FILENAME);
 	content = TaskList::display("all");
-	file << content << endl;	
+	file << content;	
 
 	content = TaskList::display("done");
-	file << content << endl;
-	file.close();
+	
+	if(content != MagicString::MESSAGE_EMPTY){
+		file << content;
+		file.close();
+	}
+	else{
+		file.close();
+	}
 }
 
 string storage::starting() {
@@ -45,11 +51,13 @@ string storage::archive(string fileName){
 
 	file.open(fileName);
 	content = TaskList::display("all");
-	file << content << endl;
+	file << content;
 
 	content = TaskList::display("done");
-	file << content << endl;
 
+	if(content != MagicString::MESSAGE_EMPTY){
+	file << content;
+	}
 	file.close();
 	
 	return MagicString::SUCCESS_ARCHIVE;
@@ -74,10 +82,14 @@ void storage::tempFile(){ //call by every command
 	remove(TEMP.c_str());
 	temporary.open(TEMP);
 	content = TaskList::display("all");
-	temporary << content << endl;	
+	temporary << content;	
 
 	content = TaskList::display("done");
-	temporary << content << endl;
+	temporary << content;
+	
+	if (content != MagicString::MESSAGE_EMPTY) {
+		temporary << content;
+	}
 
 	temporary.close();
 }
@@ -89,19 +101,18 @@ void storage::deleteTemp(){ //call if exit is exeucited
 void storage::backup(){ //call before starting function
 	ifstream temporary;
 	ofstream file;
-	string line;
 	string tempLine;
 
 	temporary.open(TEMP);
-	getline(temporary,line);
+	getline(temporary,tempLine);
 
-	if(line.size()!= 0){
+	if(tempLine.size()!= 0){
 		remove(FILENAME.c_str());
 		file.open(FILENAME);
 		
 		while(!temporary.eof()){
-			getline(temporary,tempLine);
 			file << tempLine << endl;
+			getline(temporary,tempLine);
 		}
 		file.close();
 		temporary.close();

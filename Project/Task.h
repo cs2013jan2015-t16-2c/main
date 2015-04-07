@@ -35,6 +35,7 @@ public:
 	//V0.3
 	bool taskDone(); // return true if task status is done
 	string getTodayDate();
+	
 
 private:
 	string taskname;
@@ -49,6 +50,11 @@ private:
 	string priority;
 	string task_group;
 	string place;
+	//V0.4
+	int getDay();
+	string getDate(string input);
+	string getDate(int add);
+	int getDayDiff(string day);
 };
 
 #endif

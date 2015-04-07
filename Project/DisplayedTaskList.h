@@ -13,6 +13,7 @@ private:
 public:
 	static void addTask(Task input);
 	static string display();
+	static bool isEmpty();
 	static int returnListSize();
 	static Task resturnTask(int index);
 	static void emptyList();

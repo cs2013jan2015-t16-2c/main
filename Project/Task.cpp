@@ -1,7 +1,7 @@
-//#define _CRT_SECURE_NO_WARNINGS
-#include "Task.h"
+#define _CRT_SECURE_NO_WARNINGS
+#include "task.h"
 #include "InterfaceOutput.h"
-//#include "concol.h""
+#include <ctime>
 
 using namespace std;
 //using namespace eku;
@@ -43,7 +43,7 @@ Task::Task(string input){
 			task_type = SCHEDULED_TASK_LABEL;
 			taskname = input.substr(0, timed_task - 1);
 
-			string timeInfo = input.substr(timed_task);
+			string timeInfo = input.substr(timed_task, ending_time-timed_task-1);
 			string endTimeInfo = input.substr(ending_time);
 
 			std::size_t get_start_date = timeInfo.find("/");
@@ -56,13 +56,19 @@ Task::Task(string input){
 				scheduled_start_date = timeInfo.substr(get_start_date - 2, 5);
 				scheduled_end_date = scheduled_start_date;
 			}
-			else if (get_start_date != std::string::npos && get_end_date == std::string::npos){
-				scheduled_start_date = InterfaceOutput::returnTodayDate();
+			else if (get_start_date == std::string::npos && get_end_date != std::string::npos){
+				scheduled_start_date = getDate(timeInfo);
 				scheduled_end_date = endTimeInfo.substr(get_end_date - 2, 5);
 			}
 			else if (get_start_date == std::string::npos && get_end_date == std::string::npos){
-				scheduled_start_date = InterfaceOutput::returnTodayDate();
-				scheduled_end_date = scheduled_start_date;
+				scheduled_start_date = getDate(timeInfo);
+				string temp_end_date = getDate(endTimeInfo);
+				if (temp_end_date == getDate(0)){
+					scheduled_end_date = scheduled_start_date;
+				}
+				else{
+					scheduled_end_date = temp_end_date;
+				}
 			}
 
 			std::size_t get_start_time = timeInfo.find(":");
@@ -101,7 +107,7 @@ Task::Task(string input){
 				deadline_date = timeInfo.substr(get_date - 2, 5);
 			}
 			else{
-				deadline_date = InterfaceOutput::returnTodayDate();
+				deadline_date = getDate(timeInfo);
 			}
 			
 			if (get_time != std::string::npos){
@@ -184,16 +190,16 @@ Task::Task(string task, string input){
 		}
 
 		std::size_t get_priority = task.find("(");
-		
+		std::size_t get_taskname;
 		if (get_priority != std::string::npos){
 			priority = task.substr(get_priority + 1, 1);
-			
+			get_taskname = task.find(")") + 2;
 		}
 		else{
 			priority = "";
+			get_taskname = 0;
 		}
 
-		std::size_t get_taskname = task.find(")") + 2;
 		std::size_t get_starting_timeInfo = task.find("[");
 		std::size_t get_ending_timeInfo = task.find("to", get_starting_timeInfo);
 		std::size_t get_group = task.find("#");
@@ -203,24 +209,26 @@ Task::Task(string task, string input){
 			taskname = task.substr(get_taskname, get_starting_timeInfo - get_taskname - 1);
 			if (get_ending_timeInfo != std::string::npos){
 				task_type = SCHEDULED_TASK_LABEL;
-				std::size_t get_start_date = task.find("/", get_starting_timeInfo);
-				scheduled_start_date = task.substr(get_start_date - 2, 5);
-				std::size_t get_end_date = task.find("/", get_ending_timeInfo);
-				scheduled_end_date = task.substr(get_end_date - 2, 5);
+				string startTimeInfo = task.substr(get_starting_timeInfo, get_ending_timeInfo - get_starting_timeInfo - 1);
+				string endTimeInfo = task.substr(get_ending_timeInfo);
+				std::size_t get_start_date = startTimeInfo.find("/");
+				scheduled_start_date = startTimeInfo.substr(get_start_date - 2, 5);
+				std::size_t get_end_date = endTimeInfo.find("/");
+				scheduled_end_date = endTimeInfo.substr(get_end_date - 2, 5);
 
-				std::size_t get_start_time = task.find(":", get_starting_timeInfo);
-				std::size_t get_end_time = task.find(":", get_ending_timeInfo);
+				std::size_t get_start_time = startTimeInfo.find(":");
+				std::size_t get_end_time = endTimeInfo.find(":");
 				if (get_start_time != std::string::npos && get_end_time != std::string::npos){
-					start_time = task.substr(get_start_time - 2, 5);
-					end_time = task.substr(get_end_time - 2, 5);
+					start_time = startTimeInfo.substr(get_start_time - 2, 5);
+					end_time = endTimeInfo.substr(get_end_time - 2, 5);
 				}
 				else if (get_start_time != std::string::npos){
-					start_time = task.substr(get_start_time - 2, 5);
+					start_time = startTimeInfo.substr(get_start_time - 2, 5);
 					end_time = "";
 				}
 				else if (get_end_time != std::string::npos){
 					start_time = "";
-					end_time = task.substr(get_end_time - 2, 5);
+					end_time = endTimeInfo.substr(get_end_time - 2, 5);
 				}
 				else{
 					start_time = "";
@@ -229,12 +237,13 @@ Task::Task(string task, string input){
 			}
 			else{
 				task_type = DEADLINE_TASK_LABEL;
-				std::size_t get_deadline_date = task.find("/", get_starting_timeInfo);
-				deadline_date = task.substr(get_deadline_date - 2, 5);
+				string timeInfo = task.substr(get_starting_timeInfo);
+				std::size_t get_deadline_date = timeInfo.find("/");
+				deadline_date = timeInfo.substr(get_deadline_date - 2, 5);
 
-				std::size_t get_deadline_time = task.find(":", get_starting_timeInfo);
+				std::size_t get_deadline_time = timeInfo.find(":");
 				if (get_deadline_time != std::string::npos){
-					deadline_time = task.substr(get_deadline_date - 2, 5);
+					deadline_time = timeInfo.substr(get_deadline_date - 2, 5);
 				}
 				else{
 					deadline_time = "";
@@ -244,16 +253,16 @@ Task::Task(string task, string input){
 		else{
 			task_type = FLOATING_TASK_LABEL;
 			if ((get_group != std::string::npos) && (get_place != std::string::npos)){
-				taskname = task.substr(0, get_group - 1);
+				taskname = task.substr(get_taskname, get_group - get_taskname - 1);
 			}
 			else if (get_group != std::string::npos){
-				taskname = task.substr(0, get_group - 1);
+				taskname = task.substr(get_taskname, get_group - get_taskname - 1);
 			}
 			else if (get_place != std::string::npos){
-				taskname = task.substr(0, get_place - 1);
+				taskname = task.substr(get_taskname, get_place - get_taskname - 1);
 			}
 			else{
-				taskname = task.substr(0, find_status-1);
+				taskname = task.substr(get_taskname, find_status - get_taskname - 1);
 			}
 			start_time = "";
 			end_time = "";
@@ -298,8 +307,8 @@ string Task::ToString(){
 	if (task_type == DEADLINE_TASK_LABEL){
 		strcat_s(task, " [");
 		strcat_s(task, deadline_date.c_str());
-		strcat_s(task, " ");
 		if (deadline_time != ""){
+			strcat_s(task, " ");
 			strcat_s(task, deadline_time.c_str());
 		}
 		strcat_s(task, "] ");
@@ -317,14 +326,14 @@ string Task::ToString(){
 	else if (task_type == SCHEDULED_TASK_LABEL){
 		strcat_s(task, " [");
 		strcat_s(task, scheduled_start_date.c_str());
-		strcat_s(task, " ");
 		if (start_time != ""){
+			strcat_s(task, " ");
 			strcat_s(task, start_time.c_str());
 		}
 		strcat_s(task, "] to [");
 		strcat_s(task, scheduled_end_date.c_str());
-		strcat_s(task, " ");
 		if (end_time != ""){
+			strcat_s(task, " ");
 			strcat_s(task, end_time.c_str());
 		}
 		strcat_s(task, "] ");
@@ -369,11 +378,10 @@ void Task::UpdateTask(string input){
 		std::size_t deadlined_task = input.find("-by");
 
 		if (timed_task != std::string::npos){
+			task_type = SCHEDULED_TASK_LABEL;
 			std::size_t ending_time = input.find("-to");
 
-			task_type = SCHEDULED_TASK_LABEL;
-
-			string timeInfo = input.substr(timed_task);
+			string timeInfo = input.substr(timed_task, ending_time - timed_task - 1);
 			string endTimeInfo = input.substr(ending_time);
 
 			std::size_t get_start_date = timeInfo.find("/");
@@ -386,13 +394,19 @@ void Task::UpdateTask(string input){
 				scheduled_start_date = timeInfo.substr(get_start_date - 2, 5);
 				scheduled_end_date = scheduled_start_date;
 			}
-			else if (get_start_date != std::string::npos && get_end_date == std::string::npos){
-				scheduled_start_date = InterfaceOutput::returnTodayDate();
+			else if (get_start_date == std::string::npos && get_end_date != std::string::npos){
+				scheduled_start_date = getDate(timeInfo);
 				scheduled_end_date = endTimeInfo.substr(get_end_date - 2, 5);
 			}
 			else if (get_start_date == std::string::npos && get_end_date == std::string::npos){
-				scheduled_start_date = InterfaceOutput::returnTodayDate();
-				scheduled_end_date = scheduled_start_date;
+				scheduled_start_date = getDate(timeInfo);
+				string temp_end_date = getDate(endTimeInfo);
+				if (temp_end_date == getDate(0)){
+					scheduled_end_date = scheduled_start_date;
+				}
+				else{
+					scheduled_end_date = temp_end_date;
+				}
 			}
 
 			std::size_t get_start_time = timeInfo.find(":");
@@ -428,7 +442,7 @@ void Task::UpdateTask(string input){
 				deadline_date = timeInfo.substr(get_date - 2, 5);
 			}
 			else{
-				deadline_date = InterfaceOutput::returnTodayDate();
+				deadline_date = getDate(timeInfo);
 			}
 
 			if (get_time != std::string::npos){
@@ -732,3 +746,73 @@ bool Task::taskDone(){
 	}
 	return false;
 }
+
+int Task::getDay(){
+	const int DAY[] = { 0, 1, 2, 3, 4, 5, 6 };
+	time_t rawtime;
+	tm * timeinfo;
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	int wday = timeinfo->tm_wday;
+	return DAY[wday];
+}
+
+int Task::getDayDiff(string day){
+	const string DAY[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+	for (int i = 0; i < 7; i++){
+		if (day == DAY[i]){
+			return i;
+		}
+	}
+}
+
+string Task::getDate(int add){
+	time_t rawtime;
+	tm * timeinfo;
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	int mon = 1 + timeinfo->tm_mon;
+	int day = add + timeinfo->tm_mday;
+	ostringstream month;
+	if (mon < 10){
+		month << "0" << mon;
+	}
+	else{
+		month << mon;
+	}
+	string month_s = month.str();
+
+	ostringstream date;
+	if (day < 10){
+		date << "0" << day;
+	}
+	else{
+		date << day;
+	}
+	string day_s = date.str();
+	return day_s + "/" + month_s;
+}
+
+string Task::getDate(string input){
+	std::size_t get_tmr = input.find("tmr");
+	if (get_tmr != std::string::npos){
+		return getDate(1);
+	}
+	std::size_t get_this = input.find("this");
+	if (get_this != std::string::npos){
+		string day = input.substr(get_this + 5, 3);
+		int daydiff = getDayDiff(day) - getDay();
+		return getDate(daydiff);
+	}
+	std::size_t get_next = input.find("next");
+	if (get_next != std::string::npos){
+		string day = input.substr(get_next + 5, 3);
+		int daydiff = getDayDiff(day) - getDay();
+		return getDate(daydiff+7);
+	}
+
+	if (get_tmr == std::string::npos && get_this == std::string::npos && get_next == std::string::npos){
+		return getDate(0);
+	}
+}
+

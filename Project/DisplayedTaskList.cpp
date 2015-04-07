@@ -8,23 +8,21 @@ void DisplayedTaskList::addTask(Task input){
 }
 
 string DisplayedTaskList::display(){
-	if (!displayedTaskList.empty()){
-		sort();
-		ostringstream overallOss;
-		for (unsigned int i = 0; i < displayedTaskList.size() - 1; i++){
-			ostringstream oss;			
-			oss << i + 1 << "." << displayedTaskList[i].ToString() << endl;
-			string taskDisplay = oss.str();
-			overallOss << taskDisplay;
-		}
+	sort();
+	ostringstream overallOss;
+	for (unsigned int i = 0; i < displayedTaskList.size() - 1; i++){
+		ostringstream oss;			
+		oss << i + 1 << ". " << displayedTaskList[i].ToString() << endl;
+		string taskDisplay = oss.str();
+		overallOss << taskDisplay;
+	}
+	int size = displayedTaskList.size();
+	overallOss << size << ". " << displayedTaskList[size - 1].ToString();;
+	return overallOss.str();
+}
 
-		int size = displayedTaskList.size();
-		overallOss << size << "." << displayedTaskList[size - 1].ToString();;
-		return overallOss.str();
-	}
-	else{
-		return "";
-	}
+bool DisplayedTaskList::isEmpty(){
+	return displayedTaskList.empty();
 }
 
 int DisplayedTaskList::returnListSize(){
