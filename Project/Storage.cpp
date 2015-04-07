@@ -19,7 +19,7 @@ void storage::ending() {
 
 	content = TaskList::display("done");
 	
-	if(content.size() != 0){
+	if((content != MagicString::MESSAGE_EMPTY) or (content.size() != 0)){
 		file << endl;
 		file << content;
 		file.close();
@@ -88,7 +88,8 @@ string storage::archive(string fileName){
 
 	content = TaskList::display("done");
 
-	if(content != MagicString::MESSAGE_EMPTY){
+	if((content != MagicString::MESSAGE_EMPTY) or (content.size() != 0)){
+	file << endl;
 	file << content;
 	}
 	file.close();
@@ -118,9 +119,9 @@ void storage::tempFile(){ //call by every command
 	temporary << content;	
 
 	content = TaskList::display("done");
-	temporary << content;
 	
-	if (content != MagicString::MESSAGE_EMPTY) {
+	if ((content != MagicString::MESSAGE_EMPTY) or (content.size() != 0)) {
+		file << endl;
 		temporary << content;
 	}
 
