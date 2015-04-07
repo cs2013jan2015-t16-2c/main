@@ -55,6 +55,8 @@ string storage::saveDone(){
 
 	file.open(DONE);
 	content = TaskList::display("done");
+	file << content;
+	
 	file.close();
 
 	return MagicString::DONE_TASK_SAVED;
@@ -68,6 +70,8 @@ string storage::saveProgress(){
 
 	file.open(PROGRESS);
 	content = TaskList::display("all");
+	file << content;
+
 	file.close();
 
 	return MagicString::IN_PROGRESS_TASK_SAVED;
