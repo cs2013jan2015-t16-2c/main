@@ -1,8 +1,7 @@
 //#define _CRT_SECURE_NO_WARNINGS
-#include "task.h"
-//#include "concol.h""
+#include "Task.h"
 #include "InterfaceOutput.h"
-//#include <ctime>
+//#include "concol.h""
 
 using namespace std;
 //using namespace eku;
@@ -285,13 +284,17 @@ Task::Task(string task, string input){
 
 string Task::ToString(){
 	char task[TASK_LEN];
-	if (priority == "A" || priority == "B" || priority == "C"){
-		strcpy_s(task, "(");
-		strcpy_s(task, priority.c_str());
-		strcpy_s(task, ") ");
-	}
 
-	strcpy_s(task, taskname.c_str());
+	if (priority != ""){
+		strcpy_s(task, "(");
+		strcat_s(task, priority.c_str());
+		strcat_s(task, ") ");
+		strcat_s(task, taskname.c_str());
+	}
+	else{
+		strcpy_s(task, taskname.c_str());
+	}
+		
 	if (task_type == DEADLINE_TASK_LABEL){
 		strcat_s(task, " [");
 		strcat_s(task, deadline_date.c_str());
@@ -598,13 +601,21 @@ bool Task::isEarlier(const Task b){
 	const string DEADLINE_TASK_LABEL = "deadline";
 	
 	//check priority first
-	if (priority > b.priority){
+	if (priority != "" && b.priority == ""){
 		return true;
 	}
-	else if (priority < b.priority){
+	else if (priority == "" && b.priority != ""){
 		return false;
 	}
-
+	else{
+		if (priority < b.priority){
+			return true;
+		}
+		else if (priority > b.priority){
+			return false;
+		}
+	}
+	
 	// floating task rank always at last
 	if (type_a == FLOATING_TASK_LABEL && type_b==FLOATING_TASK_LABEL){ 
 		if (taskname <= b.taskname){
