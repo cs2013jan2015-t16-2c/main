@@ -5,6 +5,7 @@
 #include "TaskList.h"
 
 int main() {
+	storage::backup();
 	InterfaceOutput::showToUser(storage::starting());
 	InterfaceOutput::showToUser(InterfaceOutput::displayWelcome());
 	InterfaceOutput::displayTime();
