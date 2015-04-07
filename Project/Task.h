@@ -51,10 +51,10 @@ private:
 	string task_group;
 	string place;
 	//V0.4
-	string getDay();
+	int getDay();
 	string getDate(string input);
 	string getDate(int add);
-
+	int getDayDiff(string day);
 };
 
 #endif

@@ -34,7 +34,6 @@ Task::Task(){
 
 Task::Task(string input){
 	if (!input.empty()){
-		cout << getDay();
 		std::size_t timed_task = input.find("-from");
 		std::size_t deadlined_task = input.find("-by");
 
@@ -729,14 +728,23 @@ bool Task::taskDone(){
 	return false;
 }
 
-string Task::getDay(){
-	const string DAY[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+int Task::getDay(){
+	const int DAY[] = { 0, 1, 2, 3, 4, 5, 6 };
 	time_t rawtime;
 	tm * timeinfo;
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 	int wday = timeinfo->tm_wday;
 	return DAY[wday];
+}
+
+int Task::getDayDiff(string day){
+	const string DAY[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+	for (int i = 0; i < 7; i++){
+		if (day == DAY[i]){
+			return i;
+		}
+	}
 }
 
 string Task::getDate(int add){
@@ -762,6 +770,18 @@ string Task::getDate(string input){
 	getdate = input.find("tmr");
 	if (getdate != std::string::npos){
 		return getDate(1);
+	}
+	getdate = input.find("this");
+	if (getdate != std::string::npos){
+		string day = input.substr(getdate+5,3);
+		int daydiff = getDayDiff(day) - getDay();
+		return getDate(daydiff);
+	}
+	getdate = input.find("next");
+	if (getdate != std::string::npos){
+		string day = input.substr(getdate + 5, 3);
+		int daydiff = getDayDiff(day) - getDay();
+		return getDate(daydiff+7);
 	}
 }
 
