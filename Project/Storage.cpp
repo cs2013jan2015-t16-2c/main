@@ -19,7 +19,8 @@ void storage::ending() {
 
 	content = TaskList::display("done");
 	
-	if(content != MagicString::MESSAGE_EMPTY){
+	if(content.size() != 0){
+		file << endl;
 		file << content;
 		file.close();
 	}
