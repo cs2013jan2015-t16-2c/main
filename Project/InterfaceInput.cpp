@@ -64,8 +64,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case REDO:
 		return TaskList::redo();	
 	case EXIT:
-		storage::deleteTemp();
-		storage::ending();
+		TaskList::copyToStorage();
 		cout << MagicString::MESSAGE_GOODBYE << endl;
 		exit(0);
 	case OTHERS:
