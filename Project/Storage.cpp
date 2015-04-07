@@ -102,17 +102,20 @@ void storage::backup(){ //call before starting function
 	ifstream temporary;
 	ofstream file;
 	string tempLine;
+	sting line
 
 	temporary.open(TEMP);
-	getline(temporary,tempLine);
+	getline(temporary,line);
 
-	if(tempLine.size()!= 0){
+	if(line.size()!= 0){
 		remove(FILENAME.c_str());
 		file.open(FILENAME);
 		
+		file << line << endl;
+
 		while(!temporary.eof()){
-			file << tempLine << endl;
 			getline(temporary,tempLine);
+			file << tempLine << endl;
 		}
 		file.close();
 		temporary.close();
