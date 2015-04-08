@@ -12,7 +12,6 @@ const string InterfaceInput::SHORTENED_COMMAND_UNDO = "un";
 const string InterfaceInput::SHORTENED_COMMAND_REDO = "re";
 const string InterfaceInput::SHORTENED_COMMAND_EXIT = "q";
 
-//@Cai Yu A0093586N
 string InterfaceInput::getUserCommand() {
 	string userCommand;
 
@@ -22,7 +21,6 @@ string InterfaceInput::getUserCommand() {
 	return userCommand;
 }
 
-//@Cai Yu A0093586N
 string InterfaceInput::executeUserCommand(string userCommand) {
 	string commandTypeString;
 	string taskString;
@@ -66,8 +64,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case REDO:
 		return TaskList::redo();	
 	case EXIT:
-		storage::deleteTemp();
-		storage::ending();
+		TaskList::copyToStorage();
 		cout << MagicString::MESSAGE_GOODBYE << endl;
 		exit(0);
 	case OTHERS:
@@ -76,7 +73,6 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	}
 }
 
-//@Cai Yu A0093586N
 InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString, string taskString) {
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
@@ -130,24 +126,20 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 	}
 }
 
-//@Cai Yu A0093586N
 string InterfaceInput::getFirstWord(string userCommand) {
 	return userCommand.substr(0, userCommand.find(' '));
 }
 
-//@Cai Yu A0093586N
 string InterfaceInput::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
 }
 
 // for unit test only
 // to call private functions
-//@Cai Yu A0093586N
 string InterfaceInput::testGetFirstWord(string testString) {
 	return InterfaceInput::getFirstWord(testString);
 }
 
-//@Cai Yu A0093586N
 string InterfaceInput::testRemoveFirstWord(string testString){
 	return InterfaceInput::removeFirstWord(testString);
 }

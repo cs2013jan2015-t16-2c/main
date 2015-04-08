@@ -3,6 +3,8 @@
 #include "Task.h"
 #include "storage.h"
 #include "TaskList.h"
+#include "DisplayedTaskList.h"
+#include "Help.h"
 
 int main() {
 	storage::backup();

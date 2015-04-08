@@ -23,15 +23,6 @@ public:
 	static const string DONE_TASK_SAVED;
 	static const string IN_PROGRESS_TASK_SAVED;
 	//task
-	static const int DAY[];
-	static const string DAY_S[];
-	static const string LABEL_SCHEDULED_FORMAT_1;
-	static const string LABEL_SCHEDULED_FORMAT_2;
-	static const string LABEL_SCHEDULED_FORMAT_3;
-	static const string LABEL_SCHEDULED_FORMAT_4;
-	static const string LABEL_REPEAT_FORMAT_1;
-	static const string LABEL_REPEAT_FORMAT_2;
-	static const string LABEL_REPEAT_FORMAT_3;
 	static const string LABEL_SCHEDULED_TASK;
 	static const string LABEL_DEADLINE_TASK;
 	static const string LABEL_FLOATING_TASK;

@@ -13,6 +13,7 @@ using namespace std;
 class TaskList
 {
 private:
+	static vector<Task> list;
 	static vector<string> taskGroup;
 	static vector<string> taskPlace;
 	static bool isLastCommandUndo;
@@ -30,9 +31,9 @@ private:
 	static void addTaskGroup(Task newtask);
 	static void addPlace(Task newtask);
 	static bool isExist(vector<string> checkingList, string input);
-public:
-	static vector<Task> list;
+	static void addRepeatTask(Task newTask, string repear_type, int repeat_time);
 
+public:
 	static void copyFromStorage();
 	static void copyToStorage();
 

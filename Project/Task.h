@@ -5,7 +5,6 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <ctime>
 
 using namespace std;
 
@@ -20,6 +19,7 @@ public:
 	string getTaskname();
 	string getTaskGroup();
 	string getPlace();
+	string getDate();
 	void UpdateTask(string input);
 	void markAsDone();
 	void markAsUndone();
@@ -35,7 +35,9 @@ public:
 	bool isEarlier(const Task b);
 	//V0.3
 	bool taskDone(); // return true if task status is done
-	string getTodayDate();
+
+	void recurringAdd(string repear_type);
+	string getDate(int add);
 	
 
 private:
@@ -54,12 +56,8 @@ private:
 	//V0.4
 	int getDay();
 	string getDate(string input);
-	string getDate(int add);
 	int getDayDiff(string day);
-	void addRepeatTask(int repeat_time, string repeat_type);
-	string addDay(string date, int day);
-	bool checkTimeClash();
-	time_t getTaskSchedule(string task_type, int i); // i to indicate starting date or ending date for scheduled task
+	string returnDate(int month, int day);
 };
 
 #endif

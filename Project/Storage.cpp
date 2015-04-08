@@ -15,18 +15,18 @@ void storage::ending() {
 
 	file.open(FILENAME);
 	content = TaskList::display("all");
-	file << content;	
+	if (content != MagicString::TASK_EMPTY2){
+		file << content;
+		file.close();
+	}
 
 	content = TaskList::display("done");
-	
-	if((content != MagicString::MESSAGE_EMPTY) || (content.size() != 0)){
+	if(content != MagicString::TASK_EMPTY2){
 		file << endl;
 		file << content;
 		file.close();
 	}
-	else{
-		file.close();
-	}
+	file.close();
 }
 
 string storage::starting() {
@@ -121,7 +121,7 @@ void storage::tempFile(){ //call by every command
 	content = TaskList::display("done");
 	
 	if ((content != MagicString::MESSAGE_EMPTY) || (content.size() != 0)) {
-		//file << endl;
+		temporary << endl;
 		temporary << content;
 	}
 
