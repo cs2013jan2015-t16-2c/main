@@ -1,6 +1,7 @@
 #include "Help.h"
 #include "MagicString.h"
 
+//@Cai Yu A0093586N
 void Help::mainHelpPage() {
 	cout << MagicString::HELP_MAIN_L1 << endl;
 	cout << MagicString::HELP_MAIN_L2 << endl;
@@ -17,6 +18,7 @@ void Help::mainHelpPage() {
 	return;
 }
 
+//@Cai Yu A0093586N
 void Help::addHelpPage() {
 	cout << MagicString::INSTRUCTION_ADD << endl;
 	cout << MagicString::INSTRUCTION_ADD_FLOATING << endl;
@@ -31,6 +33,7 @@ void Help::addHelpPage() {
 	return;
 }
 
+//@Cai Yu A0093586N
 void Help::displayHelpPage() {
 	cout << MagicString::INSTRUCTION_DISPLAY << endl;
 	cout << MagicString::INSTRUCTION_DISPLAY_ALL << endl;
@@ -46,6 +49,7 @@ void Help::displayHelpPage() {
 	return;
 }
 
+//@Cai Yu A0093586N
 void Help::deleteHelpPage() {
 	cout << MagicString::INSTRUCTION_COMMON << endl;
 	cout << MagicString::INSTRUCTION_DELETE << endl;
@@ -59,6 +63,7 @@ void Help::deleteHelpPage() {
 	return;
 }
 
+//@Cai Yu A0093586N
 void Help::updateHelpPage() {
 	cout << MagicString::INSTRUCTION_COMMON << endl;
 	cout << MagicString::INSTRUCTION_UPDATE << endl;
@@ -72,6 +77,7 @@ void Help::updateHelpPage() {
 	return;
 }
 
+//@Cai Yu A0093586N
 void Help::undoHelpPage() {
 	cout << MagicString::INSTRUCTION_UNDO << endl;
 	cout << MagicString::DIVIDER;
@@ -83,6 +89,7 @@ void Help::undoHelpPage() {
 	return;
 }
 
+//@Cai Yu A0093586N
 void Help::redoHelpPage() {
 	cout << MagicString::INSTRUCTION_REDO << endl;
 	cout << MagicString::DIVIDER;
@@ -94,6 +101,7 @@ void Help::redoHelpPage() {
 	return;
 }
 
+//@Cai Yu A0093586N
 void Help::archiveHelpPage() {
 	cout << MagicString::INSTRUCTION_ARCHIVE << endl;
 	cout << MagicString::INSTRUCTION_ARCHIVE_EXP1 << endl;
@@ -107,7 +115,8 @@ void Help::archiveHelpPage() {
 	return;
 }
 
-void Help::exitHelpPage () {
+//@Cai Yu A0093586N
+void Help::exitHelpPage() {
 	cout << MagicString::INSTRUCTION_EXIT << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
@@ -120,10 +129,12 @@ void Help::exitHelpPage () {
 
 bool Help::isInMainHelpPage = true;
 
+//@Cai Yu A0093586N
 void Help::showHelp(string helpText) {
 	cout << helpText;
 }
 
+//@Cai Yu A0093586N
 string Help::executeHelpCommand() {
 	Help::mainHelpPage();
 	string userInput;

@@ -4,10 +4,12 @@
 
 string InterfaceOutput::TodayDate;
 
+//@Cai Yu A0093586N
 string InterfaceOutput::displayWelcome() {
 	return MagicString::MESSAGE_WELCOME;
 }
 
+//@Cai Yu A0093586N
 void InterfaceOutput::displayTime() {
 	cout << MagicString::TODAY;
 
@@ -38,14 +40,17 @@ void InterfaceOutput::displayTime() {
 	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
 }
 
+//@Cai Yu A0093586N
 string InterfaceOutput::returnTodayDate(){
 	return TodayDate;
 }
 
+//@Cai Yu A0093586N
 string InterfaceOutput::displayTip() {
 	return MagicString::MESSAGE_TIP;
 }
 
+//@Cai Yu A0093586N
 void InterfaceOutput::showToUser(string text) {
 	cout << text << endl;
 }
