@@ -176,17 +176,28 @@ Task::Task(string input){
 			string repeat_type = "";
 			input = input.substr(repeat + 6);
 			std::size_t repeat_format = input.find("day");
+			//repeat every day
 			if (repeat_format != std::string::npos){
 				repeat_type = "day";
 				repeat_time = atoi(input.substr(repeat_format + 3).c_str());
 				addRepeatTask(repeat_time, repeat_type);
 			}
 			else{
+			//repeat every month
 				std::size_t repeat_format = input.find("month");
 				if (repeat_format != std::string::npos){
 					repeat_type = "month";
 					repeat_time = atoi(input.substr(repeat_format + 5).c_str());
 					addRepeatTask(repeat_time, repeat_type);
+				}
+				else{
+			//repeat every week
+					std::size_t repeat_format = input.find("week");
+					if (repeat_format != std::string::npos){
+						repeat_type = "week";
+						repeat_time = atoi(input.substr(repeat_format + 5).c_str());
+						addRepeatTask(repeat_time, repeat_type);
+					}
 				}
 			}
 		}
@@ -811,15 +822,21 @@ string Task::getDate(string input){
 void Task::addRepeatTask(int repeat_time, string repeat_type){
 	string add_task;
 	if (repeat_type == "day"){
-		for (int i = 0; i < repeat_time; i++){
+		for (int i = 0; i < repeat_time - 1 ; i++){
 			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 1 + i) + " -to " + end_time + " " + addDay(scheduled_end_date,1+i);
 			//cout << input << endl;
 			TaskList::addTask(input);
 		}
 	}
 	else if (repeat_type == "month"){
-		for (int i = 1; i <= repeat_time; i++){
+		for (int i = 1; i <= repeat_time - 1; i++){
 			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 30 * i) + " -to " + end_time + " " + addDay(scheduled_end_date, 30 * i);
+			TaskList::addTask(input);
+		}
+	}
+	else if (repeat_type == "week"){
+		for (int i = 1; i <= repeat_time - 1; i++){
+			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 7 * i) + " -to " + end_time + " " + addDay(scheduled_end_date, 7 * i);
 			TaskList::addTask(input);
 		}
 	}
