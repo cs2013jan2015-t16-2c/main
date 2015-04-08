@@ -16,6 +16,7 @@ const string MagicString::DONE_TASK_SAVED = "Done tasks have been saved into the
 const string MagicString::IN_PROGRESS_TASK_SAVED = "In progress tasks have been saved into the file";
 
 //Task
+//@Yu Pui Yin A0135141W
 const int MagicString::DAY[] = { 0, 1, 2, 3, 4, 5, 6 };
 const string MagicString::DAY_S[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 const string MagicString::LABEL_SCHEDULED_FORMAT_1 = "-from";

@@ -6,9 +6,9 @@
 
 using namespace std;
 //using namespace eku;
-
 const int TASK_LEN = 256;
 
+//@Yu Pui Yin A0135141W
 Task::Task(){
 	taskname = "";
 	task_type = "";
@@ -23,7 +23,7 @@ Task::Task(){
 	task_group = "";
 	place = "";
 }
-
+//@Yu Pui Yin A0135141W
 Task::Task(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find(MagicString::LABEL_SCHEDULED_FORMAT_1);
@@ -199,6 +199,7 @@ Task::Task(string input){
 
 Task::~Task(){}
 
+//@Yu Pui Yin A0135141W
 Task::Task(string task, string input){
 	if (!task.empty()){
 		//store status
@@ -388,10 +389,12 @@ string Task::ToString(){
 	return task;
 }
 
+//@Yu Pui Yin A0135141W
 string Task::getTaskname(){
 	return taskname;
 }
 
+//@Yu Pui Yin A0135141W
 void Task::UpdateTask(string input){
 	if (!input.empty()){
 		std::size_t timed_task = input.find(MagicString::LABEL_SCHEDULED_FORMAT_1);
@@ -476,23 +479,27 @@ void Task::UpdateTask(string input){
 	//checkInputValidation();
 }
 
+//@Yu Pui Yin A0135141W
 void Task::markAsDone(){
 	status = MagicString::LABEL_FINISHED_TASK;
 }
 
+//@Yu Pui Yin A0135141W
 void Task::markAsUndone(){
 	status = MagicString::LABEL_PROCESSING_TASK;
 }
 
+//@Yu Pui Yin A0135141W
 void Task::setPriority(string input){
 	priority = input;
 }
 
+//@Yu Pui Yin A0135141W
 string Task::getPriority(){
 	return priority;
 }
 
-
+//@Yu Pui Yin A0135141W
 /*void Task::checkInputValidation(){
 	concolinit();
 	//check for valid time frame
@@ -601,18 +608,22 @@ string Task::getPriority(){
 	}
 }*/
 
+//@Yu Pui Yin A0135141W
 int Task::charToASCII(char c){
 	return int(c);
 }
 
+//@Yu Pui Yin A0135141W
 char Task::ASCIIToChar(int c){
 	return char(c);
 }
 
+//@Yu Pui Yin A0135141W
 string Task::getTaskType(){
 	return task_type;
 }
 
+//@Yu Pui Yin A0135141W
 //return true if a is before b
 bool Task::isEarlier(const Task b){
 	int mon_a; //storing month for a
@@ -736,14 +747,17 @@ bool Task::isEarlier(const Task b){
 	}
 }
 
+//@Yu Pui Yin A0135141W
 string Task::getTaskGroup(){
 	return task_group;
 }
 
+//@Yu Pui Yin A0135141W
 string Task::getPlace(){
 	return place;
 }
 
+//@Yu Pui Yin A0135141W
 bool Task::taskDone(){
 	if (status == MagicString::LABEL_FINISHED_TASK){
 		return true;
@@ -751,6 +765,7 @@ bool Task::taskDone(){
 	return false;
 }
 
+//@Yu Pui Yin A0135141W
 int Task::getDay(){
 	time_t rawtime;
 	tm * timeinfo;
@@ -760,6 +775,7 @@ int Task::getDay(){
 	return MagicString::DAY[wday];
 }
 
+//@Yu Pui Yin A0135141W
 int Task::getDayDiff(string day){
 	for (int i = 0; i < 7; i++){
 		if (day == MagicString::DAY_S[i]){
@@ -768,6 +784,7 @@ int Task::getDayDiff(string day){
 	}
 }
 
+//@Yu Pui Yin A0135141W
 string Task::getDate(int add){
 	{
 		time_t rawtime;
@@ -783,6 +800,7 @@ string Task::getDate(int add){
 	}
 }
 
+//@Yu Pui Yin A0135141W
 string Task::getDate(string input){
 	std::size_t getdate = input.find("today");
 	if (getdate != std::string::npos){
@@ -806,6 +824,7 @@ string Task::getDate(string input){
 	}
 }
 
+//@Yu Pui Yin A0135141W
 void Task::addRepeatTask(int repeat_time, string repeat_type){
 	string add_task;
 	if (repeat_type == MagicString::LABEL_REPEAT_FORMAT_1){
@@ -828,6 +847,7 @@ void Task::addRepeatTask(int repeat_time, string repeat_type){
 	}
 }
 
+//@Yu Pui Yin A0135141W
 string Task::addDay(string date, int day){
 	std::size_t getdate = date.find("/");
 	int mon = atoi(date.substr(getdate + 1).c_str());
@@ -854,6 +874,7 @@ string Task::addDay(string date, int day){
 	return day_s + "/" + mon_s;
 }
 
+//@Yu Pui Yin A0135141W
 bool Task::checkTimeClash(){
 	if (!TaskList::list.empty()){
 		for (int i = 0; i < TaskList::list.size(); i++){
@@ -877,6 +898,7 @@ bool Task::checkTimeClash(){
 	return false;
 }
 
+//@Yu Pui Yin A0135141W
 time_t Task::getTaskSchedule(string task_type, int i){ //i = 0 for schedule start date and start time
 	time_t taskdate;
 	int y, mon, mday, hr, min;
