@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <ctime>
 
 using namespace std;
 
@@ -57,6 +58,8 @@ private:
 	int getDayDiff(string day);
 	void addRepeatTask(int repeat_time, string repeat_type);
 	string addDay(string date, int day);
+	bool checkTimeClash();
+	time_t getTaskSchedule(string task_type, int i); // i to indicate starting date or ending date for scheduled task
 };
 
 #endif

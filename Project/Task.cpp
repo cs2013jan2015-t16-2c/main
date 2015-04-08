@@ -3,7 +3,6 @@
 //#include "TaskList.cpp"
 //#include "concol.h""
 #include "InterfaceOutput.h"
-#include <ctime>
 
 using namespace std;
 //using namespace eku;
@@ -193,6 +192,7 @@ Task::Task(string input){
 				}
 			}
 		}
+		checkTimeClash();
 	}
 	//checkInputValidation();
 }
@@ -752,19 +752,17 @@ bool Task::taskDone(){
 }
 
 int Task::getDay(){
-	const int DAY[] = { 0, 1, 2, 3, 4, 5, 6 };
 	time_t rawtime;
 	tm * timeinfo;
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 	int wday = timeinfo->tm_wday;
-	return DAY[wday];
+	return MagicString::DAY[wday];
 }
 
 int Task::getDayDiff(string day){
-	const string DAY[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 	for (int i = 0; i < 7; i++){
-		if (day == DAY[i]){
+		if (day == MagicString::DAY_S[i]){
 			return i;
 		}
 	}
@@ -812,19 +810,19 @@ void Task::addRepeatTask(int repeat_time, string repeat_type){
 	string add_task;
 	if (repeat_type == MagicString::LABEL_REPEAT_FORMAT_1){
 		for (int i = 0; i < repeat_time - 1 ; i++){
-			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 1 + i) + " -to " + end_time + " " + addDay(scheduled_end_date,1+i);
+			string input = taskname + " " + MagicString::LABEL_SCHEDULED_FORMAT_1 + " " + start_time + " " + addDay(scheduled_start_date, 1 + i) + " " + MagicString::LABEL_SCHEDULED_FORMAT_2 + " " + end_time + " " + addDay(scheduled_end_date, 1 + i);
 			TaskList::addTask(input);
 		}
 	}
 	else if (repeat_type == MagicString::LABEL_REPEAT_FORMAT_2){
 		for (int i = 1; i <= repeat_time - 1; i++){
-			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 30 * i) + " -to " + end_time + " " + addDay(scheduled_end_date, 30 * i);
+			string input = taskname + " " + MagicString::LABEL_SCHEDULED_FORMAT_1 + " " + start_time + " " + addDay(scheduled_start_date, 30 * i) + " " + MagicString::LABEL_SCHEDULED_FORMAT_2 + " " + end_time + " " + addDay(scheduled_end_date, 30 * i);
 			TaskList::addTask(input);
 		}
 	}
 	else if (repeat_type == MagicString::LABEL_REPEAT_FORMAT_3){
 		for (int i = 1; i <= repeat_time - 1; i++){
-			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 7 * i) + " -to " + end_time + " " + addDay(scheduled_end_date, 7 * i);
+			string input = taskname + " " + MagicString::LABEL_SCHEDULED_FORMAT_1 + " " + start_time + " " + addDay(scheduled_start_date, 7 * i) + " " + MagicString::LABEL_SCHEDULED_FORMAT_2 + " " + end_time + " " + addDay(scheduled_end_date, 7 * i);
 			TaskList::addTask(input);
 		}
 	}
@@ -854,4 +852,86 @@ string Task::addDay(string date, int day){
 	string mon_s = to_string(mon);
 	string day_s = to_string(mday);
 	return day_s + "/" + mon_s;
+}
+
+bool Task::checkTimeClash(){
+	if (!TaskList::list.empty()){
+		for (int i = 0; i < TaskList::list.size(); i++){
+			//for both task_type == timed, check new task starting_time / ending_time inbetween list.starting_time and ending_time
+			if ((TaskList::list[i].task_type == MagicString::LABEL_SCHEDULED_TASK) && (task_type == MagicString::LABEL_SCHEDULED_TASK)){
+				if ((getTaskSchedule(task_type, 1) < TaskList::list[i].getTaskSchedule(task_type, 1)) && (getTaskSchedule(task_type, 1) > TaskList::list[i].getTaskSchedule(task_type, 0))){
+					cout << "clashed with task " << TaskList::list.size() - i << " : " << TaskList::list[i].taskname << endl;
+					return true;
+				}
+				else if((getTaskSchedule(task_type, 0) >= TaskList::list[i].getTaskSchedule(task_type, 0)) && (getTaskSchedule(task_type, 1) <= TaskList::list[i].getTaskSchedule(task_type, 1))){
+					cout << "clashed with task " << TaskList::list.size() - i << " : " << TaskList::list[i].taskname << endl;
+					return true;
+				}
+				else if ((getTaskSchedule(task_type, 0) > TaskList::list[i].getTaskSchedule(task_type, 0)) && (getTaskSchedule(task_type, 0) < TaskList::list[i].getTaskSchedule(task_type, 1))){
+					cout << "clashed with task " << TaskList::list.size() - i << " : " << TaskList::list[i].taskname << endl;
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+time_t Task::getTaskSchedule(string task_type, int i){ //i = 0 for schedule start date and start time
+	time_t taskdate;
+	int y, mon, mday, hr, min;
+	if (task_type == MagicString::LABEL_SCHEDULED_TASK){
+		if (i == 0){
+			std::size_t symbol = scheduled_start_date.find("[");
+			if (symbol != std::string::npos){
+				scheduled_start_date = scheduled_start_date.substr(symbol+1);
+			}
+			std::size_t getdate = scheduled_start_date.find("/");
+			std::size_t gettime = start_time.find(":");
+			mon = atoi(scheduled_start_date.substr(getdate + 1).c_str());
+			mday = atoi(scheduled_start_date.substr(0, getdate).c_str());
+			hr = atoi(start_time.substr(0, gettime).c_str());
+			min = atoi(start_time.substr(gettime + 1).c_str());
+			y = 2015;
+		}
+		else{
+			std::size_t symbol = scheduled_end_date.find("[");
+			if (symbol != std::string::npos){
+				scheduled_end_date = scheduled_end_date.substr(symbol+1);
+			}
+			std::size_t getdate = scheduled_end_date.find("/");
+			std::size_t gettime = end_time.find(":");
+			mon = atoi(scheduled_end_date.substr(getdate + 1).c_str());
+			mday = atoi(scheduled_end_date.substr(0, getdate).c_str());
+			hr = atoi(end_time.substr(0, gettime).c_str());
+			min = atoi(end_time.substr(gettime + 1).c_str());
+			y = 2015;
+		}
+	}
+	else if (task_type == MagicString::LABEL_DEADLINE_TASK){
+		std::size_t symbol = deadline_date.find("[");
+		if (symbol != std::string::npos){
+			deadline_date = deadline_date.substr(symbol+1);
+		}
+		std::size_t getdate = deadline_date.find("/");
+		std::size_t gettime = deadline_time.find(":");
+		mon = atoi(deadline_date.substr(getdate + 1).c_str());
+		mday = atoi(deadline_date.substr(0, getdate).c_str());
+		hr = atoi(deadline_time.substr(0, gettime).c_str());
+		min = atoi(deadline_time.substr(gettime + 1).c_str());
+		y = 2015;
+
+	}
+	struct std::tm * t = {};
+	time(&taskdate);
+	t = localtime(&taskdate);
+	t->tm_year = y - 1900;
+	t->tm_mon = mon - 1;
+	t->tm_mday = mday;
+	t->tm_hour = hr;
+	t->tm_min = min;
+
+	taskdate = std::mktime(t);
+	//cout << asctime(t) << endl;
+	return taskdate;
 }
