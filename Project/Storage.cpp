@@ -84,13 +84,16 @@ string storage::archive(string fileName){
 
 	file.open(fileName);
 	content = TaskList::display("all");
-	file << content;
+	if (content != MagicString::TASK_EMPTY2){
+		file << content;
+		file.close();
+	}
 
 	content = TaskList::display("done");
-
-	if((content != MagicString::MESSAGE_EMPTY) || (content.size() != 0)){
-	file << endl;
-	file << content;
+	if (content != MagicString::TASK_EMPTY2){
+		file << endl;
+		file << content;
+		file.close();
 	}
 	file.close();
 	
@@ -116,15 +119,17 @@ void storage::tempFile(){ //call by every command
 	remove(TEMP.c_str());
 	temporary.open(TEMP);
 	content = TaskList::display("all");
-	temporary << content;	
-
-	content = TaskList::display("done");
-	
-	if ((content != MagicString::MESSAGE_EMPTY) || (content.size() != 0)) {
-		temporary << endl;
+	if (content != MagicString::TASK_EMPTY2){
 		temporary << content;
+		temporary.close();
 	}
 
+	content = TaskList::display("done");
+	if (content != MagicString::TASK_EMPTY2){
+		temporary << endl;
+		temporary << content;
+		temporary.close();
+	}
 	temporary.close();
 }
 
@@ -160,14 +165,3 @@ void storage::backup(){ //call before starting function
 		remove(TEMP.c_str());
 	}
 }
-
-
-
-
-
-
-
-
-
-
-

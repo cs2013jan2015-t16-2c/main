@@ -242,7 +242,7 @@ Task::Task(string task, string input){
 
 				std::size_t get_deadline_time = timeInfo.find(":");
 				if (get_deadline_time != std::string::npos){
-					deadline_time = timeInfo.substr(get_deadline_date - 2, 5);
+					deadline_time = timeInfo.substr(get_deadline_time - 2, 5);
 				}
 				else{
 					deadline_time = "";
