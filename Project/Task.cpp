@@ -824,7 +824,6 @@ void Task::addRepeatTask(int repeat_time, string repeat_type){
 	if (repeat_type == "day"){
 		for (int i = 0; i < repeat_time - 1 ; i++){
 			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 1 + i) + " -to " + end_time + " " + addDay(scheduled_end_date,1+i);
-			//cout << input << endl;
 			TaskList::addTask(input);
 		}
 	}
@@ -846,9 +845,12 @@ string Task::addDay(string date, int day){
 	std::size_t getdate = date.find("/");
 	int mon = atoi(date.substr(getdate + 1).c_str());
 	int mday = atoi(date.substr(0, getdate).c_str());
+	int y = 2015, m = mon, d = mday;
+
 	std::tm t = {};
-	t.tm_mon = mon;
-	t.tm_mday = mday;
+	t.tm_year = y - 1900;
+	t.tm_mon = m - 1;
+	t.tm_mday = d;
 	// modify
 	if (day % 30 == 0){
 		t.tm_mon += (day/30) - 1;
@@ -856,7 +858,11 @@ string Task::addDay(string date, int day){
 	else{
 		t.tm_mday += day;
 	}
-	string mon_s = to_string(t.tm_mon);
-	string day_s = to_string(t.tm_mday);
+	std::mktime(&t);
+	// show result
+	mon = 1 + t.tm_mon;
+	mday = t.tm_mday;
+	string mon_s = to_string(mon);
+	string day_s = to_string(mday);
 	return day_s + "/" + mon_s;
 }
