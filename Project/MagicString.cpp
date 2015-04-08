@@ -16,6 +16,13 @@ const string MagicString::DONE_TASK_SAVED = "Done tasks have been saved into the
 const string MagicString::IN_PROGRESS_TASK_SAVED = "In progress tasks have been saved into the file";
 
 //Task
+const string MagicString::LABEL_SCHEDULED_FORMAT_1 = "-from";
+const string MagicString::LABEL_SCHEDULED_FORMAT_2 = "-to";
+const string MagicString::LABEL_SCHEDULED_FORMAT_3 = "-by";
+const string MagicString::LABEL_SCHEDULED_FORMAT_4 = "-every";
+const string MagicString::LABEL_REPEAT_FORMAT_1 = "day";
+const string MagicString::LABEL_REPEAT_FORMAT_2 = "month";
+const string MagicString::LABEL_REPEAT_FORMAT_3 = "week";
 const string MagicString::LABEL_SCHEDULED_TASK = "timed";
 const string MagicString::LABEL_DEADLINE_TASK = "deadline";
 const string MagicString::LABEL_FLOATING_TASK = "floating";
@@ -24,6 +31,7 @@ const string MagicString::LABEL_FINISHED_TASK = "done";
 const string MagicString::MESSAGE_INVALID_DATE = "invalid date, please input a valid one";
 const string MagicString::MESSAGE_INVALID_TIME = "invalid time, please enter a valid one";
 const string MagicString::MESSAGE2_INVALID_TIME = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
+
 //TaskList
 const string MagicString::TASK_ADDED = "Task added";
 const string MagicString::TASK_EMPTY = "Task list is empty";

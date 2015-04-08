@@ -9,14 +9,6 @@ using namespace std;
 //using namespace eku;
 
 const int TASK_LEN = 256;
-const string SCHEDULED_TASK_LABEL = "timed";
-const string DEADLINE_TASK_LABEL = "deadline";
-const string FLOATING_TASK_LABEL = "floating";
-const string PROCESSING_TASK_LABEL = "in progress";
-const string FINISHED_TASK_LABEL = "done";
-const string INVALID_DATE_MSG = "invalid date, please input a valid one";
-const string INVALID_TIME_MSG = "invalid time, please enter a valid one";
-const string INVALID_TIME_MSG2 = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 
 Task::Task(){
 	taskname = "";
@@ -35,14 +27,14 @@ Task::Task(){
 
 Task::Task(string input){
 	if (!input.empty()){
-		std::size_t timed_task = input.find("-from");
-		std::size_t deadlined_task = input.find("-by");
+		std::size_t timed_task = input.find(MagicString::LABEL_SCHEDULED_FORMAT_1);
+		std::size_t deadlined_task = input.find(MagicString::LABEL_SCHEDULED_FORMAT_3);
 
 		std::size_t get_group = input.find("#");
 		std::size_t get_place = input.find("@");
 		if (timed_task != std::string::npos){
-			std::size_t ending_time = input.find("-to");
-			task_type = SCHEDULED_TASK_LABEL;
+			std::size_t ending_time = input.find(MagicString::LABEL_SCHEDULED_FORMAT_2);
+			task_type = MagicString::LABEL_SCHEDULED_TASK;
 			taskname = input.substr(0, timed_task - 1);
 
 			string timeInfo = input.substr(timed_task);
@@ -95,10 +87,10 @@ Task::Task(string input){
 			deadline_time = "";
 			deadline_date = "";
 			priority = "";
-			status = PROCESSING_TASK_LABEL;
+			status = MagicString::LABEL_PROCESSING_TASK;
 		}
 		else if (deadlined_task != std::string::npos){
-			task_type = DEADLINE_TASK_LABEL;
+			task_type = MagicString::LABEL_DEADLINE_TASK;
 			taskname = input.substr(0, deadlined_task - 1);
 			
 			string timeInfo = input.substr(deadlined_task);
@@ -124,10 +116,10 @@ Task::Task(string input){
 			scheduled_start_date = "";
 			scheduled_end_date = "";
 			priority = "";
-			status = PROCESSING_TASK_LABEL;
+			status = MagicString::LABEL_PROCESSING_TASK;
 		}
 		else{
-			task_type = FLOATING_TASK_LABEL;
+			task_type = MagicString::LABEL_FLOATING_TASK;
 			start_time = "";
 			end_time = "";
 			deadline_time = "";
@@ -135,7 +127,7 @@ Task::Task(string input){
 			scheduled_end_date = "";
 			deadline_date = "";
 			priority = "";
-			status = PROCESSING_TASK_LABEL;
+			status = MagicString::LABEL_PROCESSING_TASK;
 			if ((get_group != std::string::npos) && (get_place != std::string::npos)){
 				taskname = input.substr(0, get_group - 1);
 			}
@@ -169,32 +161,32 @@ Task::Task(string input){
 			task_group = "";
 		}
 		//V0.4
-		std::size_t repeat = input.find("-every");
+		std::size_t repeat = input.find(MagicString::LABEL_SCHEDULED_FORMAT_4);
 		if (repeat != std::string::npos){
 			//task repeat every day
 			int repeat_time = 0;
 			string repeat_type = "";
 			input = input.substr(repeat + 6);
-			std::size_t repeat_format = input.find("day");
+			std::size_t repeat_format = input.find(MagicString::LABEL_REPEAT_FORMAT_1);
 			//repeat every day
 			if (repeat_format != std::string::npos){
-				repeat_type = "day";
+				repeat_type = MagicString::LABEL_REPEAT_FORMAT_1;
 				repeat_time = atoi(input.substr(repeat_format + 3).c_str());
 				addRepeatTask(repeat_time, repeat_type);
 			}
 			else{
 			//repeat every month
-				std::size_t repeat_format = input.find("month");
+				std::size_t repeat_format = input.find(MagicString::LABEL_REPEAT_FORMAT_2);
 				if (repeat_format != std::string::npos){
-					repeat_type = "month";
+					repeat_type = MagicString::LABEL_REPEAT_FORMAT_2;
 					repeat_time = atoi(input.substr(repeat_format + 5).c_str());
 					addRepeatTask(repeat_time, repeat_type);
 				}
 				else{
 			//repeat every week
-					std::size_t repeat_format = input.find("week");
+					std::size_t repeat_format = input.find(MagicString::LABEL_REPEAT_FORMAT_3);
 					if (repeat_format != std::string::npos){
-						repeat_type = "week";
+						repeat_type = MagicString::LABEL_REPEAT_FORMAT_3;
 						repeat_time = atoi(input.substr(repeat_format + 5).c_str());
 						addRepeatTask(repeat_time, repeat_type);
 					}
@@ -210,14 +202,14 @@ Task::~Task(){}
 Task::Task(string task, string input){
 	if (!task.empty()){
 		//store status
-		std::size_t find_status = task.find(PROCESSING_TASK_LABEL);
+		std::size_t find_status = task.find(MagicString::LABEL_PROCESSING_TASK);
 		if (find_status != std::string::npos){
-			status = PROCESSING_TASK_LABEL;
+			status = MagicString::LABEL_PROCESSING_TASK;
 		}
 		else{
-			std::size_t find_status = task.find(FINISHED_TASK_LABEL);
+			std::size_t find_status = task.find(MagicString::LABEL_FINISHED_TASK);
 			if (find_status != std::string::npos){
-				status = FINISHED_TASK_LABEL;
+				status = MagicString::LABEL_FINISHED_TASK;
 			}
 			else{
 				status = "";
@@ -243,7 +235,7 @@ Task::Task(string task, string input){
 		if (get_starting_timeInfo != std::string::npos){
 			taskname = task.substr(get_taskname, get_starting_timeInfo - get_taskname - 1);
 			if (get_ending_timeInfo != std::string::npos){
-				task_type = SCHEDULED_TASK_LABEL;
+				task_type = MagicString::LABEL_SCHEDULED_TASK;
 				std::size_t get_start_date = task.find("/", get_starting_timeInfo);
 				scheduled_start_date = task.substr(get_start_date - 2, 5);
 				std::size_t get_end_date = task.find("/", get_ending_timeInfo);
@@ -269,7 +261,7 @@ Task::Task(string task, string input){
 				}
 			}
 			else{
-				task_type = DEADLINE_TASK_LABEL;
+				task_type = MagicString::LABEL_DEADLINE_TASK;
 				std::size_t get_deadline_date = task.find("/", get_starting_timeInfo);
 				deadline_date = task.substr(get_deadline_date - 2, 5);
 
@@ -283,7 +275,7 @@ Task::Task(string task, string input){
 			}
 		}
 		else{
-			task_type = FLOATING_TASK_LABEL;
+			task_type = MagicString::LABEL_FLOATING_TASK;
 			if ((get_group != std::string::npos) && (get_place != std::string::npos)){
 				taskname = task.substr(0, get_group - 1);
 			}
@@ -332,7 +324,7 @@ string Task::ToString(){
 	}
 
 	strcpy_s(task, taskname.c_str());
-	if (task_type == DEADLINE_TASK_LABEL){
+	if (task_type == MagicString::LABEL_DEADLINE_TASK){
 		strcat_s(task, " [");
 		strcat_s(task, deadline_date.c_str());
 		strcat_s(task, " ");
@@ -351,7 +343,7 @@ string Task::ToString(){
 			strcat_s(task, " ");
 		}
 	}
-	else if (task_type == SCHEDULED_TASK_LABEL){
+	else if (task_type == MagicString::LABEL_SCHEDULED_TASK){
 		strcat_s(task, " [");
 		strcat_s(task, scheduled_start_date.c_str());
 		strcat_s(task, " ");
@@ -377,7 +369,7 @@ string Task::ToString(){
 			strcat_s(task, " ");
 		}
 	}
-	else if (task_type == FLOATING_TASK_LABEL){
+	else if (task_type == MagicString::LABEL_FLOATING_TASK){
 		strcat_s(task, " ");
 		if (task_group != ""){
 			strcat_s(task, "#");
@@ -402,13 +394,13 @@ string Task::getTaskname(){
 
 void Task::UpdateTask(string input){
 	if (!input.empty()){
-		std::size_t timed_task = input.find("-from");
-		std::size_t deadlined_task = input.find("-by");
+		std::size_t timed_task = input.find(MagicString::LABEL_SCHEDULED_FORMAT_1);
+		std::size_t deadlined_task = input.find(MagicString::LABEL_SCHEDULED_FORMAT_3);
 
 		if (timed_task != std::string::npos){
-			std::size_t ending_time = input.find("-to");
+			std::size_t ending_time = input.find(MagicString::LABEL_SCHEDULED_FORMAT_2);
 
-			task_type = SCHEDULED_TASK_LABEL;
+			task_type = MagicString::LABEL_SCHEDULED_TASK;
 
 			string timeInfo = input.substr(timed_task);
 			string endTimeInfo = input.substr(ending_time);
@@ -455,7 +447,7 @@ void Task::UpdateTask(string input){
 			deadline_date = "";
 		}
 		else if (deadlined_task != std::string::npos){
-			task_type = DEADLINE_TASK_LABEL;
+			task_type = MagicString::LABEL_DEADLINE_TASK;
 
 			string timeInfo = input.substr(deadlined_task);
 			std::size_t get_date = timeInfo.find("/");
@@ -485,11 +477,11 @@ void Task::UpdateTask(string input){
 }
 
 void Task::markAsDone(){
-	status = FINISHED_TASK_LABEL;
+	status = MagicString::LABEL_FINISHED_TASK;
 }
 
 void Task::markAsUndone(){
-	status = PROCESSING_TASK_LABEL;
+	status = MagicString::LABEL_PROCESSING_TASK;
 }
 
 void Task::setPriority(string input){
@@ -511,7 +503,7 @@ string Task::getPriority(){
 	int end_mins;
 
 	//check time frame in scheduled task
-	while ((task_type == SCHEDULED_TASK_LABEL) && (!valid_time)){
+	while ((task_type == MagicString::LABEL_SCHEDULED_TASK) && (!valid_time)){
 		std::size_t get_start_time = start_time.find(":");
 		std::size_t get_end_time = end_time.find(":");
 		start_hour = atoi(start_time.substr(0, get_start_time).c_str());
@@ -523,7 +515,7 @@ string Task::getPriority(){
 				valid_time = true;
 			}
 			else{
-				cout << red << INVALID_TIME_MSG2 << endl;
+				cout << red << MagicString::MESSAGE2_INVALID_TIME << endl;
 				settextcolor(deftextcol);
 				cout << "starting time:";
 				cin >> start_time;
@@ -534,9 +526,9 @@ string Task::getPriority(){
 		else{
 			ofstream errorlog;
 			errorlog.open("errorlog.txt");
-			errorlog << INVALID_TIME_MSG << endl;
+			errorlog << MagicString::MESSAGE_INVALID_TIME << endl;
 			errorlog.close();
-			cout << red << INVALID_TIME_MSG << endl;
+			cout << red << MagicString::MESSAGE_INVALID_TIME << endl;
 			settextcolor(deftextcol);
 			cout << "starting time:";
 			cin >> start_time;
@@ -546,7 +538,7 @@ string Task::getPriority(){
 	}
 
 	//check time frame in deadline task
-	while ((task_type == DEADLINE_TASK_LABEL) && (!valid_time)){
+	while ((task_type == MagicString::LABEL_DEADLINE_TASK) && (!valid_time)){
 		std::size_t get_time = deadline_time.find(":");
 		start_hour = atoi(deadline_time.substr(0, get_time).c_str());
 		start_mins = atoi(deadline_time.substr(get_time + 1, 2).c_str());
@@ -556,9 +548,9 @@ string Task::getPriority(){
 		else{
 			ofstream errorlog;
 			errorlog.open("errorlog.txt");
-			errorlog << INVALID_TIME_MSG << endl;
+			errorlog << MagicString::MESSAGE_INVALID_TIME << endl;
 			errorlog.close();
-			cout << red << INVALID_TIME_MSG << endl;
+			cout << red << MagicString::MESSAGE_INVALID_TIME << endl;
 			settextcolor(deftextcol);
 			cout << "deadline time:";
 			cin >> deadline_time;
@@ -571,7 +563,7 @@ string Task::getPriority(){
 	int date;
 
 	//check date for deadline task
-	while ((task_type == DEADLINE_TASK_LABEL) && (!valid_date)){
+	while ((task_type == MagicString::LABEL_DEADLINE_TASK) && (!valid_date)){
 		std::size_t get_date = deadline_date.find("/");
 		date = atoi(deadline_date.substr(0, get_date).c_str());
 		month = atoi(deadline_date.substr(get_date + 1, 2).c_str());
@@ -581,16 +573,16 @@ string Task::getPriority(){
 		else{
 			ofstream errorlog;
 			errorlog.open("errorlog.txt");
-			errorlog << INVALID_DATE_MSG << endl;
+			errorlog << MagicString::MESSAGE_INVALID_DATE << endl;
 			errorlog.close();
-			cout << red << INVALID_DATE_MSG << endl;
+			cout << red << MagicString::MESSAGE_INVALID_DATE << endl;
 			settextcolor(deftextcol);
 			cin >> deadline_date;
 		}
 	}
 
 	//check date for schedule task
-	while ((task_type == SCHEDULED_TASK_LABEL) && (!valid_date)){
+	while ((task_type == MagicString::LABEL_SCHEDULED_TASK) && (!valid_date)){
 		std::size_t get_date = scheduled_date.find("/");
 		date = atoi(scheduled_date.substr(0, get_date).c_str());
 		month = atoi(scheduled_date.substr(get_date + 1, 2).c_str());
@@ -600,9 +592,9 @@ string Task::getPriority(){
 		else{
 			ofstream errorlog;
 			errorlog.open("errorlog.txt");
-			errorlog << INVALID_DATE_MSG << endl;
+			errorlog << MagicString::MESSAGE_INVALID_DATE << endl;
 			errorlog.close();
-			cout << red << INVALID_DATE_MSG << endl;
+			cout << red << MagicString::MESSAGE_INVALID_DATE << endl;
 			settextcolor(deftextcol);
 			cin >> scheduled_date;
 		}
@@ -633,10 +625,7 @@ bool Task::isEarlier(const Task b){
 	int min_b; // mins for b
 	string type_a = task_type;
 	string type_b = b.task_type;
-
-	const string SCHEDULED_TASK_LABEL = "timed";
-	const string DEADLINE_TASK_LABEL = "deadline";
-	
+		
 	//check priority first
 	if (priority > b.priority){
 		return true;
@@ -646,7 +635,7 @@ bool Task::isEarlier(const Task b){
 	}
 
 	// floating task rank always at last
-	if (type_a == FLOATING_TASK_LABEL && type_b==FLOATING_TASK_LABEL){ 
+	if (type_a == MagicString::LABEL_FLOATING_TASK && type_b==MagicString::LABEL_FLOATING_TASK){ 
 		if (taskname <= b.taskname){
 			return true;
 		}
@@ -654,21 +643,21 @@ bool Task::isEarlier(const Task b){
 			return false;
 		}
 	}
-	else if (type_b == FLOATING_TASK_LABEL && type_a != FLOATING_TASK_LABEL){
+	else if (type_b == MagicString::LABEL_FLOATING_TASK && type_a != MagicString::LABEL_FLOATING_TASK){
 		return true;
 	}
-	else if (type_a == FLOATING_TASK_LABEL && type_b != FLOATING_TASK_LABEL){
+	else if (type_a == MagicString::LABEL_FLOATING_TASK && type_b != MagicString::LABEL_FLOATING_TASK){
 		return false;
 	}
 
 	//check a
 	string sortingDate_a;
 	string sortingTime_a;
-	if (type_a == SCHEDULED_TASK_LABEL){ // for scheduled task, we sort with the starting time
+	if (type_a == MagicString::LABEL_SCHEDULED_TASK){ // for scheduled task, we sort with the starting time
 		sortingDate_a = scheduled_start_date;
 		sortingTime_a = start_time;
 	}
-	else if (type_a == DEADLINE_TASK_LABEL){
+	else if (type_a == MagicString::LABEL_DEADLINE_TASK){
 		sortingDate_a = deadline_date;
 		sortingTime_a = deadline_time;
 	}
@@ -689,11 +678,11 @@ bool Task::isEarlier(const Task b){
 	//check b
 	string sortingDate_b;
 	string sortingTime_b;
-	if (type_b == SCHEDULED_TASK_LABEL){ // for scheduled task, we sort with the starting time
+	if (type_b == MagicString::LABEL_SCHEDULED_TASK){ // for scheduled task, we sort with the starting time
 		sortingDate_b = b.scheduled_start_date;
 		sortingTime_b = b.start_time;
 	}
-	else if (type_b == DEADLINE_TASK_LABEL){
+	else if (type_b == MagicString::LABEL_DEADLINE_TASK){
 		sortingDate_b = b.deadline_date;
 		sortingTime_b = b.deadline_time;
 	}
@@ -756,7 +745,7 @@ string Task::getPlace(){
 }
 
 bool Task::taskDone(){
-	if (status == FINISHED_TASK_LABEL){
+	if (status == MagicString::LABEL_FINISHED_TASK){
 		return true;
 	}
 	return false;
@@ -821,19 +810,19 @@ string Task::getDate(string input){
 
 void Task::addRepeatTask(int repeat_time, string repeat_type){
 	string add_task;
-	if (repeat_type == "day"){
+	if (repeat_type == MagicString::LABEL_REPEAT_FORMAT_1){
 		for (int i = 0; i < repeat_time - 1 ; i++){
 			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 1 + i) + " -to " + end_time + " " + addDay(scheduled_end_date,1+i);
 			TaskList::addTask(input);
 		}
 	}
-	else if (repeat_type == "month"){
+	else if (repeat_type == MagicString::LABEL_REPEAT_FORMAT_2){
 		for (int i = 1; i <= repeat_time - 1; i++){
 			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 30 * i) + " -to " + end_time + " " + addDay(scheduled_end_date, 30 * i);
 			TaskList::addTask(input);
 		}
 	}
-	else if (repeat_type == "week"){
+	else if (repeat_type == MagicString::LABEL_REPEAT_FORMAT_3){
 		for (int i = 1; i <= repeat_time - 1; i++){
 			string input = taskname + " -from " + start_time + " " + addDay(scheduled_start_date, 7 * i) + " -to " + end_time + " " + addDay(scheduled_end_date, 7 * i);
 			TaskList::addTask(input);
