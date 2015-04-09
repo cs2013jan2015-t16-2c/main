@@ -273,14 +273,14 @@ Task::Task(string task, string input){
 
 		if ((get_group != std::string::npos) && (get_place != std::string::npos)){
 			task_group = task.substr(get_group + 1, get_place - get_group - 2);
-			place = task.substr(get_place + 1);
+			place = task.substr(get_place + 1, find_status - get_place - 2);
 		}
 		else if (get_group != std::string::npos){
-			task_group = task.substr(get_group + 1);
+			task_group = task.substr(get_group + 1, find_status - get_group - 2);
 			place = "";
 		}
 		else if (get_place != std::string::npos){
-			place = task.substr(get_place + 1);
+			place = task.substr(get_place + 1, find_status - get_place - 2);
 			task_group = "";
 		}
 		else{
