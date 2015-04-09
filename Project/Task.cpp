@@ -746,6 +746,9 @@ string Task::getDate(){
 	else if (task_type == DEADLINE_TASK_LABEL){
 		return deadline_date;
 	}
+	else{
+		return "";
+	}
 }
 bool Task::taskDone(){
 	if (status == FINISHED_TASK_LABEL){

@@ -18,7 +18,10 @@ void TaskList::copyFromStorage(){
 	for (unsigned int i = 0; i < taskList.size(); i++){
 		string task = removeFirstWord(taskList[i]);
 		Task newTask(task, "copy");
+		
 		list.push_back(newTask);
+		addTaskGroup(newTask);
+		addPlace(newTask);
 	}
 }
 
@@ -392,19 +395,15 @@ void TaskList::addPlace(Task newTask){
 }
 
 bool TaskList::isExist(vector<string> list, string input){
-	bool isExist = false;
 	if (list.empty()){
 		return false;
 	}
 	
-	while (!isExist)
-	{
-		for (unsigned int i = 0; i < list.size(); i++){
-			if (input == list[i]){
-				return true;
-			}
+	for (unsigned int i = 0; i < list.size(); i++){
+		if (input == list[i]){
+			return true;
 		}
 	}
 
-	return isExist;
+	return false;
 }
