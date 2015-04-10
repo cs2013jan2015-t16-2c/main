@@ -855,22 +855,22 @@ string Task::returnDate(int month, int day){
 	if (month == 1 || 3 || 5 || 7 || 8 || 10 || 12){
 		if (day > 30){
 			month = month + day / 30;
-			day = day % 30;
-			month = month % 12;
+			day = day % 30 + 1;
+			month = month % 12 + 1;
 		}
 	}
 	else if (month == 4 || 6 || 9 || 11){
 		if (day > 31){
 			month = month + day / 31; 
-			day = day % 31;
-			month = month % 12;
+			day = day % 31 + 1;
+			month = month % 12 + 1;
 		}
 	}
 	else{
 		if (day > 28){
 			month = month + day / 28; 
-			day = day % 28;
-			month = month % 12;
+			day = day % 28 + 1;
+			month = month % 12 + 1;
 		}
 	}
 

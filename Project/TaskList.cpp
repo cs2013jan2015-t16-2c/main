@@ -139,7 +139,6 @@ string TaskList::search(string input){
 			vector<string> contents = splitText(taskName);
 
 			for (unsigned int j = 0; j < contents.size(); j++){
-				std::size_t search = contents[j].find(input);
 				if (search!=std::string::npos){
 					DisplayedTaskList::addTask(list[i]);
 					break;
@@ -247,17 +246,23 @@ string TaskList::setPriority(string input){
 		return output;
 	}
 	else{
-		lastCommandType = "setPriority";
-		lastChangedTaskIndex = findTargetedTaskIndex(index);
-		lastUnchangedTask = list[lastChangedTaskIndex];
+		if (taskInfo == "A" || "B" || "C"){
+			lastCommandType = "setPriority";
+			lastChangedTaskIndex = findTargetedTaskIndex(index);
+			lastUnchangedTask = list[lastChangedTaskIndex];
 
-		list[lastChangedTaskIndex].setPriority(taskInfo);
+			list[lastChangedTaskIndex].setPriority(taskInfo);
 
-		lastChangedTask = list[lastChangedTaskIndex];
-		output = "Task " + taskIndex + " is prioritised"; //change to magic string
+			lastChangedTask = list[lastChangedTaskIndex];
+			output = "Task " + taskIndex + " is prioritised"; //change to magic string
 
-		storage::tempFile();
-		return output;
+			storage::tempFile();
+			return output;
+		}
+		else{
+			return "Invalid priority type";
+		}
+		
 	}	
 }
 
