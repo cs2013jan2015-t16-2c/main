@@ -1,5 +1,6 @@
 #include "storage.h"
 #include "MagicString.h"
+#include "DisplayedTaskList.h"
 
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
@@ -44,6 +45,13 @@ string storage::starting() {
 	return MagicString::PROGRAM_START;
 }
 
+string storage::deletePer(){
+	remove(FILENAME.c_str());
+	task.clear();
+	displayedTaskList.clear();
+	return MagicString::STORAGE_CLEARED;
+}
+
 vector<string> storage::returnTask() {
 	return task;
 }
@@ -56,8 +64,9 @@ string storage::saveDone(){
 
 	file.open(DONE);
 	content = TaskList::display("done");
-	file << content;
-	
+	if (content != MagicString::TASK_EMPTY2){
+		file << content;
+	}
 	file.close();
 
 	return MagicString::DONE_TASK_SAVED;
@@ -71,8 +80,9 @@ string storage::saveProgress(){
 
 	file.open(PROGRESS);
 	content = TaskList::display("all");
-	file << content;
-
+	if (content != MagicString::TASK_EMPTY2){
+		file << content;
+	}
 	file.close();
 
 	return MagicString::IN_PROGRESS_TASK_SAVED;
@@ -99,6 +109,11 @@ string storage::archive(string fileName){
 	
 	return MagicString::SUCCESS_ARCHIVE;
 } 
+
+string storage::archiveDelete(string location){
+	remove(location.c_str());
+	return MagicString::ARCHIVE_CLEARED;
+}
 
 void storage::checkRubbish(){
 	ifstream file;

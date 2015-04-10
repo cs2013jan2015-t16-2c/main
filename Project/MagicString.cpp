@@ -18,7 +18,8 @@ const string MagicString::FILE_RUBBISH = "Rubbish has been cleaned in storage fi
 const string MagicString::FILE_CHECK = "Storage file has been checked, and it is ready to use";
 const string MagicString::DONE_TASK_SAVED = "Done tasks have been saved into the file";
 const string MagicString::IN_PROGRESS_TASK_SAVED = "In progress tasks have been saved into the file";
-
+const string MagicString::STORAGE_CLEARED = "Permanent storage file has been cleared";
+const string MagicString::ARCHIVE_CLEARED = "Archived storage file has been cleared";
 //Task
 const string MagicString::LABEL_SCHEDULED_TASK = "timed";
 const string MagicString::LABEL_DEADLINE_TASK = "deadline";

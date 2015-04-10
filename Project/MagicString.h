@@ -26,6 +26,8 @@ public:
 	static const string FILE_CHECK;
 	static const string DONE_TASK_SAVED;
 	static const string IN_PROGRESS_TASK_SAVED;
+	static const string STORAGE_CLEARED;
+	static const string ARCHIVE_CLEARED;
 	//task
 	static const string LABEL_SCHEDULED_TASK;
 	static const string LABEL_DEADLINE_TASK;

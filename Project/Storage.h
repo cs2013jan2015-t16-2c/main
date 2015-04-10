@@ -23,10 +23,12 @@ private:
 public:
 	static string starting();
 	static void ending();
+	static string deletePer();
 	static vector<string> returnTask();
 	static string saveDone();
 	static string saveProgress();
 	static string archive(string fileName);
+	static string archiveDelete(string location);
 	static void checkRubbish();
 	static void tempFile();
 	static void deleteTemp();
