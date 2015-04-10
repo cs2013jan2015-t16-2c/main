@@ -28,7 +28,7 @@ public:
 	static string saveDone();
 	static string saveProgress();
 	static string archive(string fileName);
-	static string archiveFile(string location);
+	static string archiveDelete(string location);
 	static void checkRubbish();
 	static void tempFile();
 	static void deleteTemp();

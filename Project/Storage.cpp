@@ -107,7 +107,7 @@ string storage::archive(string fileName){
 	return MagicString::SUCCESS_ARCHIVE;
 } 
 
-string storage::archiveFile(string location){
+string storage::archiveDelete(string location){
 	remove(location.c_str());
 	return MagicString::ARCHIVE_CLEARED;
 }
