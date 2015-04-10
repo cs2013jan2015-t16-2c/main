@@ -50,7 +50,7 @@ string TaskList::addTask(string input){
 			}
 		}
 		else{
-			return "Invalid time input";
+			return MagicString::INVALID_TIME_INPUT;
 		}
 		
 	}
@@ -67,7 +67,7 @@ string TaskList::addTask(string input){
 			return MagicString::TASK_ADDED;
 		}
 		else{
-			return "Invalid time input";
+			return MagicString::INVALID_TIME_INPUT;
 		}
 	}
 }
@@ -101,7 +101,7 @@ string TaskList::updateTask(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size|| index <= 0){
-		output = "Task " + taskIndex + " does not exit"; //change to magic string
+		output = MagicString::TASK + taskIndex + MagicString::NON_EXISTENCE;
 		return output;
 	}
 	else{
@@ -114,11 +114,11 @@ string TaskList::updateTask(string input){
 			lastChangedTaskIndex = listIndex;
 			lastUnchangedTask = temp;
 			lastChangedTask = list[lastChangedTaskIndex];
-			output = "Task " + taskIndex + " updated"; //change to magic string
+			output = MagicString::TASK + taskIndex + MagicString::UPDATE;
 		}
 		else{
 			list[lastChangedTaskIndex] = temp;
-			output = "Invalid time input";		
+			output = MagicString::INVALID_TIME_INPUT;		
 		}
 		
 		storage::tempFile();
@@ -134,7 +134,7 @@ string TaskList::deleteTask(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size || index <= 0){
-		output = "Task " + input + " does not exit"; //change to magic string
+		output = MagicString::TASK + input + MagicString::NON_EXISTENCE; 
 		return output;
 	}
 	else{
@@ -143,7 +143,7 @@ string TaskList::deleteTask(string input){
 		lastUnchangedTask = list[lastChangedTaskIndex];
 
 		list.erase(list.begin() + lastChangedTaskIndex);
-		string output = "Task " + input + " deleted"; //change to magic string
+		string output = MagicString::TASK + input + MagicString::DELETE; 
 
 		storage::tempFile();
 		return output;
@@ -152,7 +152,7 @@ string TaskList::deleteTask(string input){
 
 string TaskList::search(string input){
 	if (list.empty()){
-		return "Task list is empty"; //change to magic string
+		return MagicString::TASK_EMPTY; 
 	}
 	else{
 		DisplayedTaskList::emptyList();
@@ -169,7 +169,7 @@ string TaskList::search(string input){
 		}
 		
 		if (DisplayedTaskList::isEmpty()){
-			return "No task containes the searched word"; //change to magic string
+			return MagicString::SEARCH_NOT_FOUND;
 		}
 		else{
 			string output = DisplayedTaskList::display();
@@ -276,7 +276,7 @@ string TaskList::markAsDone(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size || index <= 0){
-		output = "Task " + input + " does not exit"; //change to magic string
+		output = MagicString::TASK + input + MagicString::NON_EXISTENCE;
 		return output;
 	}
 	else{
@@ -284,7 +284,7 @@ string TaskList::markAsDone(string input){
 		lastChangedTaskIndex = findTargetedTaskIndex(index);
 
 		list[lastChangedTaskIndex].markAsDone();
-		string output = "Task " + input + " marked as done"; //change to magic string
+		string output = MagicString::TASK + input + MagicString::MARK_AS_DONE;
 
 		storage::tempFile();
 		return output;
@@ -302,7 +302,7 @@ string TaskList::setPriority(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size || index <= 0){
-		output = "Task " + taskIndex + " does not exit"; //change to magic string
+		output = MagicString::TASK + input + MagicString::NON_EXISTENCE;
 		return output;
 	}
 	else{
@@ -314,7 +314,7 @@ string TaskList::setPriority(string input){
 			list[lastChangedTaskIndex].setPriority(taskInfo);
 
 			lastChangedTask = list[lastChangedTaskIndex];
-			output = "Task " + taskIndex + " is prioritised"; //change to magic string
+			output = MagicString::TASK + taskIndex + MagicString::SET_PRIORITY; 
 
 			storage::tempFile();
 			return output;
@@ -331,34 +331,34 @@ string TaskList::undo(){
 		list.pop_back();
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "Adding command is undone"; //change to magic string
+		return MagicString::ADD_UNDO;
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "Updating command is undone"; //change to magic string
+		return MagicString::UPDATE_UNDO;
 	}
 	else if (lastCommandType == "delete"){
 		list.insert(list.begin() + lastChangedTaskIndex, lastUnchangedTask);
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "Deleting command is undone"; //change to magic string
+		return MagicString::DELETE_UNDO;
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsUndone();
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "MarkasDone command is undone"; //change to magic string
+		return MagicString::MARK_UNDO;
 	}
 	else if (lastCommandType == "setPriority"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "SetPriority command is undone";
+		return MagicString::PRIORITY_UNDO;
 	}
 	else{
-		return "Previous action cannot be undo"; //change to magic string
+		return MagicString::UNDO_UNABLE;
 	}
 }
 
@@ -368,31 +368,31 @@ string TaskList::redo(){
 		if (lastCommandType == "add"){
 			list.push_back(lastChangedTask);
 			storage::tempFile();
-			return "Adding command is redone"; //change to magic string
+			return MagicString::ADD_REDO;
 		}
 		else if (lastCommandType == "update"){
 			list[lastChangedTaskIndex] = lastChangedTask;
 			storage::tempFile();
-			return "Updating command is redone"; //change to magic string
+			return MagicString::UPDATE_REDO;
 		}
 		else if (lastCommandType == "delete"){
 			list.erase(list.begin() + lastChangedTaskIndex);
 			storage::tempFile();
-			return "Deleting command is redone"; //change to magic string
+			return MagicString::DELETE_REDO;
 		}
 		else if (lastCommandType == "done"){
 			list[lastChangedTaskIndex].markAsDone();
 			storage::tempFile();
-			return "MarkasDone command is redone"; //change to magic string
+			return MagicString::MARK_REDO;
 		}
 		else{
 			list[lastChangedTaskIndex] = lastChangedTask;
 			storage::tempFile();
-			return "SetPriority command is redone";
-		}	
+			return MagicString::PRIORITY_REDO;
+		}
 	}
 	else{
-		return "No undo action is done previously"; //change to magic string
+		return MagicString::REDO_UNABLE;
 	}
 }
 

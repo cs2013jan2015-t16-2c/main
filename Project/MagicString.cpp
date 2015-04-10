@@ -36,6 +36,7 @@ const string MagicString::MESSAGE2_INVALID_TIME = "invalid time frame, ending ti
 //TaskList
 const string MagicString::FLOATING_CANNOT_RECUR = "Floating task cannot be added recurrsively";
 const string MagicString::RECURRING_TASK_ADDED = "Recurring tasks added";
+const string MagicString::INVALID_TIME_INPUT = "Invalid time input";
 const string MagicString::TASK_ADDED = "Task added!";
 const string MagicString::TASK_EMPTY = "Task list is empty";
 const string MagicString::SEARCH_NOT_FOUND = "No task containes the searched word";
@@ -46,15 +47,18 @@ const string MagicString::UPDATE = " updated";
 const string MagicString::DELETE = " deleted";
 const string MagicString::TASK_EMPTY2 = "Required task list is empty";
 const string MagicString::MARK_AS_DONE = " marked as done";
+const string MagicString::SET_PRIORITY = " is prioritised";
 const string MagicString::ADD_UNDO = "Adding command is undone";
 const string MagicString::UPDATE_UNDO = "Updating command is undone";
 const string MagicString::DELETE_UNDO = "Deleting command is undone";
 const string MagicString::MARK_UNDO = "MarkasDone command is undone";
+const string MagicString::PRIORITY_UNDO = "SetPriority command is undone";
 const string MagicString::UNDO_UNABLE = "Previous action cannot be undone";
 const string MagicString::ADD_REDO = "Adding command is redone";
 const string MagicString::UPDATE_REDO = "Updating command is redone";
 const string MagicString::DELETE_REDO = "Deleting command is redone";
 const string MagicString::MARK_REDO = "MarkasDone command is redone";
+const string MagicString::PRIORITY_REDO = "SetPriority command is redone";
 const string MagicString::REDO_UNABLE = "previous action cannot be redone";
 //keepTrack
 const string MagicString::DIVIDER = "================================================================================";
