@@ -1,6 +1,6 @@
 #include "storage.h"
 #include "MagicString.h"
-#include "DisplayedTaskList.h"
+#include "TaskList.h"
 
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
@@ -8,6 +8,7 @@ const string storage::TEMP = "temp.txt";
 const string storage::DONE = "done.txt";
 const string storage::PROGRESS = "progress.txt";
 
+//@QinZhao A0114792
 void storage::ending() {
 	ofstream file;
 	string content;
@@ -47,8 +48,7 @@ string storage::starting() {
 
 string storage::deletePer(){
 	remove(FILENAME.c_str());
-	task.clear();
-	displayedTaskList.clear();
+	TaskList::empty();
 	return MagicString::STORAGE_CLEARED;
 }
 
