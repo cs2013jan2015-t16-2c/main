@@ -14,11 +14,12 @@ const string InterfaceInput::SHORTENED_COMMAND_EXIT = "q";
 
 const string InterfaceInput::STRING_EMPTY = "";
 const string InterfaceInput::STRING_TODAY = "today";
+const string InterfaceInput::STRING_DO_NOT_EXIST = "does not exit";
 
 string InterfaceInput::getUserCommand() {
 	string userCommand;
 
-	cout << "Command: ";
+	cout << MagicString::MESSAGE_USER_COMMAND;
 	getline(cin, userCommand);
 
 	return userCommand;
@@ -42,22 +43,39 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case HELP:
 		return Help::executeHelpCommand();
 	case ADD_TASK:
-		cout << TaskList::addTask(taskString) << endl;
-		cout << MagicString::DIVIDER;
+		displayText = TaskList::addTask(taskString);
+		DisplayColor::displaySuccess(displayText);
+		cout << '\n' << MagicString::DIVIDER;
 		return displayToday();
 	case SEARCH:
-		return TaskList::search(taskString);
+		displayText = TaskList::search(taskString);
+		DisplayColor::displayColor(displayText);
+		return STRING_EMPTY;
 	case UPDATE:
 		cout << TaskList::updateTask(taskString) << endl;
 		cout << MagicString::DIVIDER;
 		return displayToday();
 	case DELETE_TASK:
-		cout << TaskList::deleteTask(taskString) << endl;
-		cout << MagicString::DIVIDER;
+		displayText = TaskList::deleteTask(taskString);
+		if (displayText.find(STRING_DO_NOT_EXIST) != string::npos) {
+			DisplayColor::displayError(displayText);
+		}
+		else {
+			DisplayColor::displaySuccess(displayText);
+		}
+		cout << '\n' << MagicString::DIVIDER;
 		return displayToday();
 	case DISPLAY_TASKS:
 		displayText = TaskList::display(taskString);
-		DisplayColor::displayColor(displayText);
+		if (displayText == MagicString::INVALID_DISPLAY) {
+			DisplayColor::displayError(displayText);
+		}
+		else if (displayText == MagicString::TASK_EMPTY2){
+			DisplayColor::displayError(displayText);
+		}
+		else {
+			DisplayColor::displayColor(displayText);
+		}
 		return STRING_EMPTY;
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
@@ -70,16 +88,30 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case SAVE_IN_PROGRESS:
 		return storage::saveProgress();
 	case UNDO:
-		return TaskList::undo();
+		displayText = TaskList::undo();
+		if (displayText == MagicString::UNDO_UNABLE) {
+			DisplayColor::displayError(displayText);
+		}
+		else {
+			DisplayColor::displaySuccess(displayText);
+		}
+		return STRING_EMPTY;
 	case REDO:
-		return TaskList::redo();	
+		displayText = TaskList::redo();
+		if (displayText == MagicString::REDO_UNABLE) {
+			DisplayColor::displayError(displayText);
+		}
+		else {
+			DisplayColor::displaySuccess(displayText);
+		}
+		return STRING_EMPTY;
 	case EXIT:
 		TaskList::copyToStorage();
 		cout << MagicString::MESSAGE_GOODBYE << endl;
 		exit(0);
 	case OTHERS:
 	default:
-		DisplayColor::displayRed(MagicString::ERROR_INVALID_COMMAND);
+		DisplayColor::displayError(MagicString::ERROR_INVALID_COMMAND);
 		return STRING_EMPTY;
 	}
 }
@@ -155,8 +187,7 @@ string InterfaceInput::displayToday() {
 		return STRING_EMPTY;
 	}
 	else {
-		DisplayColor::displayGreen(MagicString::MESSAGE_NO_TASK_TODAY);
-		return STRING_EMPTY;
+		return MagicString::MESSAGE_NO_TASK_TODAY;
 	}
 }
 

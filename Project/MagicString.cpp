@@ -2,6 +2,7 @@
 //display taskList
 const string MagicString::MESSAGE_EMPTY = "Task list is empty";
 //interfaceinput
+const string MagicString::MESSAGE_USER_COMMAND = "Command: ";
 const string MagicString::MESSAGE_NO_TASK_TODAY = "There is no task today!";
 const string MagicString::MESSAGE_TODAY_TASK = "Today's task:";
 //interfaceoutput
@@ -9,7 +10,7 @@ const string MagicString::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string MagicString::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
 const string MagicString::MESSAGE_GOODBYE = "Goodbye!";
 const string MagicString::ERROR_INVALID_COMMAND = "Error: invalid command";
-const string MagicString::TODAY = "                       Today is ";
+const string MagicString::TODAY = "                              Today is ";
 //Storage
 const string MagicString::PROGRAM_START = "Data has been successfully loaded";
 const string MagicString::SUCCESS_ARCHIVE = "Tasklist is successfully archived";

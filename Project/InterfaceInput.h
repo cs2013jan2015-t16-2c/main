@@ -40,6 +40,7 @@ private:
 
 	static const string STRING_TODAY;
 	static const string STRING_EMPTY;
+	static const string STRING_DO_NOT_EXIST;
 
 	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
 

@@ -81,14 +81,14 @@ void DisplayColor::displayColor(string displayText) {
 	settextcolor(deftextcol);
 }
 
-void DisplayColor::displayGreen(string displayText) {
+void DisplayColor::displaySuccess(string displayText) {
 	concolinit();
 	settextcolor(dark_green);
 	cout << displayText;
 	settextcolor(deftextcol);
 }
 
-void DisplayColor::displayRed(string displayText) {
+void DisplayColor::displayError(string displayText) {
 	concolinit();
 	settextcolor(red);
 	cout << displayText;

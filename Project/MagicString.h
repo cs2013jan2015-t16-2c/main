@@ -10,6 +10,7 @@ public:
 	//display taskList
 	static const string MESSAGE_EMPTY;
 	//interfaceinput
+	static const string MESSAGE_USER_COMMAND;
 	static const string MESSAGE_NO_TASK_TODAY;
 	static const string MESSAGE_TODAY_TASK;
 	//interfaceoutput

@@ -21,7 +21,7 @@ private:
 
 public:
 	static void displayColor(string displayText);
-	static void displayGreen(string displayText);
-	static void displayRed(string displayText);
+	static void displaySuccess(string displayText);
+	static void displayError(string displayText);
 };
 #endif
