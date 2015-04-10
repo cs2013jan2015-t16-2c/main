@@ -46,6 +46,7 @@ string storage::starting() {
 
 string storage::deletePer(){
 	remove(FILENAME.c_str());
+	task.clear();
 	return MagicString::STORAGE_CLEARED;
 }
 
