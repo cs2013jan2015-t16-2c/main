@@ -830,7 +830,6 @@ void Task::recurringAdd(string repeat_type){
 			mon_start++;
 			mon_end++;
 		}
-
 		scheduled_start_date = returnDate(mon_start, day_start);
 		scheduled_end_date = returnDate(mon_end, day_end);
 	}
@@ -856,22 +855,23 @@ string Task::returnDate(int month, int day){
 		if (day > 30){
 			month = month + day / 30;
 			day = day % 30 + 1;
-			month = month % 12 + 1;
 		}
 	}
 	else if (month == 4 || 6 || 9 || 11){
 		if (day > 31){
 			month = month + day / 31; 
 			day = day % 31 + 1;
-			month = month % 12 + 1;
 		}
 	}
 	else{
 		if (day > 28){
 			month = month + day / 28; 
 			day = day % 28 + 1;
-			month = month % 12 + 1;
 		}
+	}
+
+	if (month > 12){
+		return "-1";
 	}
 
 	ostringstream mon;

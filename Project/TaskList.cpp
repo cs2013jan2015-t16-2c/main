@@ -19,19 +19,19 @@ void TaskList::copyFromStorage(){
 	for (unsigned int i = 0; i < taskList.size(); i++){
 		string task = removeFirstWord(taskList[i]);
 		Task newTask(task, "copy");
-		
+
 		list.push_back(newTask);
 		addTaskGroup(newTask);
 		addPlace(newTask);
 	}
 }
 
-void TaskList::copyToStorage(){	
+void TaskList::copyToStorage(){
 	storage::deleteTemp();
 	storage::ending();
 }
 
-string TaskList::addTask(string input){	
+string TaskList::addTask(string input){
 	std::size_t repeat = input.find("-every");
 	if (repeat != std::string::npos){
 		string taskInfo = input.substr(0, repeat - 1);
@@ -72,7 +72,12 @@ void TaskList::addRepeatTask(Task newTask, string repeat_type, int repeat_time){
 		Task *ptr = new Task;
 		newTask.recurringAdd(repeat_type);
 		*ptr = newTask;
-		list.push_back(*ptr);
+		if ((*ptr).getDate() != "-1"){
+			list.push_back(*ptr);
+		}
+		else{
+			break;
+		}
 	}
 }
 
