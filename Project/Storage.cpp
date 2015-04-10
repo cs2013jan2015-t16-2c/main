@@ -1,5 +1,6 @@
 #include "storage.h"
 #include "MagicString.h"
+#include "DisplayedTaskList.h"
 
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
@@ -47,6 +48,7 @@ string storage::starting() {
 string storage::deletePer(){
 	remove(FILENAME.c_str());
 	task.clear();
+	displayedTaskList.clear();
 	return MagicString::STORAGE_CLEARED;
 }
 
