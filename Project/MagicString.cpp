@@ -7,13 +7,14 @@ const string MagicString::MESSAGE_EMPTY = "Task list is empty";
 const string MagicString::MESSAGE_USER_COMMAND = "Command: ";
 const string MagicString::MESSAGE_NO_TASK_TODAY = "There is no task today!";
 const string MagicString::MESSAGE_TODAY_TASK = "Today's task:";
-const string MagicString::MESSAGE_WARNING = "WARNING: THIS ACTION CANNOT BE UNDONE! \nEnter(Y) to continue\nEnter(N) to abort\nYour choice: ";
-const string MagicString::ERROR_TYPE_AGAIN = "Invalid Command! Please enter again: ";
+const string MagicString::MESSAGE_WARNING_1 = "WARNING: THIS ACTION CANNOT BE UNDONE!\n";
+const string MagicString::MESSAGE_WARNING_2 = "Enter(Y) to continue\nEnter(N) to abort\nYour choice: ";
+const string MagicString::ERROR_TYPE_AGAIN = "Please enter again: ";
 //interfaceoutput
 const string MagicString::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string MagicString::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
 const string MagicString::MESSAGE_GOODBYE = "Goodbye!";
-const string MagicString::ERROR_INVALID_COMMAND = "Error: invalid command";
+const string MagicString::ERROR_INVALID_COMMAND = "Error: invalid command!";
 const string MagicString::TODAY = "                              Today is ";
 //Storage
 const string MagicString::PROGRAM_START = "Data has been successfully loaded";

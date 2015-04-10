@@ -3,6 +3,7 @@
 
 #include "InterfaceInput.h"
 
+// These are the shortened commands
 const string InterfaceInput::SHORTENED_COMMAND_UPDATE = "up";
 const string InterfaceInput::SHORTENED_COMMAND_DELETE = "del";
 const string InterfaceInput::SHORTENED_COMMAND_DISPLAY = "dis";
@@ -14,8 +15,8 @@ const string InterfaceInput::SHORTENED_COMMAND_EXIT = "q";
 
 const string InterfaceInput::STRING_EMPTY = "";
 const string InterfaceInput::STRING_TODAY = "today";
-const string InterfaceInput::STRING_DO_NOT_EXIST = "does not exit";
 
+// These are the output information for 'clear all' action
 const string InterfaceInput::MESSAGE_ABORT_CLEAR = "Clear action aborted";
 const string InterfaceInput::SYMBOL_YES = "Y";
 const string InterfaceInput::SYMBOL_NO = "N";
@@ -51,7 +52,8 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case ADD_TASK:
 		displayText = TaskList::addTask(taskString);
 		DisplayColor::displaySuccess(displayText);
-		cout << '\n' << MagicString::DIVIDER;
+		cout << endl;
+		cout << endl;
 		return displayToday();
 
 	case SEARCH:
@@ -61,18 +63,20 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	
 	case UPDATE:
 		cout << TaskList::updateTask(taskString) << endl;
-		cout << MagicString::DIVIDER;
+		cout << endl;
+		cout << endl;
 		return displayToday();
 	
 	case DELETE_TASK:
 		displayText = TaskList::deleteTask(taskString);
-		if (displayText.find(STRING_DO_NOT_EXIST) != string::npos) {
+		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
 			DisplayColor::displayError(displayText);
 		}
 		else {
 			DisplayColor::displaySuccess(displayText);
 		}
-		cout << '\n' << MagicString::DIVIDER;
+		cout << endl;
+		cout << endl;
 		return displayToday();
 	
 	case DISPLAY_TASKS:
@@ -89,7 +93,16 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		return STRING_EMPTY;
 	
 	case MARK_DONE:
-		return TaskList::markAsDone(taskString);
+		displayText = TaskList::markAsDone(taskString);
+		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+			DisplayColor::displayError(displayText);
+		}
+		else {
+			DisplayColor::displaySuccess(displayText);
+		}
+		cout << endl;
+		cout << endl;
+		return displayToday();
 	
 	case SET_PRIORITY:
 		displayText = TaskList::setPriority(taskString);
@@ -99,7 +112,8 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		else {
 			DisplayColor::displaySuccess(displayText);
 		}
-		cout << '\n' << MagicString::DIVIDER;
+		cout << endl;
+		cout << endl;
 		return displayToday();
 	
 	case ARCHIVE:
@@ -141,7 +155,9 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		else {
 			DisplayColor::displaySuccess(displayText);
 		}
-		return STRING_EMPTY;
+		cout << endl;
+		cout << endl;
+		return displayToday();
 	
 	case REDO:
 		displayText = TaskList::redo();
@@ -151,8 +167,10 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		else {
 			DisplayColor::displaySuccess(displayText);
 		}
-		return STRING_EMPTY;
-	
+		cout << endl;
+		cout << endl;
+		return displayToday();
+
 	case EXIT:
 		TaskList::copyToStorage();
 		cout << MagicString::MESSAGE_GOODBYE << endl;
@@ -252,21 +270,22 @@ string InterfaceInput::displayToday() {
 }
 
 bool InterfaceInput::isConfirmedToClear(){
-	DisplayColor::displayError(MagicString::MESSAGE_WARNING);
+	DisplayColor::displayError(MagicString::MESSAGE_WARNING_1);
+	cout << MagicString::MESSAGE_WARNING_2;
 	string userInput;
 	while (true){
 		getline(cin, userInput);
 		transform(userInput.begin(), userInput.end(), userInput.begin(), ::toupper);
+		cout << MagicString::DIVIDER;
 		if (userInput == SYMBOL_YES) {
-			cout << MagicString::DIVIDER;
 			return true;
 		}
 		else if (userInput == SYMBOL_NO) {
-			cout << MagicString::DIVIDER;
 			return false;
 		}
 		else{
-			DisplayColor::displayError(MagicString::ERROR_TYPE_AGAIN);
+			DisplayColor::displayError(MagicString::ERROR_INVALID_COMMAND);
+			cout << '\n' << MagicString::ERROR_TYPE_AGAIN;
 		}
 	}
 }
