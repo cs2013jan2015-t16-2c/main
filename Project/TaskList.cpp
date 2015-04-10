@@ -1,6 +1,7 @@
 #include <sstream>
 #include <assert.h>
 #include "TaskList.h"
+#include "MagicString.h"
 
 vector<Task> TaskList::list;
 vector<string> TaskList::taskGroup;
@@ -139,18 +140,18 @@ string TaskList::search(string input){
 			vector<string> contents = splitText(taskName);
 
 			for (unsigned int j = 0; j < contents.size(); j++){
-				if (search!=std::string::npos){
+				if (input == contents[j]){
 					DisplayedTaskList::addTask(list[i]);
 					break;
 				}
 			}
 		}
-
-		string output = DisplayedTaskList::display();
-		if (output == "-1"){
+		
+		if (DisplayedTaskList::isEmpty()){
 			return "No task containes the searched word"; //change to magic string
 		}
 		else{
+			string output = DisplayedTaskList::display();
 			return output;
 		}
 	}
@@ -163,7 +164,7 @@ string TaskList::display(string displayType){
 		return MagicString::INVALID_DISPLAY;
 	}
 	else if (DisplayedTaskList::isEmpty()){
-		return MagicString::TASK_EMPTY2; //change to magic string
+		return MagicString::TASK_EMPTY2;
 	}
 	else{
 		return DisplayedTaskList::display();
@@ -171,6 +172,7 @@ string TaskList::display(string displayType){
 }
 
 string TaskList::addToDisplayedTaskList(string displayType){
+	size_t findTimeBy = displayType.find("-by");
 	if (displayType == "all"){
 		for (unsigned int i = 0; i < list.size(); i++){
 			if (!list[i].taskDone()){
@@ -219,6 +221,27 @@ string TaskList::addToDisplayedTaskList(string displayType){
 		}
 		return "";
 	}
+	else if (findTimeBy != string::npos){
+		size_t displayBy = displayType.find("/", findTimeBy);
+		string displayByDate;
+		if (displayBy != string::npos){
+			displayByDate = displayType.substr(displayBy - 2, 5);
+		}
+		else{
+			Task a;
+			string dateInfo = removeFirstWord(displayType);
+			displayByDate = a.getDate(dateInfo);
+		}
+
+		for (unsigned int i = 0; i < list.size(); i++){
+			string taskDate = list[i].getDate();
+			if (isEariler(taskDate, displayByDate)){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+		
+		return "";
+	}
 	else{
 		return MagicString::INVALID_DISPLAY;
 	}
@@ -254,7 +277,7 @@ string TaskList::setPriority(string input){
 		return output;
 	}
 	else{
-		if (taskInfo == "A" || "B" || "C"){
+		if (taskInfo == "A" || taskInfo == "B" || taskInfo == "C"){
 			lastCommandType = "setPriority";
 			lastChangedTaskIndex = findTargetedTaskIndex(index);
 			lastUnchangedTask = list[lastChangedTaskIndex];
@@ -419,4 +442,27 @@ bool TaskList::isExist(vector<string> list, string input){
 	}
 
 	return false;
+}
+
+bool TaskList::isEariler(string taskDate, string displayByDate){
+	int month_by = atoi(displayByDate.substr(3, 2).c_str());
+	int day_by = atoi(displayByDate.substr(0, 2).c_str());
+
+	int month_task = atoi(taskDate.substr(3, 2).c_str());
+	int day_task = atoi(taskDate.substr(0, 2).c_str());
+
+	if (month_task < month_by){
+		return true;
+	}
+	else if (month_task > month_by){
+		return false;
+	}
+	else{
+		if (day_task <= day_by){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 }

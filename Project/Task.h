@@ -38,8 +38,8 @@ public:
 
 	void recurringAdd(string repear_type);
 	string getDate(int add);
+	string getDate(string input);
 	
-
 private:
 	string taskname;
 	string task_type;
@@ -55,7 +55,6 @@ private:
 	string place;
 	//V0.4
 	int getDay();
-	string getDate(string input);
 	int getDayDiff(string day);
 	string returnDate(int month, int day);
 };

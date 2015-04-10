@@ -32,6 +32,7 @@ private:
 	static void addPlace(Task newtask);
 	static bool isExist(vector<string> checkingList, string input);
 	static void addRepeatTask(Task newTask, string repear_type, int repeat_time);
+	static bool isEariler(string taskDate, string displayByDate);
 
 public:
 	static void copyFromStorage();
