@@ -16,6 +16,10 @@ const string InterfaceInput::STRING_EMPTY = "";
 const string InterfaceInput::STRING_TODAY = "today";
 const string InterfaceInput::STRING_DO_NOT_EXIST = "does not exit";
 
+const string InterfaceInput::MESSAGE_ABORT_CLEAR = "Clear action aborted";
+const string InterfaceInput::SYMBOL_YES = "Y";
+const string InterfaceInput::SYMBOL_NO = "N";
+
 //@Cai Yu A0093586N
 string InterfaceInput::getUserCommand() {
 	string userCommand;
@@ -43,19 +47,23 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	switch (commandType) {
 	case HELP:
 		return Help::executeHelpCommand();
+
 	case ADD_TASK:
 		displayText = TaskList::addTask(taskString);
 		DisplayColor::displaySuccess(displayText);
 		cout << '\n' << MagicString::DIVIDER;
 		return displayToday();
+
 	case SEARCH:
 		displayText = TaskList::search(taskString);
 		DisplayColor::displayColor(displayText);
 		return STRING_EMPTY;
+	
 	case UPDATE:
 		cout << TaskList::updateTask(taskString) << endl;
 		cout << MagicString::DIVIDER;
 		return displayToday();
+	
 	case DELETE_TASK:
 		displayText = TaskList::deleteTask(taskString);
 		if (displayText.find(STRING_DO_NOT_EXIST) != string::npos) {
@@ -66,6 +74,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		}
 		cout << '\n' << MagicString::DIVIDER;
 		return displayToday();
+	
 	case DISPLAY_TASKS:
 		displayText = TaskList::display(taskString);
 		if (displayText == MagicString::INVALID_DISPLAY) {
@@ -78,8 +87,10 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 			DisplayColor::displayColor(displayText);
 		}
 		return STRING_EMPTY;
+	
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
+	
 	case SET_PRIORITY:
 		displayText = TaskList::setPriority(taskString);
 		if (displayText.find(STRING_DO_NOT_EXIST) != string::npos) {
@@ -90,26 +101,38 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		}
 		cout << '\n' << MagicString::DIVIDER;
 		return displayToday();
+	
 	case ARCHIVE:
 		displayText = storage::archive(taskString);
 		DisplayColor::displaySuccess(displayText);
 		return STRING_EMPTY;
+	
 	case SAVE_DONE:
 		displayText = storage::saveDone();
 		DisplayColor::displaySuccess(displayText);
 		return STRING_EMPTY;
+	
 	case SAVE_IN_PROGRESS:
 		displayText = storage::saveProgress();
 		DisplayColor::displaySuccess(displayText);
 		return STRING_EMPTY;
+	
 	case CLEAR_FILE:
-		displayText = storage::deletePer();
-		DisplayColor::displaySuccess(displayText);
-		return STRING_EMPTY;
+		if (isConfirmedToClear()) {
+			displayText = storage::deletePer();
+			DisplayColor::displayError(displayText);
+			return STRING_EMPTY;
+		}
+		else {
+			DisplayColor::displaySuccess(MESSAGE_ABORT_CLEAR);
+			return STRING_EMPTY;
+		}
+	
 	case CLEAR_ARCHIVE:
 		displayText = storage::archiveDelete(taskString);
 		DisplayColor::displaySuccess(displayText);
 		return STRING_EMPTY;
+	
 	case UNDO:
 		displayText = TaskList::undo();
 		if (displayText == MagicString::UNDO_UNABLE) {
@@ -119,6 +142,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 			DisplayColor::displaySuccess(displayText);
 		}
 		return STRING_EMPTY;
+	
 	case REDO:
 		displayText = TaskList::redo();
 		if (displayText == MagicString::REDO_UNABLE) {
@@ -128,10 +152,12 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 			DisplayColor::displaySuccess(displayText);
 		}
 		return STRING_EMPTY;
+	
 	case EXIT:
 		TaskList::copyToStorage();
 		cout << MagicString::MESSAGE_GOODBYE << endl;
 		exit(0);
+	
 	case OTHERS:
 	default:
 		DisplayColor::displayError(MagicString::ERROR_INVALID_COMMAND);
@@ -225,6 +251,26 @@ string InterfaceInput::displayToday() {
 	}
 }
 
+bool InterfaceInput::isConfirmedToClear(){
+	string errorMessage = MagicString::MESSAGE_WARNING;
+	DisplayColor::displayError(errorMessage);
+	string userInput;
+	getline(cin, userInput);
+	while (true){
+		if (userInput == SYMBOL_YES) {
+			cout << MagicString::DIVIDER;
+			return true;
+		}
+		else if (userInput == SYMBOL_NO) {
+			cout << MagicString::DIVIDER;
+			return false;
+		}
+		else{
+			errorMessage = MagicString::ERROR_TYPE_AGAIN;
+			DisplayColor::displayError(errorMessage);
+		}
+	}
+}
 // for unit test only
 // to call private functions
 string InterfaceInput::testGetFirstWord(string testString) {
