@@ -11,6 +11,7 @@ public:
 	static const string MESSAGE_EMPTY;
 	//interfaceinput
 	static const string MESSAGE_NO_TASK_TODAY;
+	static const string MESSAGE_TODAY_TASK;
 	//interfaceoutput
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_TIP;
@@ -39,6 +40,7 @@ public:
 	static const string TASK_ADDED;
 	static const string TASK_EMPTY;
 	static const string SEARCH_NOT_FOUND;
+	static const string INVALID_DISPLAY;
 	static const string TASK;
 	static const string NON_EXISTENCE;
 	static const string UPDATE;

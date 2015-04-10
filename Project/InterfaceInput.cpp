@@ -12,6 +12,9 @@ const string InterfaceInput::SHORTENED_COMMAND_UNDO = "un";
 const string InterfaceInput::SHORTENED_COMMAND_REDO = "re";
 const string InterfaceInput::SHORTENED_COMMAND_EXIT = "q";
 
+const string InterfaceInput::STRING_EMPTY = "";
+const string InterfaceInput::STRING_TODAY = "today";
+
 string InterfaceInput::getUserCommand() {
 	string userCommand;
 
@@ -39,16 +42,23 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case HELP:
 		return Help::executeHelpCommand();
 	case ADD_TASK:
-		return TaskList::addTask(taskString);
+		cout << TaskList::addTask(taskString) << endl;
+		cout << MagicString::DIVIDER;
+		return displayToday();
 	case SEARCH:
 		return TaskList::search(taskString);
 	case UPDATE:
-		return TaskList::updateTask(taskString);
+		cout << TaskList::updateTask(taskString) << endl;
+		cout << MagicString::DIVIDER;
+		return displayToday();
 	case DELETE_TASK:
-		return TaskList::deleteTask(taskString);
+		cout << TaskList::deleteTask(taskString) << endl;
+		cout << MagicString::DIVIDER;
+		return displayToday();
 	case DISPLAY_TASKS:
 		displayText = TaskList::display(taskString);
-		return DisplayColor::displayColor(displayText);
+		DisplayColor::displayColor(displayText);
+		return STRING_EMPTY;
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
 	case SET_PRIORITY:
@@ -69,7 +79,8 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 		exit(0);
 	case OTHERS:
 	default:
-		return MagicString::ERROR_INVALID_COMMAND;
+		DisplayColor::displayRed(MagicString::ERROR_INVALID_COMMAND);
+		return STRING_EMPTY;
 	}
 }
 
@@ -132,6 +143,21 @@ string InterfaceInput::getFirstWord(string userCommand) {
 
 string InterfaceInput::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
+}
+
+string InterfaceInput::displayToday() {
+	string displayText;
+
+	cout << MagicString::MESSAGE_TODAY_TASK << endl;
+	displayText = TaskList::display(STRING_TODAY);
+	if (displayText != MagicString::TASK_EMPTY2) {
+		DisplayColor::displayColor(displayText);
+		return STRING_EMPTY;
+	}
+	else {
+		DisplayColor::displayGreen(MagicString::MESSAGE_NO_TASK_TODAY);
+		return STRING_EMPTY;
+	}
 }
 
 // for unit test only

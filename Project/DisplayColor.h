@@ -17,8 +17,11 @@ private:
 	static const string SYMBOL_PRIORITY_C;
 	static const string STATUS_IN_PROGRESS;
 	static const string STATUS_DONE;
+	static const string EMPTY_STRING;
 
 public:
-	static string displayColor(string displayText);
+	static void displayColor(string displayText);
+	static void displayGreen(string displayText);
+	static void displayRed(string displayText);
 };
 #endif

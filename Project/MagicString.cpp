@@ -3,6 +3,7 @@
 const string MagicString::MESSAGE_EMPTY = "Task list is empty";
 //interfaceinput
 const string MagicString::MESSAGE_NO_TASK_TODAY = "There is no task today!";
+const string MagicString::MESSAGE_TODAY_TASK = "Today's task:";
 //interfaceoutput
 const string MagicString::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string MagicString::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
@@ -32,6 +33,7 @@ const string MagicString::RECURRING_TASK_ADDED = "Recurring tasks added";
 const string MagicString::TASK_ADDED = "Task added!";
 const string MagicString::TASK_EMPTY = "Task list is empty";
 const string MagicString::SEARCH_NOT_FOUND = "No task containes the searched word";
+const string MagicString::INVALID_DISPLAY = "Invalid display command!";
 const string MagicString::TASK = "Task ";
 const string MagicString::NON_EXISTENCE = " does not exist";
 const string MagicString::UPDATE = " updated";

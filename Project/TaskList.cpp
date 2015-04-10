@@ -160,8 +160,10 @@ string TaskList::search(string input){
 string TaskList::display(string displayType){
 	DisplayedTaskList::emptyList();
 	
-	addToDisplayedTaskList(displayType);
-	if (DisplayedTaskList::isEmpty()){
+	if (addToDisplayedTaskList(displayType) == MagicString::INVALID_DISPLAY){
+		return MagicString::INVALID_DISPLAY;
+	}
+	else if (DisplayedTaskList::isEmpty()){
 		return MagicString::TASK_EMPTY2; //change to magic string
 	}
 	else{
@@ -169,13 +171,14 @@ string TaskList::display(string displayType){
 	}
 }
 
-void TaskList::addToDisplayedTaskList(string displayType){
+string TaskList::addToDisplayedTaskList(string displayType){
 	if (displayType == "all"){
 		for (unsigned int i = 0; i < list.size(); i++){
 			if (!list[i].taskDone()){
 				DisplayedTaskList::addTask(list[i]);
 			}
 		}
+		return "";
 	}
 	else if (displayType == "done"){
 		for (unsigned int i = 0; i < list.size(); i++){
@@ -183,6 +186,7 @@ void TaskList::addToDisplayedTaskList(string displayType){
 				DisplayedTaskList::addTask(list[i]);
 			}
 		}
+		return "";
 	}
 	else if (displayType == "timed" || displayType == "deadline" || displayType == "floating"){
 		for (unsigned int i = 0; i < list.size(); i++){
@@ -190,6 +194,7 @@ void TaskList::addToDisplayedTaskList(string displayType){
 				DisplayedTaskList::addTask(list[i]);
 			}
 		}
+		return "";
 	}
 	else if (displayType == "today"){
 		for (unsigned int i = 0; i < list.size(); i++){
@@ -197,6 +202,7 @@ void TaskList::addToDisplayedTaskList(string displayType){
 				DisplayedTaskList::addTask(list[i]);
 			}
 		}
+		return "";
 	}
 	else if (isExist(taskGroup, displayType)){
 		for (unsigned int i = 0; i < list.size(); i++){
@@ -204,6 +210,7 @@ void TaskList::addToDisplayedTaskList(string displayType){
 				DisplayedTaskList::addTask(list[i]);
 			}
 		}
+		return "";
 	}
 	else if (isExist(taskPlace, displayType)){
 		for (unsigned int i = 0; i < list.size(); i++){
@@ -211,9 +218,10 @@ void TaskList::addToDisplayedTaskList(string displayType){
 				DisplayedTaskList::addTask(list[i]);
 			}
 		}
+		return "";
 	}
 	else{
-		cout << "Invalid display command."<<endl;
+		return MagicString::INVALID_DISPLAY;
 	}
 }
 
