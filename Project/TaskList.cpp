@@ -36,30 +36,39 @@ string TaskList::addTask(string input){
 	if (repeat != std::string::npos){
 		string taskInfo = input.substr(0, repeat - 1);
 		Task newTask(taskInfo);
-		if (newTask.getTaskType() == "floating"){
-			return MagicString::FLOATING_CANNOT_RECUR;
+		if (newTask.checkInputValidation()){
+			if (newTask.getTaskType() == "floating"){
+				return MagicString::FLOATING_CANNOT_RECUR;
+			}
+			else{
+				string repeatInfo = input.substr(repeat + 6);
+				string repeat_type = getFirstWord(repeatInfo);
+				int repeat_time = atoi((removeFirstWord(repeatInfo)).c_str());
+				addRepeatTask(taskInfo, repeat_type, repeat_time);
+				storage::tempFile();
+				return MagicString::RECURRING_TASK_ADDED;
+			}
 		}
 		else{
-			string repeatInfo = input.substr(repeat + 6);
-			string repeat_type = getFirstWord(repeatInfo);
-			int repeat_time = atoi((removeFirstWord(repeatInfo)).c_str());
-			addRepeatTask(taskInfo, repeat_type, repeat_time);
-			storage::tempFile();
-			return MagicString::RECURRING_TASK_ADDED;
+			return "Invalid time input";
 		}
+		
 	}
 	else{
-		lastCommandType = "add";
-
 		Task newTask(input);
-		list.push_back(newTask);
+		if (newTask.checkInputValidation()){
+			list.push_back(newTask);
+			lastCommandType = "add";
+			lastChangedTask = newTask;
 
-		lastChangedTask = newTask;
-
-		addTaskGroup(newTask);
-		addPlace(newTask);
-		storage::tempFile();
-		return MagicString::TASK_ADDED;
+			addTaskGroup(newTask);
+			addPlace(newTask);
+			storage::tempFile();
+			return MagicString::TASK_ADDED;
+		}
+		else{
+			return "Invalid time input";
+		}
 	}
 }
 
@@ -96,15 +105,22 @@ string TaskList::updateTask(string input){
 		return output;
 	}
 	else{
-		lastCommandType = "update";
-		lastChangedTaskIndex = findTargetedTaskIndex(index);
-		lastUnchangedTask = list[lastChangedTaskIndex];
+		int listIndex = findTargetedTaskIndex(index);
+		Task temp = list[listIndex];
+		list[listIndex].UpdateTask(taskInfo);
 
-		list[lastChangedTaskIndex].UpdateTask(taskInfo);
-
-		lastChangedTask = list[lastChangedTaskIndex];
-		output = "Task " + taskIndex + " updated"; //change to magic string
-
+		if (list[listIndex].checkInputValidation()){
+			lastCommandType = "update";
+			lastChangedTaskIndex = listIndex;
+			lastUnchangedTask = temp;
+			lastChangedTask = list[lastChangedTaskIndex];
+			output = "Task " + taskIndex + " updated"; //change to magic string
+		}
+		else{
+			list[lastChangedTaskIndex] = temp;
+			output = "Invalid time input";		
+		}
+		
 		storage::tempFile();
 		return output;
 	}
@@ -257,14 +273,22 @@ string TaskList::markAsDone(string input){
 	istringstream in(input);
 	in >> index;
 
-	lastCommandType = "done";
-	lastChangedTaskIndex = findTargetedTaskIndex(index);
+	string output;
+	int size = DisplayedTaskList::returnListSize();
+	if (index > size || index <= 0){
+		output = "Task " + input + " does not exit"; //change to magic string
+		return output;
+	}
+	else{
+		lastCommandType = "done";
+		lastChangedTaskIndex = findTargetedTaskIndex(index);
 
-	list[lastChangedTaskIndex].markAsDone();
-	string output = "Task " + input + " marked as done"; //change to magic string
+		list[lastChangedTaskIndex].markAsDone();
+		string output = "Task " + input + " marked as done"; //change to magic string
 
-	storage::tempFile();
-	return output;
+		storage::tempFile();
+		return output;
+	}	
 }
 
 string TaskList::setPriority(string input){
