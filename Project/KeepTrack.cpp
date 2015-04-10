@@ -5,6 +5,7 @@
 #include "TaskList.h"
 #include "DisplayedTaskList.h"
 #include "Help.h"
+#include "MagicString.h"
 
 int main() {
 	storage::backup();
@@ -13,9 +14,9 @@ int main() {
 	InterfaceOutput::displayTime();
 	TaskList::copyFromStorage();
 	
-    cout << "================================================================================";
+    cout << MagicString::DIVIDER;
 	InterfaceOutput::showToUser(InterfaceOutput::displayTip());
-	cout << "================================================================================";
+	cout << MagicString::DIVIDER;
 
 	while (true) {
 		string userCommand;
@@ -24,7 +25,7 @@ int main() {
 		userCommand = InterfaceInput::getUserCommand();
 		output = InterfaceInput::executeUserCommand(userCommand);
 		InterfaceOutput::showToUser(output);
-		cout << "================================================================================";
+		cout << MagicString::DIVIDER;
     }
 
 	return 0;
