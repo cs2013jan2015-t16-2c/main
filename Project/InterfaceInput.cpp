@@ -16,6 +16,7 @@ const string InterfaceInput::STRING_EMPTY = "";
 const string InterfaceInput::STRING_TODAY = "today";
 const string InterfaceInput::STRING_DO_NOT_EXIST = "does not exit";
 
+//@Cai Yu A0093586N
 string InterfaceInput::getUserCommand() {
 	string userCommand;
 
@@ -80,13 +81,35 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case MARK_DONE:
 		return TaskList::markAsDone(taskString);
 	case SET_PRIORITY:
-		return TaskList::setPriority(taskString);
+		displayText = TaskList::setPriority(taskString);
+		if (displayText.find(STRING_DO_NOT_EXIST) != string::npos) {
+			DisplayColor::displayError(displayText);
+		}
+		else {
+			DisplayColor::displaySuccess(displayText);
+		}
+		cout << '\n' << MagicString::DIVIDER;
+		return displayToday();
 	case ARCHIVE:
-		return storage::archive(taskString);
+		displayText = storage::archive(taskString);
+		DisplayColor::displaySuccess(displayText);
+		return STRING_EMPTY;
 	case SAVE_DONE:
-		return storage::saveDone();
+		displayText = storage::saveDone();
+		DisplayColor::displaySuccess(displayText);
+		return STRING_EMPTY;
 	case SAVE_IN_PROGRESS:
-		return storage::saveProgress();
+		displayText = storage::saveProgress();
+		DisplayColor::displaySuccess(displayText);
+		return STRING_EMPTY;
+	case CLEAR_FILE:
+		displayText = storage::deletePer();
+		DisplayColor::displaySuccess(displayText);
+		return STRING_EMPTY;
+	case CLEAR_ARCHIVE:
+		displayText = storage::archiveDelete(taskString);
+		DisplayColor::displaySuccess(displayText);
+		return STRING_EMPTY;
 	case UNDO:
 		displayText = TaskList::undo();
 		if (displayText == MagicString::UNDO_UNABLE) {
@@ -153,6 +176,17 @@ InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string command
 		}
 		else {
 			return COMMAND_TYPE::OTHERS;
+		}
+	}
+	else if (commandTypeString == "clear") {
+		if (taskString == "all") {
+			return COMMAND_TYPE::CLEAR_FILE;
+		}
+		else if (taskString == "") {
+			return COMMAND_TYPE::OTHERS;
+		}
+		else {
+			return COMMAND_TYPE::CLEAR_ARCHIVE;
 		}
 	}
 	else if (commandTypeString == "undo" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_UNDO) {

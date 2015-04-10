@@ -2,13 +2,13 @@
 #include "InterfaceOutput.h"
 #include "MagicString.h"
 
+//@Cai Yu A0093586N
 string InterfaceOutput::displayWelcome() {
 	return MagicString::MESSAGE_WELCOME;
 }
 
 void InterfaceOutput::displayDate() {
 	cout << MagicString::TODAY;
-
 	time_t t = time(0);
 	struct tm * now = localtime(&t);
 	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
@@ -21,4 +21,3 @@ string InterfaceOutput::displayTip() {
 void InterfaceOutput::showToUser(string text) {
 	cout << text << endl;
 }
-
