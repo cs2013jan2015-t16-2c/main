@@ -6,7 +6,7 @@ string InterfaceOutput::displayWelcome() {
 	return MagicString::MESSAGE_WELCOME;
 }
 
-void InterfaceOutput::displayTime() {
+void InterfaceOutput::displayDate() {
 	cout << MagicString::TODAY;
 
 	time_t t = time(0);

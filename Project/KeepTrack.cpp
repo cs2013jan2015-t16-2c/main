@@ -5,26 +5,32 @@
 #include "TaskList.h"
 #include "DisplayedTaskList.h"
 #include "Help.h"
+#include "DisplayColor.h"
 
 int main() {
 	storage::backup();
-	InterfaceOutput::showToUser(storage::starting());
+	DisplayColor::displaySuccess(storage::starting());
+	cout << endl;
 	InterfaceOutput::showToUser(InterfaceOutput::displayWelcome());
-	InterfaceOutput::displayTime();
+	InterfaceOutput::displayDate();
 	TaskList::copyFromStorage();
 	
-    cout << "================================================================================";
+	cout << MagicString::DIVIDER;
 	InterfaceOutput::showToUser(InterfaceOutput::displayTip());
-	cout << "================================================================================";
+	cout << MagicString::DIVIDER;
 
 	while (true) {
 		string userCommand;
 		string output;
 
 		userCommand = InterfaceInput::getUserCommand();
+		system("cls");
+		InterfaceOutput::displayDate();
+		cout << MagicString::DIVIDER;
+		cout << MagicString::MESSAGE_USER_COMMAND << userCommand << endl;
 		output = InterfaceInput::executeUserCommand(userCommand);
 		InterfaceOutput::showToUser(output);
-		cout << "================================================================================";
+		cout << MagicString::DIVIDER;
     }
 
 	return 0;
