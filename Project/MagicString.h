@@ -34,6 +34,8 @@ public:
 	static const string MESSAGE_INVALID_TIME;
 	static const string MESSAGE2_INVALID_TIME;
 	//taskList
+	static const string FLOATING_CANNOT_RECUR;
+	static const string RECURRING_TASK_ADDED;
 	static const string TASK_ADDED;
 	static const string TASK_EMPTY;
 	static const string SEARCH_NOT_FOUND;

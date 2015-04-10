@@ -27,6 +27,8 @@ const string MagicString::MESSAGE_INVALID_DATE = "invalid date, please input a v
 const string MagicString::MESSAGE_INVALID_TIME = "invalid time, please enter a valid one";
 const string MagicString::MESSAGE2_INVALID_TIME = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 //TaskList
+const string MagicString::FLOATING_CANNOT_RECUR = "Floating task cannot be added recurrsively";
+const string MagicString::RECURRING_TASK_ADDED = "Recurring tasks added";
 const string MagicString::TASK_ADDED = "Task added!";
 const string MagicString::TASK_EMPTY = "Task list is empty";
 const string MagicString::SEARCH_NOT_FOUND = "No task containes the searched word";

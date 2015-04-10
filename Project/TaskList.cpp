@@ -36,7 +36,7 @@ string TaskList::addTask(string input){
 		string taskInfo = input.substr(0, repeat - 1);
 		Task newTask(taskInfo);
 		if (newTask.getTaskType() == "floating"){
-			return "Floation task cannot be added recurrsively";
+			return MagicString::FLOATING_CANNOT_RECUR;
 		}
 		else{
 			string repeatInfo = input.substr(repeat + 6);
@@ -44,7 +44,7 @@ string TaskList::addTask(string input){
 			int repeat_time = atoi((removeFirstWord(repeatInfo)).c_str());
 			addRepeatTask(taskInfo, repeat_type, repeat_time);
 			storage::tempFile();
-			return "Recurring tasks added";
+			return MagicString::RECURRING_TASK_ADDED;
 		}
 	}
 	else{
@@ -58,7 +58,7 @@ string TaskList::addTask(string input){
 		addTaskGroup(newTask);
 		addPlace(newTask);
 		storage::tempFile();
-		return "Task added";
+		return MagicString::TASK_ADDED;
 	}
 }
 
