@@ -9,6 +9,8 @@ class MagicString{
 public:
 	//display taskList
 	static const string MESSAGE_EMPTY;
+	//interfaceinput
+	static const string MESSAGE_NO_TASK_TODAY;
 	//interfaceoutput
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_TIP;
@@ -52,7 +54,7 @@ public:
 	static const string MARK_REDO;
 	static const string REDO_INABLE;
 
-	//keppTrack
+	//keepTrack
 	static const string DIVIDER;
 	//help
 	static const string HELP_MAIN_L1;

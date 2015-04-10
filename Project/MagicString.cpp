@@ -1,6 +1,8 @@
 #include "MagicString.h"
 //display taskList
 const string MagicString::MESSAGE_EMPTY = "Task list is empty";
+//interfaceinput
+const string MagicString::MESSAGE_NO_TASK_TODAY = "There is no task today!";
 //interfaceoutput
 const string MagicString::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string MagicString::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
