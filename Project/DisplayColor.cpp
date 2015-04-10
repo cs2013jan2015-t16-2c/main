@@ -12,6 +12,7 @@ const string DisplayColor::SYMBOL_PRIORITY_C = "(C)";
 const string DisplayColor::STATUS_IN_PROGRESS = "in progress";
 const string DisplayColor::STATUS_DONE = "done";
 
+//@Cai Yu A0093586N
 void DisplayColor::displayColor(string displayText) {
 	concolinit();
 

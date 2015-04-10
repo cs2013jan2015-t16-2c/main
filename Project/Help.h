@@ -10,11 +10,12 @@ private:
 	static void mainHelpPage();
 	static void addHelpPage();
 	static void displayHelpPage();
+	static void setPriorityHelpPage();
 	static void deleteHelpPage();
 	static void updateHelpPage();
-	static void undoHelpPage();
-	static void redoHelpPage();
+	static void undoRedoHelpPage();
 	static void archiveHelpPage();
+	static void clearHelpPage();
 	static void exitHelpPage();
 
 	static bool isInMainHelpPage;

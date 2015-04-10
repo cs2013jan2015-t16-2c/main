@@ -1,6 +1,7 @@
 #include "Help.h"
 #include "MagicString.h"
 
+//@Cai Yu A0093586N
 void Help::mainHelpPage() {
 	cout << MagicString::HELP_MAIN_L1 << endl;
 	cout << MagicString::HELP_MAIN_L2 << endl;
@@ -12,6 +13,7 @@ void Help::mainHelpPage() {
 	cout << MagicString::HELP_MAIN_L8 << endl;
 	cout << MagicString::HELP_MAIN_L9 << endl;
 	cout << MagicString::HELP_MAIN_L10 << endl;
+	cout << MagicString::HELP_MAIN_L11 << endl;
 	cout << MagicString::DIVIDER;
 	cout << MagicString::MESSAGE_COMMAND;
 	return;
@@ -22,7 +24,11 @@ void Help::addHelpPage() {
 	cout << MagicString::INSTRUCTION_ADD_FLOATING << endl;
 	cout << MagicString::INSTRUCTION_ADD_DEADLINE << endl;
 	cout << MagicString::INSTRUCTION_ADD_TIMED << endl;
-	cout << MagicString::DIVIDER;
+	cout << MagicString::INSTRUCTION_ADD_TAG << endl;
+	cout << MagicString::INSTRUCTION_ADD_VENUE << endl;
+	cout << MagicString::INSTRUCTION_ADD_BOTH_1 << endl;
+	cout << MagicString::INSTRUCTION_ADD_BOTH_2 << endl;
+	cout << endl;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
 	cout << MagicString::MESSAGE_EXIT_HELP << endl;
@@ -33,11 +39,13 @@ void Help::addHelpPage() {
 
 void Help::displayHelpPage() {
 	cout << MagicString::INSTRUCTION_DISPLAY << endl;
-	cout << MagicString::INSTRUCTION_DISPLAY_ALL << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_TODAY << endl;
 	cout << MagicString::INSTRUCTION_DISPLAY_FLOATING << endl;
 	cout << MagicString::INSTRUCTION_DISPLAY_DEADLINE << endl;
 	cout << MagicString::INSTRUCTION_DISPLAY_TIMED << endl;
-	cout << MagicString::DIVIDER;
+	cout << MagicString::INSTRUCTION_DISPLAY_DONE << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_ALL << endl;
+	cout << endl;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
 	cout << MagicString::MESSAGE_EXIT_HELP << endl;
@@ -46,11 +54,25 @@ void Help::displayHelpPage() {
 	return;
 }
 
+void Help::setPriorityHelpPage() {
+	cout << MagicString::INSTRUCTION_COMMON << endl;
+	cout << MagicString::INSTRUCTION_SET_PRIORITY << endl;
+	cout << MagicString::INSTRUCTION_SET_PRIORITY_REMINDER << endl;
+	cout << MagicString::INSTRUCTION_SET_PRIORITY_EXP1 << endl;
+	cout << MagicString::INSTRUCTION_SET_PRIORITY_EXP2 << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+}
+
 void Help::deleteHelpPage() {
 	cout << MagicString::INSTRUCTION_COMMON << endl;
 	cout << MagicString::INSTRUCTION_DELETE << endl;
 	cout << MagicString::INSTRUCTION_DELETE_EXP << endl;
-	cout << MagicString::DIVIDER;
+	cout << endl;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
 	cout << MagicString::MESSAGE_EXIT_HELP << endl;
@@ -63,7 +85,7 @@ void Help::updateHelpPage() {
 	cout << MagicString::INSTRUCTION_COMMON << endl;
 	cout << MagicString::INSTRUCTION_UPDATE << endl;
 	cout << MagicString::INSTRUCTION_UPDATE_EXP << endl;
-	cout << MagicString::DIVIDER;
+	cout << endl;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
 	cout << MagicString::MESSAGE_EXIT_HELP << endl;
@@ -72,20 +94,10 @@ void Help::updateHelpPage() {
 	return;
 }
 
-void Help::undoHelpPage() {
+void Help::undoRedoHelpPage() {
 	cout << MagicString::INSTRUCTION_UNDO << endl;
-	cout << MagicString::DIVIDER;
-	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
-	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
-	cout << MagicString::MESSAGE_EXIT_HELP << endl;
-	cout << MagicString::DIVIDER;
-	cout << MagicString::MESSAGE_COMMAND;
-	return;
-}
-
-void Help::redoHelpPage() {
 	cout << MagicString::INSTRUCTION_REDO << endl;
-	cout << MagicString::DIVIDER;
+	cout << endl;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
 	cout << MagicString::MESSAGE_EXIT_HELP << endl;
@@ -98,7 +110,19 @@ void Help::archiveHelpPage() {
 	cout << MagicString::INSTRUCTION_ARCHIVE << endl;
 	cout << MagicString::INSTRUCTION_ARCHIVE_EXP1 << endl;
 	cout << MagicString::INSTRUCTION_ARCHIVE_EXP2 << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
 	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+void Help::clearHelpPage() {
+	cout << MagicString::INSTRUCTION_CLEAR_EXP1 << endl;
+	cout << MagicString::INSTRUCTION_CLEAR_EXP2 << endl;
+	cout << endl;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
 	cout << MagicString::MESSAGE_EXIT_HELP << endl;
@@ -109,7 +133,7 @@ void Help::archiveHelpPage() {
 
 void Help::exitHelpPage () {
 	cout << MagicString::INSTRUCTION_EXIT << endl;
-	cout << MagicString::DIVIDER;
+	cout << endl;
 	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
 	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
 	cout << MagicString::MESSAGE_EXIT_HELP << endl;
@@ -137,6 +161,10 @@ string Help::executeHelpCommand() {
 			Help::displayHelpPage();
 			Help::isInMainHelpPage = false;
 		}
+		else if (Help::isInMainHelpPage && userInput == MagicString::SET_PRIORITY_HELP_PAGE_INDEX) {
+			Help::setPriorityHelpPage();
+			Help::isInMainHelpPage = false;
+		}
 		else if (Help::isInMainHelpPage && userInput == MagicString::DELETE_HELP_PAGE_INDEX) {
 			Help::deleteHelpPage();
 			Help::isInMainHelpPage = false;
@@ -145,16 +173,16 @@ string Help::executeHelpCommand() {
 			Help::updateHelpPage();
 			Help::isInMainHelpPage = false;
 		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::UNDO_HELP_PAGE_INDEX) {
-			Help::undoHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::REDO_HELP_PAGE_INDEX) {
-			Help::redoHelpPage();
+		else if (Help::isInMainHelpPage && userInput == MagicString::UNDO_REDO_HELP_PAGE_INDEX) {
+			Help::undoRedoHelpPage();
 			Help::isInMainHelpPage = false;
 		}
 		else if (Help::isInMainHelpPage && userInput == MagicString::ARCHIVE_HELP_PAGE_INDEX) {
 			Help::archiveHelpPage();
+			Help::isInMainHelpPage = false;
+		}
+		else if (Help::isInMainHelpPage && userInput == MagicString::CLEAR_HELP_PAGE_INDEX) {
+			Help::clearHelpPage();
 			Help::isInMainHelpPage = false;
 		}
 		else if (Help::isInMainHelpPage && userInput == MagicString::EXIT_HELP_PAGE_INDEX) {
@@ -172,11 +200,9 @@ string Help::executeHelpCommand() {
 		else {
 			Help::showHelp(MagicString::MESSAGE_INVALID_INDEX);
 			cout << endl;
-			cout << MagicString::DIVIDER;
-			Help::mainHelpPage();
 			cout << endl;
-			cout << MagicString::DIVIDER;
-			cout << MagicString::HELP_INDEX;
+			Help::mainHelpPage();
+			Help::isInMainHelpPage = true;
 		}
 
 	}

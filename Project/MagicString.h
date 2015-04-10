@@ -80,14 +80,16 @@ public:
 	static const string HELP_MAIN_L8;
 	static const string HELP_MAIN_L9;
 	static const string HELP_MAIN_L10;
+	static const string HELP_MAIN_L11;
 
 	static const string ADD_HELP_PAGE_INDEX;
 	static const string DISPLAY_HELP_PAGE_INDEX;
+	static const string SET_PRIORITY_HELP_PAGE_INDEX;
 	static const string DELETE_HELP_PAGE_INDEX;
 	static const string UPDATE_HELP_PAGE_INDEX;
-	static const string UNDO_HELP_PAGE_INDEX;
-	static const string REDO_HELP_PAGE_INDEX;
+	static const string UNDO_REDO_HELP_PAGE_INDEX;
 	static const string ARCHIVE_HELP_PAGE_INDEX;
+	static const string CLEAR_HELP_PAGE_INDEX;
 	static const string EXIT_HELP_PAGE_INDEX;
 	static const string REUTRN_TO_MAIN_HELP_PAGE;
 	static const string EXIT_HELP;
@@ -101,15 +103,26 @@ public:
 	static const string INSTRUCTION_ADD_FLOATING;
 	static const string INSTRUCTION_ADD_DEADLINE;
 	static const string INSTRUCTION_ADD_TIMED;
+	static const string INSTRUCTION_ADD_TAG;
+	static const string INSTRUCTION_ADD_VENUE;
+	static const string INSTRUCTION_ADD_BOTH_1;
+	static const string INSTRUCTION_ADD_BOTH_2;
 
 	static const string INSTRUCTION_DISPLAY;
-	static const string INSTRUCTION_DISPLAY_ALL;
+	static const string INSTRUCTION_DISPLAY_TODAY;
 	static const string INSTRUCTION_DISPLAY_FLOATING;
 	static const string INSTRUCTION_DISPLAY_DEADLINE;
 	static const string INSTRUCTION_DISPLAY_TIMED;
+	static const string INSTRUCTION_DISPLAY_DONE;
+	static const string INSTRUCTION_DISPLAY_ALL;
 
 	static const string INSTRUCTION_COMMON;
 	
+	static const string INSTRUCTION_SET_PRIORITY;
+	static const string INSTRUCTION_SET_PRIORITY_REMINDER;
+	static const string INSTRUCTION_SET_PRIORITY_EXP1;
+	static const string INSTRUCTION_SET_PRIORITY_EXP2;
+
 	static const string INSTRUCTION_DELETE;
 	static const string INSTRUCTION_DELETE_EXP;
 
@@ -122,6 +135,9 @@ public:
 	static const string INSTRUCTION_ARCHIVE;
 	static const string INSTRUCTION_ARCHIVE_EXP1;
 	static const string INSTRUCTION_ARCHIVE_EXP2;
+
+	static const string INSTRUCTION_CLEAR_EXP1;
+	static const string INSTRUCTION_CLEAR_EXP2;
 
 	static const string INSTRUCTION_EXIT;
 
