@@ -27,7 +27,7 @@ private:
 	static vector<string> splitText(string text);
 	static string printVector(vector<string> output);
 	static int  findTargetedTaskIndex(int displayedIndex);
-	static void addToDisplayedTaskList(string displayType);
+	static string addToDisplayedTaskList(string displayType);
 	static void addTaskGroup(Task newtask);
 	static void addPlace(Task newtask);
 	static bool isExist(vector<string> checkingList, string input);

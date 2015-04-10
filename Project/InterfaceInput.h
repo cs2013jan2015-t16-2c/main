@@ -38,6 +38,10 @@ private:
 	static const string SHORTENED_COMMAND_REDO;
 	static const string SHORTENED_COMMAND_EXIT;
 
+	static const string STRING_TODAY;
+	static const string STRING_EMPTY;
+	static const string STRING_DO_NOT_EXIST;
+
 	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
 
 	static string getFirstWord(string userCommand);
@@ -47,6 +51,7 @@ public:
 	static string executeUserCommand(string userCommand);
 	static bool isValidDisplayChoice(string taskString);
 	static string getUserCommand();
+	static string displayToday();
 
 	// for unit test
 	static string testGetFirstWord(string testString);

@@ -22,7 +22,7 @@ using namespace std;
 class InterfaceOutput {
 public:
 	static string displayWelcome();
-	static void displayTime();
+	static void displayDate();
 	static string displayTip();
 	static void showToUser(string text);
 };

@@ -1,12 +1,16 @@
 #include "MagicString.h"
 //display taskList
 const string MagicString::MESSAGE_EMPTY = "Task list is empty";
+//interfaceinput
+const string MagicString::MESSAGE_USER_COMMAND = "Command: ";
+const string MagicString::MESSAGE_NO_TASK_TODAY = "There is no task today!";
+const string MagicString::MESSAGE_TODAY_TASK = "Today's task:";
 //interfaceoutput
 const string MagicString::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string MagicString::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
 const string MagicString::MESSAGE_GOODBYE = "Goodbye!";
 const string MagicString::ERROR_INVALID_COMMAND = "Error: invalid command";
-const string MagicString::TODAY = "                       Today is ";
+const string MagicString::TODAY = "                              Today is ";
 //Storage
 const string MagicString::PROGRAM_START = "Data has been successfully loaded";
 const string MagicString::SUCCESS_ARCHIVE = "Tasklist is successfully archived";
@@ -26,9 +30,12 @@ const string MagicString::MESSAGE_INVALID_DATE = "invalid date, please input a v
 const string MagicString::MESSAGE_INVALID_TIME = "invalid time, please enter a valid one";
 const string MagicString::MESSAGE2_INVALID_TIME = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 //TaskList
-const string MagicString::TASK_ADDED = "Task added";
+const string MagicString::FLOATING_CANNOT_RECUR = "Floating task cannot be added recurrsively";
+const string MagicString::RECURRING_TASK_ADDED = "Recurring tasks added";
+const string MagicString::TASK_ADDED = "Task added!";
 const string MagicString::TASK_EMPTY = "Task list is empty";
 const string MagicString::SEARCH_NOT_FOUND = "No task containes the searched word";
+const string MagicString::INVALID_DISPLAY = "Invalid display command!";
 const string MagicString::TASK = "Task ";
 const string MagicString::NON_EXISTENCE = " does not exist";
 const string MagicString::UPDATE = " updated";
@@ -39,12 +46,12 @@ const string MagicString::ADD_UNDO = "Adding command is undone";
 const string MagicString::UPDATE_UNDO = "Updating command is undone";
 const string MagicString::DELETE_UNDO = "Deleting command is undone";
 const string MagicString::MARK_UNDO = "MarkasDone command is undone";
-const string MagicString::UNDO_INABLE = "Previous action cannot be undone";
+const string MagicString::UNDO_UNABLE = "Previous action cannot be undone";
 const string MagicString::ADD_REDO = "Adding command is redone";
 const string MagicString::UPDATE_REDO = "Updating command is redone";
 const string MagicString::DELETE_REDO = "Deleting command is redone";
 const string MagicString::MARK_REDO = "MarkasDone command is redone";
-const string MagicString::REDO_INABLE = "previous action cannot be redone";
+const string MagicString::REDO_UNABLE = "previous action cannot be redone";
 //keepTrack
 const string MagicString::DIVIDER = "================================================================================";
 //help

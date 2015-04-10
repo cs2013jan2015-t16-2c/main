@@ -12,7 +12,7 @@ const string DisplayColor::SYMBOL_PRIORITY_C = "(C)";
 const string DisplayColor::STATUS_IN_PROGRESS = "in progress";
 const string DisplayColor::STATUS_DONE = "done";
 
-string DisplayColor::displayColor(string displayText) {
+void DisplayColor::displayColor(string displayText) {
 	concolinit();
 
 	size_t foundNewLineStart = 0;
@@ -79,5 +79,18 @@ string DisplayColor::displayColor(string displayText) {
 		foundNewLineStart = foundNewLineEnd + 1;
 	}
 	settextcolor(deftextcol);
-	return "";
+}
+
+void DisplayColor::displaySuccess(string displayText) {
+	concolinit();
+	settextcolor(dark_green);
+	cout << displayText;
+	settextcolor(deftextcol);
+}
+
+void DisplayColor::displayError(string displayText) {
+	concolinit();
+	settextcolor(red);
+	cout << displayText;
+	settextcolor(deftextcol);
 }

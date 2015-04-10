@@ -9,6 +9,10 @@ class MagicString{
 public:
 	//display taskList
 	static const string MESSAGE_EMPTY;
+	//interfaceinput
+	static const string MESSAGE_USER_COMMAND;
+	static const string MESSAGE_NO_TASK_TODAY;
+	static const string MESSAGE_TODAY_TASK;
 	//interfaceoutput
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_TIP;
@@ -34,9 +38,12 @@ public:
 	static const string MESSAGE_INVALID_TIME;
 	static const string MESSAGE2_INVALID_TIME;
 	//taskList
+	static const string FLOATING_CANNOT_RECUR;
+	static const string RECURRING_TASK_ADDED;
 	static const string TASK_ADDED;
 	static const string TASK_EMPTY;
 	static const string SEARCH_NOT_FOUND;
+	static const string INVALID_DISPLAY;
 	static const string TASK;
 	static const string NON_EXISTENCE;
 	static const string UPDATE;
@@ -47,14 +54,14 @@ public:
 	static const string UPDATE_UNDO;
 	static const string DELETE_UNDO;
 	static const string MARK_UNDO;
-	static const string UNDO_INABLE;
+	static const string UNDO_UNABLE;
 	static const string ADD_REDO;
 	static const string UPDATE_REDO;
 	static const string DELETE_REDO;
 	static const string MARK_REDO;
-	static const string REDO_INABLE;
+	static const string REDO_UNABLE;
 
-	//keppTrack
+	//keepTrack
 	static const string DIVIDER;
 	//help
 	static const string HELP_MAIN_L1;
