@@ -37,10 +37,14 @@ private:
 	static const string SHORTENED_COMMAND_UNDO;
 	static const string SHORTENED_COMMAND_REDO;
 	static const string SHORTENED_COMMAND_EXIT;
-
+	
 	static const string STRING_TODAY;
 	static const string STRING_EMPTY;
 	static const string STRING_DO_NOT_EXIST;
+
+	static const string MESSAGE_ABORT_CLEAR;
+	static const string SYMBOL_YES;
+	static const string SYMBOL_NO;
 
 	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
 
@@ -52,10 +56,10 @@ public:
 	static bool isValidDisplayChoice(string taskString);
 	static string getUserCommand();
 	static string displayToday();
+	static bool isConfirmedToClear();
 
 	// for unit test
 	static string testGetFirstWord(string testString);
 	static string testRemoveFirstWord(string testString);
-
 };
 #endif

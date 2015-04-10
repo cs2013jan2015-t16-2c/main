@@ -13,6 +13,8 @@ public:
 	static const string MESSAGE_USER_COMMAND;
 	static const string MESSAGE_NO_TASK_TODAY;
 	static const string MESSAGE_TODAY_TASK;
+	static const string MESSAGE_WARNING;
+	static const string ERROR_TYPE_AGAIN;
 	//interfaceoutput
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_TIP;
