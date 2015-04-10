@@ -252,11 +252,11 @@ string InterfaceInput::displayToday() {
 }
 
 bool InterfaceInput::isConfirmedToClear(){
-	string errorMessage = MagicString::MESSAGE_WARNING;
-	DisplayColor::displayError(errorMessage);
+	DisplayColor::displayError(MagicString::MESSAGE_WARNING);
 	string userInput;
-	getline(cin, userInput);
 	while (true){
+		getline(cin, userInput);
+		transform(userInput.begin(), userInput.end(), userInput.begin(), ::toupper);
 		if (userInput == SYMBOL_YES) {
 			cout << MagicString::DIVIDER;
 			return true;
@@ -266,11 +266,11 @@ bool InterfaceInput::isConfirmedToClear(){
 			return false;
 		}
 		else{
-			errorMessage = MagicString::ERROR_TYPE_AGAIN;
-			DisplayColor::displayError(errorMessage);
+			DisplayColor::displayError(MagicString::ERROR_TYPE_AGAIN);
 		}
 	}
 }
+
 // for unit test only
 // to call private functions
 string InterfaceInput::testGetFirstWord(string testString) {
