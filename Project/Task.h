@@ -23,7 +23,8 @@ public:
 	void UpdateTask(string input);
 	void markAsDone();
 	void markAsUndone();
-	void checkInputValidation();
+	bool checkInputValidation();
+	bool isWithinLimit(int month, int day, int hour, int min);
 	//V0.2
 	string getTaskType();
 	void setPriority(string input);

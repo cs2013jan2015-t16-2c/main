@@ -36,30 +36,39 @@ string TaskList::addTask(string input){
 	if (repeat != std::string::npos){
 		string taskInfo = input.substr(0, repeat - 1);
 		Task newTask(taskInfo);
-		if (newTask.getTaskType() == "floating"){
-			return MagicString::FLOATING_CANNOT_RECUR;
+		if (newTask.checkInputValidation()){
+			if (newTask.getTaskType() == "floating"){
+				return MagicString::FLOATING_CANNOT_RECUR;
+			}
+			else{
+				string repeatInfo = input.substr(repeat + 6);
+				string repeat_type = getFirstWord(repeatInfo);
+				int repeat_time = atoi((removeFirstWord(repeatInfo)).c_str());
+				addRepeatTask(taskInfo, repeat_type, repeat_time);
+				storage::tempFile();
+				return MagicString::RECURRING_TASK_ADDED;
+			}
 		}
 		else{
-			string repeatInfo = input.substr(repeat + 6);
-			string repeat_type = getFirstWord(repeatInfo);
-			int repeat_time = atoi((removeFirstWord(repeatInfo)).c_str());
-			addRepeatTask(taskInfo, repeat_type, repeat_time);
-			storage::tempFile();
-			return MagicString::RECURRING_TASK_ADDED;
+			return MagicString::INVALID_TIME_INPUT;
 		}
+		
 	}
 	else{
-		lastCommandType = "add";
-
 		Task newTask(input);
-		list.push_back(newTask);
+		if (newTask.checkInputValidation()){
+			list.push_back(newTask);
+			lastCommandType = "add";
+			lastChangedTask = newTask;
 
-		lastChangedTask = newTask;
-
-		addTaskGroup(newTask);
-		addPlace(newTask);
-		storage::tempFile();
-		return MagicString::TASK_ADDED;
+			addTaskGroup(newTask);
+			addPlace(newTask);
+			storage::tempFile();
+			return MagicString::TASK_ADDED;
+		}
+		else{
+			return MagicString::INVALID_TIME_INPUT;
+		}
 	}
 }
 
@@ -92,19 +101,26 @@ string TaskList::updateTask(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size|| index <= 0){
-		output = "Task " + taskIndex + " does not exit"; //change to magic string
+		output = MagicString::TASK + taskIndex + MagicString::NON_EXISTENCE;
 		return output;
 	}
 	else{
-		lastCommandType = "update";
-		lastChangedTaskIndex = findTargetedTaskIndex(index);
-		lastUnchangedTask = list[lastChangedTaskIndex];
+		int listIndex = findTargetedTaskIndex(index);
+		Task temp = list[listIndex];
+		list[listIndex].UpdateTask(taskInfo);
 
-		list[lastChangedTaskIndex].UpdateTask(taskInfo);
-
-		lastChangedTask = list[lastChangedTaskIndex];
-		output = "Task " + taskIndex + " updated"; //change to magic string
-
+		if (list[listIndex].checkInputValidation()){
+			lastCommandType = "update";
+			lastChangedTaskIndex = listIndex;
+			lastUnchangedTask = temp;
+			lastChangedTask = list[lastChangedTaskIndex];
+			output = MagicString::TASK + taskIndex + MagicString::UPDATE;
+		}
+		else{
+			list[lastChangedTaskIndex] = temp;
+			output = MagicString::INVALID_TIME_INPUT;		
+		}
+		
 		storage::tempFile();
 		return output;
 	}
@@ -118,7 +134,7 @@ string TaskList::deleteTask(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size || index <= 0){
-		output = "Task " + input + " does not exit"; //change to magic string
+		output = MagicString::TASK + input + MagicString::NON_EXISTENCE; 
 		return output;
 	}
 	else{
@@ -127,7 +143,7 @@ string TaskList::deleteTask(string input){
 		lastUnchangedTask = list[lastChangedTaskIndex];
 
 		list.erase(list.begin() + lastChangedTaskIndex);
-		string output = "Task " + input + " deleted"; //change to magic string
+		string output = MagicString::TASK + input + MagicString::DELETE; 
 
 		storage::tempFile();
 		return output;
@@ -136,7 +152,7 @@ string TaskList::deleteTask(string input){
 
 string TaskList::search(string input){
 	if (list.empty()){
-		return "Task list is empty"; //change to magic string
+		return MagicString::TASK_EMPTY; 
 	}
 	else{
 		DisplayedTaskList::emptyList();
@@ -153,7 +169,7 @@ string TaskList::search(string input){
 		}
 		
 		if (DisplayedTaskList::isEmpty()){
-			return "No task containes the searched word"; //change to magic string
+			return MagicString::SEARCH_NOT_FOUND;
 		}
 		else{
 			string output = DisplayedTaskList::display();
@@ -257,14 +273,22 @@ string TaskList::markAsDone(string input){
 	istringstream in(input);
 	in >> index;
 
-	lastCommandType = "done";
-	lastChangedTaskIndex = findTargetedTaskIndex(index);
+	string output;
+	int size = DisplayedTaskList::returnListSize();
+	if (index > size || index <= 0){
+		output = MagicString::TASK + input + MagicString::NON_EXISTENCE;
+		return output;
+	}
+	else{
+		lastCommandType = "done";
+		lastChangedTaskIndex = findTargetedTaskIndex(index);
 
-	list[lastChangedTaskIndex].markAsDone();
-	string output = "Task " + input + " marked as done"; //change to magic string
+		list[lastChangedTaskIndex].markAsDone();
+		string output = MagicString::TASK + input + MagicString::MARK_AS_DONE;
 
-	storage::tempFile();
-	return output;
+		storage::tempFile();
+		return output;
+	}	
 }
 
 string TaskList::setPriority(string input){
@@ -278,7 +302,7 @@ string TaskList::setPriority(string input){
 	string output;
 	int size = DisplayedTaskList::returnListSize();
 	if (index > size || index <= 0){
-		output = "Task " + taskIndex + " does not exit"; //change to magic string
+		output = MagicString::TASK + input + MagicString::NON_EXISTENCE;
 		return output;
 	}
 	else{
@@ -290,7 +314,7 @@ string TaskList::setPriority(string input){
 			list[lastChangedTaskIndex].setPriority(taskInfo);
 
 			lastChangedTask = list[lastChangedTaskIndex];
-			output = "Task " + taskIndex + " is prioritised"; //change to magic string
+			output = MagicString::TASK + taskIndex + MagicString::SET_PRIORITY; 
 
 			storage::tempFile();
 			return output;
@@ -307,34 +331,34 @@ string TaskList::undo(){
 		list.pop_back();
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "Adding command is undone"; //change to magic string
+		return MagicString::ADD_UNDO;
 	}
 	else if (lastCommandType == "update"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "Updating command is undone"; //change to magic string
+		return MagicString::UPDATE_UNDO;
 	}
 	else if (lastCommandType == "delete"){
 		list.insert(list.begin() + lastChangedTaskIndex, lastUnchangedTask);
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "Deleting command is undone"; //change to magic string
+		return MagicString::DELETE_UNDO;
 	}
 	else if (lastCommandType == "done"){
 		list[lastChangedTaskIndex].markAsUndone();
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "MarkasDone command is undone"; //change to magic string
+		return MagicString::MARK_UNDO;
 	}
 	else if (lastCommandType == "setPriority"){
 		list[lastChangedTaskIndex] = lastUnchangedTask;
 		isLastCommandUndo = true;
 		storage::tempFile();
-		return "SetPriority command is undone";
+		return MagicString::PRIORITY_UNDO;
 	}
 	else{
-		return "Previous action cannot be undo"; //change to magic string
+		return MagicString::UNDO_UNABLE;
 	}
 }
 
@@ -344,31 +368,31 @@ string TaskList::redo(){
 		if (lastCommandType == "add"){
 			list.push_back(lastChangedTask);
 			storage::tempFile();
-			return "Adding command is redone"; //change to magic string
+			return MagicString::ADD_REDO;
 		}
 		else if (lastCommandType == "update"){
 			list[lastChangedTaskIndex] = lastChangedTask;
 			storage::tempFile();
-			return "Updating command is redone"; //change to magic string
+			return MagicString::UPDATE_REDO;
 		}
 		else if (lastCommandType == "delete"){
 			list.erase(list.begin() + lastChangedTaskIndex);
 			storage::tempFile();
-			return "Deleting command is redone"; //change to magic string
+			return MagicString::DELETE_REDO;
 		}
 		else if (lastCommandType == "done"){
 			list[lastChangedTaskIndex].markAsDone();
 			storage::tempFile();
-			return "MarkasDone command is redone"; //change to magic string
+			return MagicString::MARK_REDO;
 		}
 		else{
 			list[lastChangedTaskIndex] = lastChangedTask;
 			storage::tempFile();
-			return "SetPriority command is redone";
-		}	
+			return MagicString::PRIORITY_REDO;
+		}
 	}
 	else{
-		return "No undo action is done previously"; //change to magic string
+		return MagicString::REDO_UNABLE;
 	}
 }
 

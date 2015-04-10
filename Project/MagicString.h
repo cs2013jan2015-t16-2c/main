@@ -42,6 +42,7 @@ public:
 	//taskList
 	static const string FLOATING_CANNOT_RECUR;
 	static const string RECURRING_TASK_ADDED;
+	static const string INVALID_TIME_INPUT;
 	static const string TASK_ADDED;
 	static const string TASK_EMPTY;
 	static const string SEARCH_NOT_FOUND;
@@ -52,15 +53,18 @@ public:
 	static const string DELETE;
 	static const string TASK_EMPTY2;
 	static const string MARK_AS_DONE;
+	static const string SET_PRIORITY;
 	static const string ADD_UNDO;
 	static const string UPDATE_UNDO;
 	static const string DELETE_UNDO;
 	static const string MARK_UNDO;
+	static const string PRIORITY_UNDO;
 	static const string UNDO_UNABLE;
 	static const string ADD_REDO;
 	static const string UPDATE_REDO;
 	static const string DELETE_REDO;
 	static const string MARK_REDO;
+	static const string PRIORITY_REDO;
 	static const string REDO_UNABLE;
 
 	//keepTrack

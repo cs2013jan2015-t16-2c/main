@@ -476,7 +476,6 @@ string Task::getPriority(){
 	return priority;
 }
 
-
 /*void Task::checkInputValidation(){
 	concolinit();
 	//check for valid time frame
@@ -853,20 +852,20 @@ void Task::recurringAdd(string repeat_type){
 string Task::returnDate(int month, int day){
 	if (month == 1 || 3 || 5 || 7 || 8 || 10 || 12){
 		if (day > 30){
-			month = month + day / 30;
-			day = day % 30 + 1;
+			month = month + day / 31;
+			day = day % 31 + 1;
 		}
 	}
 	else if (month == 4 || 6 || 9 || 11){
 		if (day > 31){
-			month = month + day / 31; 
-			day = day % 31 + 1;
+			month = month + day / 32; 
+			day = day % 32 + 1;
 		}
 	}
 	else{
 		if (day > 28){
-			month = month + day / 28; 
-			day = day % 28 + 1;
+			month = month + day / 29; 
+			day = day % 29 + 1;
 		}
 	}
 
@@ -892,4 +891,76 @@ string Task::returnDate(int month, int day){
 	}
 	string day_s = date.str();
 	return day_s + "/" + month_s;
+}
+
+bool Task::checkInputValidation(){
+	if (task_type == FLOATING_TASK_LABEL){
+		return true;
+	}
+	else if (task_type == SCHEDULED_TASK_LABEL){
+		int mon_s = atoi(scheduled_start_date.substr(3, 2).c_str());
+		int day_s = atoi(scheduled_start_date.substr(0, 2).c_str());
+		int hour_s = atoi(start_time.substr(0, 2).c_str());
+		int min_s = atoi(start_time.substr(3, 2).c_str());
+
+		int mon_e = atoi(scheduled_end_date.substr(3, 2).c_str());
+		int day_e = atoi(scheduled_end_date.substr(0, 2).c_str());
+		int hour_e = atoi(end_time.substr(0, 2).c_str());
+		int min_e = atoi(end_time.substr(3, 2).c_str());
+
+		if (!isWithinLimit(mon_s, day_s, hour_s, min_s) || !isWithinLimit(mon_e, day_e, hour_e, min_e)){
+			return false;
+		}
+
+		if (mon_s > mon_e){
+			return false;
+		}
+		else if (mon_s == mon_e){
+			if (day_s > day_e){
+				return false;
+			}
+			else if (day_s == day_e){
+				if (hour_s > hour_e){
+					return false;
+				}
+				else if (hour_s == hour_e){
+					if (min_s > min_e){
+						return false;
+					}
+				}
+			}
+		}
+	}
+	else{
+		int mon = atoi(deadline_date.substr(3, 2).c_str());
+		int day = atoi(deadline_date.substr(0, 2).c_str());
+		int hour = atoi(deadline_time.substr(0, 2).c_str());
+		int min = atoi(deadline_time.substr(3, 2).c_str());
+
+		if (!isWithinLimit(mon, day, hour, min)){
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Task::isWithinLimit(int month, int day, int hour, int min){
+	if (month < 1 || month>12){
+		return false;
+	}
+
+	if (day < 1 || day>31){
+		return false;
+	}
+
+	if (hour < 0 || hour >= 24){
+		return false;
+	}
+
+	if (min < 0 || min >= 60){
+		return false;
+	}
+
+	return true;
 }
