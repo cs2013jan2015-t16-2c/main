@@ -44,12 +44,12 @@ const string MagicString::ADD_UNDO = "Adding command is undone";
 const string MagicString::UPDATE_UNDO = "Updating command is undone";
 const string MagicString::DELETE_UNDO = "Deleting command is undone";
 const string MagicString::MARK_UNDO = "MarkasDone command is undone";
-const string MagicString::UNDO_INABLE = "Previous action cannot be undone";
+const string MagicString::UNDO_UNABLE = "Previous action cannot be undone";
 const string MagicString::ADD_REDO = "Adding command is redone";
 const string MagicString::UPDATE_REDO = "Updating command is redone";
 const string MagicString::DELETE_REDO = "Deleting command is redone";
 const string MagicString::MARK_REDO = "MarkasDone command is redone";
-const string MagicString::REDO_INABLE = "previous action cannot be redone";
+const string MagicString::REDO_UNABLE = "previous action cannot be redone";
 //keepTrack
 const string MagicString::DIVIDER = "================================================================================";
 //help

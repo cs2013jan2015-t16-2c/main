@@ -51,12 +51,12 @@ public:
 	static const string UPDATE_UNDO;
 	static const string DELETE_UNDO;
 	static const string MARK_UNDO;
-	static const string UNDO_INABLE;
+	static const string UNDO_UNABLE;
 	static const string ADD_REDO;
 	static const string UPDATE_REDO;
 	static const string DELETE_REDO;
 	static const string MARK_REDO;
-	static const string REDO_INABLE;
+	static const string REDO_UNABLE;
 
 	//keepTrack
 	static const string DIVIDER;
