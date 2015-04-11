@@ -106,7 +106,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	
 	case SET_PRIORITY:
 		displayText = TaskList::setPriority(taskString);
-		if (displayText.find(STRING_DO_NOT_EXIST) != string::npos) {
+		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
 			DisplayColor::displayError(displayText);
 		}
 		else {
