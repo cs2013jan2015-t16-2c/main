@@ -12,8 +12,11 @@ const string DisplayColor::SYMBOL_PRIORITY_C = "(C)";
 const string DisplayColor::STATUS_IN_PROGRESS = "in progress";
 const string DisplayColor::STATUS_DONE = "done";
 
+//this is for unit testing only
+string DisplayColor::TEST_OUTPUT;
+
 //@Cai Yu A0093586N
-void DisplayColor::displayColor(string displayText) {
+string DisplayColor::displayColor(string displayText) {
 	concolinit();
 
 	size_t foundNewLineStart = 0;
@@ -43,55 +46,68 @@ void DisplayColor::displayColor(string displayText) {
 		if (currentLine.find('#') != string::npos && currentLine.find('@') != string::npos) {
 			foundTag = currentLine.find('#');
 			cout << currentLine.substr(0, foundTag - 0);
+			TEST_OUTPUT = currentLine.substr(0, foundTag - 0);
 			foundSpace = currentLine.find(" ", foundTag);
 			settextcolor(dark_aqua);
 
 			foundAt = currentLine.find('@');
 			cout << currentLine.substr(foundTag, foundAt - foundTag);
+			TEST_OUTPUT += currentLine.substr(foundTag, foundAt - foundTag);
 			foundSpace = currentLine.find(" ", foundAt);
 			settextcolor(dark_green);
 			cout << currentLine.substr(foundAt, foundSpace - foundAt) << endl;
+			TEST_OUTPUT += currentLine.substr(foundAt, foundSpace - foundAt);
 		}
 		else if (currentLine.find('#') != string::npos && currentLine.find('@') == string::npos) {
 			foundTag = currentLine.find('#');
 			cout << currentLine.substr(0, foundTag - 0);
+			TEST_OUTPUT = currentLine.substr(0, foundTag - 0);
 			foundSpace = currentLine.find(" ", foundTag);
 			settextcolor(dark_aqua);
 			cout << currentLine.substr(foundTag, foundSpace - foundTag) << endl;
-
+			TEST_OUTPUT += currentLine.substr(foundTag, foundSpace - foundTag);
 		}
 		else if (currentLine.find('#') == string::npos && currentLine.find('@') != string::npos) {
 			foundAt = currentLine.find('@');
 			cout << currentLine.substr(0, foundAt - 0);
+			TEST_OUTPUT = currentLine.substr(0, foundAt - 0);
 			foundSpace = currentLine.find(" ", foundAt);
 			settextcolor(dark_green);
 			cout << currentLine.substr(foundAt, foundSpace - foundAt) << endl;
+			TEST_OUTPUT += currentLine.substr(foundAt, foundSpace - foundAt);
 		}
 		else {
 			if (currentLine.find(DisplayColor::STATUS_DONE) != string::npos) {
 				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_DONE);
 				cout << currentLine.substr(0, foundInProcessOrDone) << endl;
+				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone);
 			}
 			else {
 				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_IN_PROGRESS);
 				cout << currentLine.substr(0, foundInProcessOrDone) << endl;
+				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone);
 			}
 		}
 		foundNewLineStart = foundNewLineEnd + 1;
 	}
 	settextcolor(deftextcol);
+	return TEST_OUTPUT;
 }
 
-void DisplayColor::displaySuccess(string displayText) {
+string DisplayColor::displaySuccess(string displayText) {
 	concolinit();
 	settextcolor(dark_green);
 	cout << displayText;
+	TEST_OUTPUT = displayText;
 	settextcolor(deftextcol);
+	return TEST_OUTPUT;
 }
 
-void DisplayColor::displayError(string displayText) {
+string DisplayColor::displayError(string displayText) {
 	concolinit();
 	settextcolor(red);
 	cout << displayText;
+	DisplayColor::TEST_OUTPUT = displayText;
 	settextcolor(deftextcol);
+	return TEST_OUTPUT;
 }

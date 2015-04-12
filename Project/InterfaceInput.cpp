@@ -16,10 +16,14 @@ const string InterfaceInput::SHORTENED_COMMAND_EXIT = "q";
 const string InterfaceInput::STRING_EMPTY = "";
 const string InterfaceInput::STRING_TODAY = "today";
 
-// These are the output information for 'clear all' action
+//These are the output information for 'clear all' action
 const string InterfaceInput::MESSAGE_ABORT_CLEAR = "Clear action aborted";
 const string InterfaceInput::SYMBOL_YES = "Y";
 const string InterfaceInput::SYMBOL_NO = "N";
+
+//These are for unit testing only
+string InterfaceInput::TEST_OUTPUT_EXECUTE;
+string InterfaceInput::TEST_OUTPUT_TODAY;
 
 //@Cai Yu A0093586N
 string InterfaceInput::getUserCommand() {
@@ -51,14 +55,14 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 
 	case ADD_TASK:
 		displayText = TaskList::addTask(taskString);
-		DisplayColor::displaySuccess(displayText);
+		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		cout << endl;
 		cout << endl;
 		return displayToday();
 
 	case SEARCH:
 		displayText = TaskList::search(taskString);
-		DisplayColor::displayColor(displayText);
+		TEST_OUTPUT_EXECUTE = DisplayColor::displayColor(displayText); //For unit testing
 		return STRING_EMPTY;
 	
 	case UPDATE:
@@ -70,10 +74,10 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case DELETE_TASK:
 		displayText = TaskList::deleteTask(taskString);
 		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
-			DisplayColor::displayError(displayText);
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
-			DisplayColor::displaySuccess(displayText);
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		}
 		cout << endl;
 		cout << endl;
@@ -82,23 +86,23 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case DISPLAY_TASKS:
 		displayText = TaskList::display(taskString);
 		if (displayText == MagicString::INVALID_DISPLAY) {
-			DisplayColor::displayError(displayText);
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else if (displayText == MagicString::TASK_EMPTY2){
-			DisplayColor::displayError(displayText);
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
-			DisplayColor::displayColor(displayText);
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayColor(displayText); //For unit testing
 		}
 		return STRING_EMPTY;
 	
 	case MARK_DONE:
 		displayText = TaskList::markAsDone(taskString);
 		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
-			DisplayColor::displayError(displayText);
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
-			DisplayColor::displaySuccess(displayText);
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		}
 		cout << endl;
 		cout << endl;
@@ -107,10 +111,10 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case SET_PRIORITY:
 		displayText = TaskList::setPriority(taskString);
 		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
-			DisplayColor::displayError(displayText);
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
-			DisplayColor::displaySuccess(displayText);
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		}
 		cout << endl;
 		cout << endl;
@@ -118,42 +122,42 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	
 	case ARCHIVE:
 		displayText = storage::archive(taskString);
-		DisplayColor::displaySuccess(displayText);
+		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		return STRING_EMPTY;
 	
 	case SAVE_DONE:
 		displayText = storage::saveDone();
-		DisplayColor::displaySuccess(displayText);
+		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		return STRING_EMPTY;
 	
 	case SAVE_IN_PROGRESS:
 		displayText = storage::saveProgress();
-		DisplayColor::displaySuccess(displayText);
+		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		return STRING_EMPTY;
 	
 	case CLEAR_FILE:
 		if (isConfirmedToClear()) {
 			displayText = storage::deletePer();
-			DisplayColor::displayError(displayText);
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 			return STRING_EMPTY;
 		}
 		else {
-			DisplayColor::displaySuccess(MESSAGE_ABORT_CLEAR);
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(MESSAGE_ABORT_CLEAR); //For unit testing
 			return STRING_EMPTY;
 		}
 	
 	case CLEAR_ARCHIVE:
 		displayText = storage::archiveDelete(taskString);
-		DisplayColor::displaySuccess(displayText);
+		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		return STRING_EMPTY;
 	
 	case UNDO:
 		displayText = TaskList::undo();
 		if (displayText == MagicString::UNDO_UNABLE) {
-			DisplayColor::displayError(displayText);
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
-			DisplayColor::displaySuccess(displayText);
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		}
 		cout << endl;
 		cout << endl;
@@ -162,10 +166,10 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	case REDO:
 		displayText = TaskList::redo();
 		if (displayText == MagicString::REDO_UNABLE) {
-			DisplayColor::displayError(displayText);
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
-			DisplayColor::displaySuccess(displayText);
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		}
 		cout << endl;
 		cout << endl;
@@ -178,7 +182,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	
 	case OTHERS:
 	default:
-		DisplayColor::displayError(MagicString::ERROR_INVALID_COMMAND);
+		InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(MagicString::ERROR_INVALID_COMMAND); //For unit testing
 		return STRING_EMPTY;
 	}
 }
@@ -261,11 +265,12 @@ string InterfaceInput::displayToday() {
 	cout << MagicString::MESSAGE_TODAY_TASK << endl;
 	displayText = TaskList::display(STRING_TODAY);
 	if (displayText != MagicString::TASK_EMPTY2) {
-		DisplayColor::displayColor(displayText);
+		TEST_OUTPUT_TODAY = DisplayColor::displayColor(displayText); //For unit testing
 		return STRING_EMPTY;
 	}
 	else {
-		return MagicString::MESSAGE_NO_TASK_TODAY;
+		TEST_OUTPUT_TODAY = DisplayColor::displayError(MagicString::MESSAGE_NO_TASK_TODAY); //For unit testing
+		return STRING_EMPTY;
 	}
 }
 
@@ -290,7 +295,7 @@ bool InterfaceInput::isConfirmedToClear(){
 	}
 }
 
-// for unit test only
+// These are for unit test only
 // to call private functions
 string InterfaceInput::testGetFirstWord(string testString) {
 	return InterfaceInput::getFirstWord(testString);

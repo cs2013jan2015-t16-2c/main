@@ -58,7 +58,9 @@ public:
 	static string displayToday();
 	static bool isConfirmedToClear();
 
-	// for unit test
+	//These are for unit test
+	static string TEST_OUTPUT_EXECUTE;
+	static string TEST_OUTPUT_TODAY;
 	static string testGetFirstWord(string testString);
 	static string testRemoveFirstWord(string testString);
 };

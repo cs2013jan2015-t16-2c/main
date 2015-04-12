@@ -20,8 +20,11 @@ private:
 	static const string EMPTY_STRING;
 
 public:
-	static void displayColor(string displayText);
-	static void displaySuccess(string displayText);
-	static void displayError(string displayText);
+	static string displayColor(string displayText);
+	static string displaySuccess(string displayText);
+	static string displayError(string displayText);
+
+	//this is for unit testing only
+	static string TEST_OUTPUT;
 };
 #endif
