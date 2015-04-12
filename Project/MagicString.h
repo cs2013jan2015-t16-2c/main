@@ -55,6 +55,7 @@ public:
 	static const string TASK_EMPTY2;
 	static const string MARK_AS_DONE;
 	static const string SET_PRIORITY;
+	static const string INVALID_PRIORITY;
 	static const string ADD_UNDO;
 	static const string UPDATE_UNDO;
 	static const string DELETE_UNDO;
