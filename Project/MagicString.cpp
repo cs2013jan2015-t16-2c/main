@@ -1,7 +1,7 @@
 #include "MagicString.h"
 //display taskList
 
-//@QinZhao A0114792
+//@author A0114792
 const string MagicString::MESSAGE_EMPTY = "Task list is empty";
 //interfaceinput
 const string MagicString::MESSAGE_USER_COMMAND = "Command: ";

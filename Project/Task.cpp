@@ -809,7 +809,7 @@ string Task::getDate(string input){
 	}
 }
 
-//@Ma Zhuoyuan A0113624R
+//@author A0113624R
 void Task::recurringAdd(string repeat_type){
 	if (task_type == SCHEDULED_TASK_LABEL){
 		int mon_start = atoi((scheduled_start_date.substr(3, 2)).c_str());

@@ -12,7 +12,7 @@ int TaskList::lastChangedTaskIndex;
 Task TaskList::lastChangedTask;
 Task TaskList::lastUnchangedTask;
 
-//@Ma Zhuoyuan A0113624R
+//@author A0113624R
 void TaskList::copyFromStorage(){
 	vector<string> taskList = storage::returnTask();
 
