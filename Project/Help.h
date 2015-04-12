@@ -3,8 +3,11 @@
 
 #include <iostream>
 #include <string>
+#include <stdio.h>
+
 using namespace std;
 
+//@author A0093586N
 class Help {
 private:
 	static void mainHelpPage();
@@ -20,9 +23,9 @@ private:
 
 	static bool isInMainHelpPage;
 
+	static const string STRING_EMPTY;
 public:
 	static void showHelp(string helpText);
 	static string executeHelpCommand();
 };
-
 #endif

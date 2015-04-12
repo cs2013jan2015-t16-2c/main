@@ -19,6 +19,7 @@
 
 using namespace std;
 
+//@author A0093586N
 class InterfaceOutput {
 public:
 	static string displayWelcome();

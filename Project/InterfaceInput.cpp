@@ -3,7 +3,8 @@
 
 #include "InterfaceInput.h"
 
-// These are the shortened commands
+//@author A0093586N
+//These are the shortened commands
 const string InterfaceInput::SHORTENED_COMMAND_UPDATE = "up";
 const string InterfaceInput::SHORTENED_COMMAND_DELETE = "del";
 const string InterfaceInput::SHORTENED_COMMAND_DISPLAY = "dis";
@@ -25,7 +26,8 @@ const string InterfaceInput::SYMBOL_NO = "N";
 string InterfaceInput::TEST_OUTPUT_EXECUTE;
 string InterfaceInput::TEST_OUTPUT_TODAY;
 
-//@Cai Yu A0093586N
+//to 'cin' user's command and pass it to 'executeUserCommand' function
+//for further processing
 string InterfaceInput::getUserCommand() {
 	string userCommand;
 
@@ -35,6 +37,8 @@ string InterfaceInput::getUserCommand() {
 	return userCommand;
 }
 
+//to receive user's command, process it,
+//and return the corresponding feedback to the user
 string InterfaceInput::executeUserCommand(string userCommand) {
 	string commandTypeString;
 	string taskString;
@@ -187,6 +191,8 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	}
 }
 
+//to determine which command type the user command belongs to
+//and to return the command type to the 'executeUserCommand' function
 InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString, string taskString) {
 	if (commandTypeString == "help") {
 		return COMMAND_TYPE::HELP;
@@ -259,6 +265,7 @@ string InterfaceInput::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
 }
 
+//to display today's task list to the user
 string InterfaceInput::displayToday() {
 	string displayText;
 
@@ -274,6 +281,9 @@ string InterfaceInput::displayToday() {
 	}
 }
 
+//when the user decides to 'clear all' function,
+//the following function is used to confirm the above action
+//as 'clear all' action cannot be undone.
 bool InterfaceInput::isConfirmedToClear(){
 	DisplayColor::displayError(MagicString::MESSAGE_WARNING_1);
 	cout << MagicString::MESSAGE_WARNING_2;

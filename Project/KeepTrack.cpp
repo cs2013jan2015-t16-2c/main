@@ -7,6 +7,7 @@
 #include "Help.h"
 #include "DisplayColor.h"
 
+//@author A0093586N
 int main() {
 	storage::backup();
 	DisplayColor::displaySuccess(storage::starting());

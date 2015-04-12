@@ -20,7 +20,7 @@
 
 using namespace std;
 
-
+//@author A0093586N
 class InterfaceInput {
 public:
 	enum COMMAND_TYPE {

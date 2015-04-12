@@ -5,6 +5,7 @@
 #include "concol.h"
 using namespace eku;
 
+//@author A0093586N
 const string DisplayColor::SYMBOL_NEW_LINE = "\n";
 const string DisplayColor::SYMBOL_PRIORITY_A = "(A)";
 const string DisplayColor::SYMBOL_PRIORITY_B = "(B)";
@@ -15,7 +16,7 @@ const string DisplayColor::STATUS_DONE = "done";
 //this is for unit testing only
 string DisplayColor::TEST_OUTPUT;
 
-//@Cai Yu A0093586N
+//to display a task list in a colored form
 string DisplayColor::displayColor(string displayText) {
 	concolinit();
 
@@ -94,6 +95,7 @@ string DisplayColor::displayColor(string displayText) {
 	return TEST_OUTPUT;
 }
 
+//to display a message after a successful action in 'green'
 string DisplayColor::displaySuccess(string displayText) {
 	concolinit();
 	settextcolor(dark_green);
@@ -103,6 +105,7 @@ string DisplayColor::displaySuccess(string displayText) {
 	return TEST_OUTPUT;
 }
 
+//to display an error message 'red'
 string DisplayColor::displayError(string displayText) {
 	concolinit();
 	settextcolor(red);

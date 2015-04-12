@@ -5,6 +5,7 @@
 #include "Task.h"
 #include "MagicString.h"
 
+//@author A0093586N
 class DisplayedTaskList
 {
 private:
@@ -19,5 +20,4 @@ public:
 	static void emptyList();
 	static void sort();
 };
-
 #endif

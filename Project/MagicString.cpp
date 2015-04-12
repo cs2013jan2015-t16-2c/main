@@ -88,27 +88,32 @@ const string MagicString::EXIT_HELP_PAGE_INDEX = "9";
 const string MagicString::REUTRN_TO_MAIN_HELP_PAGE = "0";
 const string MagicString::EXIT_HELP = "00";
 const string MagicString::MESSAGE_INVALID_INDEX = "Error: invalid input!";
-const string MagicString::MESSAGE_NEXT_ACTION = "You may select the following actions";
+const string MagicString::MESSAGE_NEXT_ACTION = "You may select the following actions:";
 const string MagicString::MESSAGE_RETURN_TO_MAIN = "0:  return to the main help page";
 const string MagicString::MESSAGE_EXIT_HELP =      "00: get back to KeepTrack!";
 const string MagicString::MESSAGE_COMMAND = "Command: ";
 
 const string MagicString::INSTRUCTION_ADD =          "You can add three types of tasks";
-const string MagicString::INSTRUCTION_ADD_FLOATING = "1. Floating task:  add do assignment";
-const string MagicString::INSTRUCTION_ADD_DEADLINE = "2. Deadline:       add finish assignment -by 14:00 13/04";
-const string MagicString::INSTRUCTION_ADD_TIMED =    "3. Timed task:     add do assignment -from 9:00 12/04 -to 11:00";
-const string MagicString::INSTRUCTION_ADD_TAG =      "4. Classification: add do assignment #study";
-const string MagicString::INSTRUCTION_ADD_VENUE =    "5. Venue:          add do assignment @lab";
-const string MagicString::INSTRUCTION_ADD_BOTH_1 =   "6. Both:           add do assignment #study @lab";
-const string MagicString::INSTRUCTION_ADD_BOTH_2 =   "7. Both:           add do assignment @lab #study";
+const string MagicString::INSTRUCTION_ADD_FLOATING = "1.  Floating task:  add do assignment";
+const string MagicString::INSTRUCTION_ADD_DEADLINE = "2.  Deadline:       add finish assignment -by 14:00 13/04";
+const string MagicString::INSTRUCTION_ADD_TIMED_1 =  "3.  Timed task:     add do assignment -from 12/04 09:00 -to 11:00";
+const string MagicString::INSTRUCTION_ADD_TIMED_2 =  "4.  Timed task:     add do assignment -from next Fri 08:00 -to 10:00";
+const string MagicString::INSTRUCTION_ADD_TAG =      "5.  Classification: add do assignment #study";
+const string MagicString::INSTRUCTION_ADD_VENUE =    "6.  Venue:          add do assignment @lab";
+const string MagicString::INSTRUCTION_ADD_BOTH_1 =   "7.  Both:           add do assignment #study @lab";
+const string MagicString::INSTRUCTION_ADD_BOTH_2 =   "8.  Both:           add do assignment @lab #study";
+const string MagicString::INSTRUCTION_ADD_RECUR_1 =  "9.  Recurring task: add do assignment -from 14/05 09:00 -to 10:00 -everyday";
+const string MagicString::INSTRUCTION_ADD_RECUR_2 =  "10. Recurring task: add do assignment -from 14/05 09:00 -to 10:00 -everyweek";
 
 const string MagicString::INSTRUCTION_DISPLAY =          "You can display your task list in the following ways: ";
-const string MagicString::INSTRUCTION_DISPLAY_TODAY =    "1. All the tasks:          display today";
-const string MagicString::INSTRUCTION_DISPLAY_FLOATING = "2. All the floating tasks: display floating";
-const string MagicString::INSTRUCTION_DISPLAY_DEADLINE = "3. All the deadlines:      display deadline";
-const string MagicString::INSTRUCTION_DISPLAY_TIMED =    "4. All the timed task:     display timed";
-const string MagicString::INSTRUCTION_DISPLAY_DONE =     "5. All the timed task:     display done";
-const string MagicString::INSTRUCTION_DISPLAY_ALL =      "6. All the tasks:          display all";
+const string MagicString::INSTRUCTION_DISPLAY_TODAY =    "1. All the tasks:           display today";
+const string MagicString::INSTRUCTION_DISPLAY_FLOATING = "2. All the floating tasks:  display floating";
+const string MagicString::INSTRUCTION_DISPLAY_DEADLINE = "3. All the deadlines:       display deadline";
+const string MagicString::INSTRUCTION_DISPLAY_TIMED =    "4. All the timed task:      display timed";
+const string MagicString::INSTRUCTION_DISPLAY_DONE =     "5. All the finished task:   display done";
+const string MagicString::INSTRUCTION_DISPLAY_CLASS =    "6. Tasks of the same tag:   display study";
+const string MagicString::INSTRUCTION_DISPLAY_VENUE =    "7. Tasks of the same venue: display lab";
+const string MagicString::INSTRUCTION_DISPLAY_ALL =      "8. All the tasks:           display all";
 
 const string MagicString::INSTRUCTION_COMMON = "After displaying tasks";
 
@@ -121,10 +126,10 @@ const string MagicString::INSTRUCTION_DELETE = "you can delete a task by its ind
 const string MagicString::INSTRUCTION_DELETE_EXP = "Example: delete 2";
 
 const string MagicString::INSTRUCTION_UPDATE = "you can select the task by its index and input the updated task information";
-const string MagicString::INSTRUCTION_UPDATE_EXP = "Example: update 1 -from 1300 23/12 -to 1500";
+const string MagicString::INSTRUCTION_UPDATE_EXP = "Example: update 1 -from 23/12 1300 -to 1500";
 
-const string MagicString::INSTRUCTION_UNDO = "You can unoo your last action by simply entering 'undo'";
-const string MagicString::INSTRUCTION_REDO = "You can reoo your last action by simply entering 'redo'";
+const string MagicString::INSTRUCTION_UNDO = "You can undo your last action by simply entering 'undo'";
+const string MagicString::INSTRUCTION_REDO = "You can redo your last action by simply entering 'redo'";
 
 const string MagicString::INSTRUCTION_ARCHIVE = "You can archive your task list in the following ways: ";
 const string MagicString::INSTRUCTION_ARCHIVE_EXP1 = "Archive in the program folder: archive myText.txt";

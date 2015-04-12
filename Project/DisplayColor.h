@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 
+//@author A0093586N
 using namespace std;
 
 class DisplayColor{

@@ -103,11 +103,14 @@ public:
 	static const string INSTRUCTION_ADD;
 	static const string INSTRUCTION_ADD_FLOATING;
 	static const string INSTRUCTION_ADD_DEADLINE;
-	static const string INSTRUCTION_ADD_TIMED;
+	static const string INSTRUCTION_ADD_TIMED_1;
+	static const string INSTRUCTION_ADD_TIMED_2;
 	static const string INSTRUCTION_ADD_TAG;
 	static const string INSTRUCTION_ADD_VENUE;
 	static const string INSTRUCTION_ADD_BOTH_1;
 	static const string INSTRUCTION_ADD_BOTH_2;
+	static const string INSTRUCTION_ADD_RECUR_1;
+	static const string INSTRUCTION_ADD_RECUR_2;
 
 	static const string INSTRUCTION_DISPLAY;
 	static const string INSTRUCTION_DISPLAY_TODAY;
@@ -115,6 +118,8 @@ public:
 	static const string INSTRUCTION_DISPLAY_DEADLINE;
 	static const string INSTRUCTION_DISPLAY_TIMED;
 	static const string INSTRUCTION_DISPLAY_DONE;
+	static const string INSTRUCTION_DISPLAY_CLASS;
+	static const string INSTRUCTION_DISPLAY_VENUE;
 	static const string INSTRUCTION_DISPLAY_ALL;
 
 	static const string INSTRUCTION_COMMON;
