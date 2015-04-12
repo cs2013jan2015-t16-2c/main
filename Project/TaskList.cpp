@@ -106,7 +106,7 @@ string TaskList::updateTask(string input){
 	string taskIndex = getFirstWord(input);
 	string taskInfo = removeFirstWord(input);
 
-	if (taskIndex.size() != 0 || !isdigit(taskIndex[0])){
+	if (taskIndex.size() != 1 || !isdigit(taskIndex[0])){
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
@@ -147,7 +147,7 @@ string TaskList::updateTask(string input){
 string TaskList::deleteTask(string input){
 	assert(input != "");
 	
-	if (input.size() != 0 || !isdigit(input[0])){
+	if (input.size() != 1 || !isdigit(input[0])){
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
@@ -300,7 +300,7 @@ string TaskList::addToDisplayedTaskList(string displayType){
 string TaskList::markAsDone(string input){
 	assert(input != "");
 	
-	if (input.size() != 0 || !isdigit(input[0])){
+	if (input.size() != 1 || !isdigit(input[0])){
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
@@ -334,7 +334,7 @@ string TaskList::setPriority(string input){
 	string taskIndex = getFirstWord(input);
 	string taskInfo = removeFirstWord(input);
 
-	if (taskIndex.size() != 0 || !isdigit(taskIndex[0])){
+	if (taskIndex.size() != 1 || !isdigit(taskIndex[0])){
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
