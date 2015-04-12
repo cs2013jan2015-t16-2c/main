@@ -49,6 +49,7 @@ const string MagicString::DELETE = " deleted";
 const string MagicString::TASK_EMPTY2 = "Required task list is empty";
 const string MagicString::MARK_AS_DONE = " marked as done";
 const string MagicString::SET_PRIORITY = " is prioritised";
+const string MagicString::INVALID_PRIORITY = "Invalid priority type";
 const string MagicString::ADD_UNDO = "Adding command is undone";
 const string MagicString::UPDATE_UNDO = "Updating command is undone";
 const string MagicString::DELETE_UNDO = "Deleting command is undone";

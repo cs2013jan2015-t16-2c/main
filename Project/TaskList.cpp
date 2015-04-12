@@ -32,6 +32,8 @@ void TaskList::copyToStorage(){
 }
 
 string TaskList::addTask(string input){
+	assert(input != "");
+
 	std::size_t repeat = input.find("-every");
 	if (repeat != std::string::npos){
 		string taskInfo = input.substr(0, repeat - 1);
@@ -50,6 +52,10 @@ string TaskList::addTask(string input){
 			}
 		}
 		else{
+			ofstream errorlog;
+			errorlog.open("errorlog.txt");
+			errorlog << input << " " << MagicString::INVALID_TIME_INPUT << endl;
+			errorlog.close();
 			return MagicString::INVALID_TIME_INPUT;
 		}
 		
@@ -67,6 +73,10 @@ string TaskList::addTask(string input){
 			return MagicString::TASK_ADDED;
 		}
 		else{
+			ofstream errorlog;
+			errorlog.open("errorlog.txt");
+			errorlog << input << " " << MagicString::INVALID_TIME_INPUT << endl;
+			errorlog.close();
 			return MagicString::INVALID_TIME_INPUT;
 		}
 	}
@@ -91,8 +101,14 @@ void TaskList::addRepeatTask(Task newTask, string repeat_type, int repeat_time){
 }
 
 string TaskList::updateTask(string input){
+	assert(input != "");
+
 	string taskIndex = getFirstWord(input);
 	string taskInfo = removeFirstWord(input);
+
+	if (taskIndex.size() != 0 || !isdigit(taskIndex[0])){
+		return MagicString::MESSAGE_INVALID_INDEX;
+	}
 
 	int index;
 	istringstream in(taskIndex);
@@ -100,57 +116,68 @@ string TaskList::updateTask(string input){
 
 	string output;
 	int size = DisplayedTaskList::returnListSize();
-	if (index > size|| index <= 0){
-		output = MagicString::TASK + taskIndex + MagicString::NON_EXISTENCE;
-		return output;
+	try{
+		if (index > size || index <= 0){
+			throw - 1;
+		}
+	}
+	catch (int){
+		return MagicString::TASK + input + MagicString::NON_EXISTENCE;
+	}
+	
+	int listIndex = findTargetedTaskIndex(index);
+	Task temp = list[listIndex];
+	list[listIndex].UpdateTask(taskInfo);
+	if (list[listIndex].checkInputValidation()){
+		lastCommandType = "update";
+		lastChangedTaskIndex = listIndex;
+		lastUnchangedTask = temp;
+		lastChangedTask = list[lastChangedTaskIndex];
+		output = MagicString::TASK + taskIndex + MagicString::UPDATE;
 	}
 	else{
-		int listIndex = findTargetedTaskIndex(index);
-		Task temp = list[listIndex];
-		list[listIndex].UpdateTask(taskInfo);
-
-		if (list[listIndex].checkInputValidation()){
-			lastCommandType = "update";
-			lastChangedTaskIndex = listIndex;
-			lastUnchangedTask = temp;
-			lastChangedTask = list[lastChangedTaskIndex];
-			output = MagicString::TASK + taskIndex + MagicString::UPDATE;
-		}
-		else{
-			list[lastChangedTaskIndex] = temp;
-			output = MagicString::INVALID_TIME_INPUT;		
-		}
-		
-		storage::tempFile();
-		return output;
+		list[lastChangedTaskIndex] = temp;
+		output = MagicString::INVALID_TIME_INPUT;		
 	}
+	
+	storage::tempFile();
+	return output;
 }
 
 string TaskList::deleteTask(string input){
+	assert(input != "");
+	
+	if (input.size() != 0 || !isdigit(input[0])){
+		return MagicString::MESSAGE_INVALID_INDEX;
+	}
+
 	int index;
 	istringstream in(input);
 	in >> index;
 
-	string output;
 	int size = DisplayedTaskList::returnListSize();
-	if (index > size || index <= 0){
-		output = MagicString::TASK + input + MagicString::NON_EXISTENCE; 
-		return output;
+	try{
+		if (index > size || index <= 0){
+			throw - 1;
+		}
 	}
-	else{
-		lastCommandType = "delete";
-		lastChangedTaskIndex = findTargetedTaskIndex(index);
-		lastUnchangedTask = list[lastChangedTaskIndex];
-
-		list.erase(list.begin() + lastChangedTaskIndex);
-		string output = MagicString::TASK + input + MagicString::DELETE; 
-
-		storage::tempFile();
-		return output;
+	catch (int){
+		return MagicString::TASK + input + MagicString::NON_EXISTENCE;
 	}
+
+	lastCommandType = "delete";
+	lastChangedTaskIndex = findTargetedTaskIndex(index);
+	lastUnchangedTask = list[lastChangedTaskIndex];
+
+	list.erase(list.begin() + lastChangedTaskIndex);
+	string output = MagicString::TASK + input + MagicString::DELETE; 
+	storage::tempFile();
+	return output;
 }
 
 string TaskList::search(string input){
+	assert(input != "");
+	
 	if (list.empty()){
 		return MagicString::TASK_EMPTY; 
 	}
@@ -179,6 +206,8 @@ string TaskList::search(string input){
 }
 
 string TaskList::display(string displayType){
+	assert(displayType != "");
+	
 	DisplayedTaskList::emptyList();
 	
 	if (addToDisplayedTaskList(displayType) == MagicString::INVALID_DISPLAY){
@@ -269,31 +298,45 @@ string TaskList::addToDisplayedTaskList(string displayType){
 }
 
 string TaskList::markAsDone(string input){
+	assert(input != "");
+	
+	if (input.size() != 0 || !isdigit(input[0])){
+		return MagicString::MESSAGE_INVALID_INDEX;
+	}
+
 	int index;
 	istringstream in(input);
 	in >> index;
 
-	string output;
 	int size = DisplayedTaskList::returnListSize();
-	if (index > size || index <= 0){
-		output = MagicString::TASK + input + MagicString::NON_EXISTENCE;
-		return output;
+	try{
+		if (index > size || index <= 0){
+			throw - 1;
+		}
 	}
-	else{
-		lastCommandType = "done";
-		lastChangedTaskIndex = findTargetedTaskIndex(index);
+	catch (int){
+		return MagicString::TASK + input + MagicString::NON_EXISTENCE;
+	}
 
-		list[lastChangedTaskIndex].markAsDone();
-		string output = MagicString::TASK + input + MagicString::MARK_AS_DONE;
+	lastCommandType = "done";
+	lastChangedTaskIndex = findTargetedTaskIndex(index);
+	list[lastChangedTaskIndex].markAsDone();
+	string output = MagicString::TASK + input + MagicString::MARK_AS_DONE;
 
-		storage::tempFile();
-		return output;
-	}	
-}
+	storage::tempFile();
+	return output;
+}	
+
 
 string TaskList::setPriority(string input){
+	assert(input != "");
+
 	string taskIndex = getFirstWord(input);
 	string taskInfo = removeFirstWord(input);
+
+	if (taskIndex.size() != 0 || !isdigit(taskIndex[0])){
+		return MagicString::MESSAGE_INVALID_INDEX;
+	}
 
 	int index;
 	istringstream in(taskIndex);
@@ -301,11 +344,16 @@ string TaskList::setPriority(string input){
 
 	string output;
 	int size = DisplayedTaskList::returnListSize();
-	if (index > size || index <= 0){
-		output = MagicString::TASK + input + MagicString::NON_EXISTENCE;
-		return output;
+	try{
+		if (index > size || index <= 0){
+			throw - 1;
+		}
 	}
-	else{
+	catch (int){
+		return MagicString::TASK + input + MagicString::NON_EXISTENCE;
+	}
+
+	try{
 		if (taskInfo == "A" || taskInfo == "B" || taskInfo == "C"){
 			lastCommandType = "setPriority";
 			lastChangedTaskIndex = findTargetedTaskIndex(index);
@@ -314,16 +362,18 @@ string TaskList::setPriority(string input){
 			list[lastChangedTaskIndex].setPriority(taskInfo);
 
 			lastChangedTask = list[lastChangedTaskIndex];
-			output = MagicString::TASK + taskIndex + MagicString::SET_PRIORITY; 
+			output = MagicString::TASK + taskIndex + MagicString::SET_PRIORITY;
 
 			storage::tempFile();
 			return output;
 		}
 		else{
-			return "Invalid priority type";
+			throw MagicString::INVALID_PRIORITY;
 		}
-		
-	}	
+	}
+	catch (string){
+		return MagicString::INVALID_PRIORITY;
+	}
 }
 
 string TaskList::undo(){

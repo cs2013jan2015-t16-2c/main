@@ -166,7 +166,6 @@ Task::Task(string input){
 			task_group = "";
 		}
 	}
-	//checkInputValidation();
 }
 
 Task::~Task(){}
@@ -457,7 +456,6 @@ void Task::UpdateTask(string input){
 			scheduled_end_date = "";
 		}
 	}
-	//checkInputValidation();
 }
 
 void Task::markAsDone(){
