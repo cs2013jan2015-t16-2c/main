@@ -1,0 +1,895 @@
+//@author: a0113624r
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\DisplayedTaskList.cpp
+	 */
+
+void DisplayedTaskList::addTask(Task input){
+	displayedTaskList.push_back(input);
+}
+
+string DisplayedTaskList::display(){
+	sort();
+	ostringstream overallOss;
+	for (unsigned int i = 0; i < displayedTaskList.size() - 1; i++){
+		ostringstream oss;
+		oss << i + 1 << ". " << displayedTaskList[i].ToString() << endl;
+		string taskDisplay = oss.str();
+		overallOss << taskDisplay;
+	}
+	int size = displayedTaskList.size();
+	overallOss << size << ". " << displayedTaskList[size - 1].ToString();;
+	return overallOss.str();
+}
+
+bool DisplayedTaskList::isEmpty(){
+	return displayedTaskList.empty();
+}
+
+int DisplayedTaskList::returnListSize(){
+	return displayedTaskList.size();
+}
+
+Task DisplayedTaskList::resturnTask(int index){
+	return displayedTaskList[index-1];
+}
+
+void DisplayedTaskList::emptyList(){
+	while (!displayedTaskList.empty()){
+		displayedTaskList.pop_back();
+	}
+}
+
+void DisplayedTaskList::sort(){
+	int minIndex;
+	int size = displayedTaskList.size();
+	for (int i = 0; i < size - 1; i++){
+		minIndex = i;
+		for (int j = i + 1; j < size; j++){
+			if ((displayedTaskList[j]).isEarlier(displayedTaskList[minIndex])){
+				minIndex = j;
+			}
+		}
+
+		if (minIndex != i){
+			Task temp = displayedTaskList[minIndex];
+			displayedTaskList[minIndex] = displayedTaskList[i];
+			displayedTaskList[i] = temp;
+		}
+	}
+}
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\DisplayedTaskList.cpp
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\DisplayedTaskList.h
+	 */
+
+class DisplayedTaskList
+{
+private:
+	static vector<Task> displayedTaskList;
+
+public:
+	static void addTask(Task input);
+	static string display();
+	static bool isEmpty();
+	static int returnListSize();
+	static Task resturnTask(int index);
+	static void emptyList();
+	static void sort();
+};
+#endif
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\DisplayedTaskList.h
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\Task.cpp
+	 */
+
+void Task::recurringAdd(string repeat_type){
+	if (task_type == MagicString::LABEL_SCHEDULED_TASK){
+		int mon_start = atoi((scheduled_start_date.substr(3, 2)).c_str());
+		int day_start = atoi((scheduled_start_date.substr(0, 2)).c_str());
+		int mon_end = atoi((scheduled_end_date.substr(3, 2)).c_str());
+		int day_end = atoi((scheduled_end_date.substr(0, 2)).c_str());
+
+		if (repeat_type == MagicString::LABEL_DAY){
+			day_start++;
+			day_end++;
+		}
+		else if (repeat_type == MagicString::LABEL_WEEK){
+			day_start = day_start + 7;
+			day_end = day_end + 7;
+		}
+		else if (repeat_type == MagicString::LABEL_MONTH){
+			mon_start++;
+			mon_end++;
+		}
+		scheduled_start_date = returnDate(mon_start, day_start);
+		scheduled_end_date = returnDate(mon_end, day_end);
+	}
+	else if (task_type == MagicString::LABEL_DEADLINE_TASK){
+		int mon = atoi((deadline_date.substr(3, 2)).c_str());
+		int day = atoi((deadline_date.substr(0, 2)).c_str());
+		
+		if (repeat_type == MagicString::LABEL_DAY){
+			day++;
+		}
+		else if (repeat_type == MagicString::LABEL_WEEK){
+			day = day + 7;
+		}
+		else if (repeat_type == MagicString::LABEL_MONTH){
+			mon++;
+		}
+		deadline_date = returnDate(mon, day);
+	}
+}
+
+string Task::returnDate(int month, int day){
+	if (month == 1 || 3 || 5 || 7 || 8 || 10 || 12){
+		if (day > 30){
+			month = month + day / 31;
+			day = day % 31 + 1;
+		}
+	}
+	else if (month == 4 || 6 || 9 || 11){
+		if (day > 31){
+			month = month + day / 32; 
+			day = day % 32 + 1;
+		}
+	}
+	else{
+		if (day > 28){
+			month = month + day / 29; 
+			day = day % 29 + 1;
+		}
+	}
+
+	if (month > 12){
+		return "-1";
+	}
+
+	ostringstream mon;
+	if (month < 10){
+		mon << "0" << month;
+	}
+	else{
+		mon << month;
+	}
+	string month_s = mon.str();
+
+	ostringstream date;
+	if (day < 10){
+		date << "0" << day;
+	}
+	else{
+		date << day;
+	}
+	string day_s = date.str();
+	return day_s + "/" + month_s;
+}
+
+bool Task::checkInputValidation(){
+	if (task_type == MagicString::LABEL_FLOATING_TASK){
+		return true;
+	}
+	else if (task_type == MagicString::LABEL_SCHEDULED_TASK){
+		int mon_s = atoi(scheduled_start_date.substr(3, 2).c_str());
+		int day_s = atoi(scheduled_start_date.substr(0, 2).c_str());
+		int hour_s, min_s;
+		if (start_time != ""){
+			hour_s = atoi(start_time.substr(0, 2).c_str());
+			min_s = atoi(start_time.substr(3, 2).c_str());
+		}
+		else{
+			hour_s = 0;
+			min_s = 0;
+		}
+
+		int mon_e = atoi(scheduled_end_date.substr(3, 2).c_str());
+		int day_e = atoi(scheduled_end_date.substr(0, 2).c_str());
+		int hour_e, min_e;
+		if (end_time != ""){
+			hour_e = atoi(end_time.substr(0, 2).c_str());
+			min_e = atoi(end_time.substr(3, 2).c_str());
+		}
+		else{
+			hour_e = 23;
+			min_e = 59;
+		}
+		
+
+		if (!isWithinLimit(mon_s, day_s, hour_s, min_s) || !isWithinLimit(mon_e, day_e, hour_e, min_e)){
+			return false;
+		}
+
+		if (mon_s > mon_e){
+			return false;
+		}
+		else if (mon_s == mon_e){
+			if (day_s > day_e){
+				return false;
+			}
+			else if (day_s == day_e){
+				if (hour_s > hour_e){
+					return false;
+				}
+				else if (hour_s == hour_e){
+					if (min_s > min_e){
+						return false;
+					}
+				}
+			}
+		}
+	}
+	else{
+		int mon = atoi(deadline_date.substr(3, 2).c_str());
+		int day = atoi(deadline_date.substr(0, 2).c_str());
+		int hour, min;
+		if (deadline_time != ""){
+			hour = atoi(deadline_time.substr(0, 2).c_str());
+			min = atoi(deadline_time.substr(3, 2).c_str());
+		}
+		else{
+			hour = 23;
+			min = 59;
+		}
+		
+
+		if (!isWithinLimit(mon, day, hour, min)){
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Task::isWithinLimit(int month, int day, int hour, int min){
+	if (month < 1 || month>12){
+		return false;
+	}
+
+	if (day < 1 || day>31){
+		return false;
+	}
+
+	if (hour < 0 || hour >= 24){
+		return false;
+	}
+
+	if (min < 0 || min >= 60){
+		return false;
+	}
+
+	return true;
+}
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\Task.cpp
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\TaskList.cpp
+	 */
+
+void TaskList::copyFromStorage(){
+	vector<string> taskList = storage::returnTask();
+
+	for (unsigned int i = 0; i < taskList.size(); i++){
+		string task = removeFirstWord(taskList[i]);
+		Task newTask(task, "copy");
+
+		list.push_back(newTask);
+		addTaskGroup(newTask);
+		addPlace(newTask);
+	}
+}
+
+void TaskList::copyToStorage(){
+	storage::deleteTemp();
+	storage::ending();
+}
+
+string TaskList::addTask(string input){
+	assert(input != "");
+
+	std::size_t repeat = input.find("-every");
+	if (repeat != std::string::npos){
+		string taskInfo = input.substr(0, repeat - 1);
+		Task newTask(taskInfo);
+		if (newTask.checkInputValidation()){
+			if (newTask.getTaskType() == "floating"){
+				return MagicString::FLOATING_CANNOT_RECUR;
+			}
+			else{
+				string repeatInfo = input.substr(repeat + 6);
+				string repeat_type = getFirstWord(repeatInfo);
+				int repeat_time = atoi((removeFirstWord(repeatInfo)).c_str());
+				addRepeatTask(taskInfo, repeat_type, repeat_time);
+				storage::tempFile();
+				return MagicString::RECURRING_TASK_ADDED;
+			}
+		}
+		else{
+			string errorlog = input + " " + MagicString::INVALID_TIME_INPUT;
+			storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);//logging the invalid time input command for future check
+			return MagicString::INVALID_TIME_INPUT;
+		}
+		
+	}
+	else{
+		Task newTask(input);
+		if (newTask.checkInputValidation()){
+			list.push_back(newTask);
+			lastCommandType = "add";
+			lastChangedTask = newTask;
+
+			addTaskGroup(newTask);
+			addPlace(newTask);
+			storage::tempFile();
+			return MagicString::TASK_ADDED;
+		}
+		else{
+			string errorlog = input + " " + MagicString::INVALID_TIME_INPUT;
+			storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);//logging the invalid time input command for future check
+			return MagicString::INVALID_TIME_INPUT;
+		}
+	}
+}
+
+void TaskList::addRepeatTask(Task newTask, string repeat_type, int repeat_time){
+	Task *newPtr = new Task;
+	*newPtr = newTask;
+	list.push_back(*newPtr);
+
+	for (int i = 1; i < repeat_time; i++){
+		Task *ptr = new Task;
+		newTask.recurringAdd(repeat_type);
+		*ptr = newTask;
+		if ((*ptr).getDate() != "-1"){
+			list.push_back(*ptr);
+		}
+		else{
+			break;
+		}
+	}
+}
+
+string TaskList::updateTask(string input){
+	assert(input != "");
+
+	string taskIndex = getFirstWord(input);
+	string taskInfo = removeFirstWord(input);
+
+	if (!isDigit(taskIndex)){
+		string errorlog = input + " " + MagicString::MESSAGE_INVALID_INDEX;
+		storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);
+		return MagicString::MESSAGE_INVALID_INDEX;
+	}
+	
+	int index;
+	istringstream in(taskIndex);
+	in >> index;
+
+	string output;
+	int size = DisplayedTaskList::returnListSize();
+	try{
+		if (index > size || index <= 0){
+			throw - 1;
+		}
+	}
+	catch (int){
+		return MagicString::TASK + taskIndex + MagicString::NON_EXISTENCE;
+	}
+	
+	int listIndex = findTargetedTaskIndex(index);
+	Task temp = list[listIndex];
+	list[listIndex].UpdateTask(taskInfo);
+	if (list[listIndex].checkInputValidation()){
+		lastCommandType = "update";
+		lastChangedTaskIndex = listIndex;
+		lastUnchangedTask = temp;
+		lastChangedTask = list[lastChangedTaskIndex];
+		output = MagicString::TASK + taskIndex + MagicString::UPDATE;
+	}
+	else{
+		list[lastChangedTaskIndex] = temp;
+		output = MagicString::INVALID_TIME_INPUT;		
+	}
+	
+	storage::tempFile();
+	return output;
+}
+
+string TaskList::deleteTask(string input){
+	assert(input != "");
+	
+	if (!isDigit(input)){
+		string errorlog = input + " " + MagicString::MESSAGE_INVALID_INDEX;
+		storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);
+		return MagicString::MESSAGE_INVALID_INDEX;
+	}
+
+	int index;
+	istringstream in(input);
+	in >> index;
+
+	int size = DisplayedTaskList::returnListSize();
+	try{
+		if (index > size || index <= 0){
+			throw - 1;
+		}
+	}
+	catch (int){
+		return MagicString::TASK + input + MagicString::NON_EXISTENCE;
+	}
+
+	lastCommandType = "delete";
+	lastChangedTaskIndex = findTargetedTaskIndex(index);
+	lastUnchangedTask = list[lastChangedTaskIndex];
+
+	list.erase(list.begin() + lastChangedTaskIndex);
+	string output = MagicString::TASK + input + MagicString::DELETE; 
+	storage::tempFile();
+	return output;
+}
+
+string TaskList::search(string input){
+	assert(input != "");
+	
+	if (list.empty()){
+		return MagicString::TASK_EMPTY; 
+	}
+	else{
+		DisplayedTaskList::emptyList();
+		for (unsigned int i = 0; i < list.size(); i++){
+			string taskName = (list[i]).getTaskname();
+			vector<string> contents = splitText(taskName);
+
+			for (unsigned int j = 0; j < contents.size(); j++){
+				if (input == contents[j]){
+					DisplayedTaskList::addTask(list[i]);
+					break;
+				}
+			}
+		}
+		
+		if (DisplayedTaskList::isEmpty()){
+			return MagicString::SEARCH_NOT_FOUND;
+		}
+		else{
+			string output = DisplayedTaskList::display();
+			return output;
+		}
+	}
+}
+
+string TaskList::display(string displayType){
+	assert(displayType != "");
+	
+	DisplayedTaskList::emptyList();
+	
+	if (addToDisplayedTaskList(displayType) == MagicString::INVALID_DISPLAY){
+		return MagicString::INVALID_DISPLAY;
+	}
+	else if (DisplayedTaskList::isEmpty()){
+		return MagicString::TASK_EMPTY2;
+	}
+	else{
+		return DisplayedTaskList::display();
+	}
+}
+
+//to add all tasks which match with the displayType to the DisplayedTaskList class
+string TaskList::addToDisplayedTaskList(string displayType){
+	size_t findTimeBy = displayType.find("-by");
+	if (displayType == "all"){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if (!list[i].taskDone()){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+		return "";
+	}
+	else if (displayType == "done"){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if (list[i].taskDone()){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+		return "";
+	}
+	else if (displayType == "timed" || displayType == "deadline" || displayType == "floating"){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if ((list[i]).getTaskType() == displayType){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+		return "";
+	}
+	else if (displayType == "today"){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if (list[i].getDate() == list[i].getDate(0)){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+		return "";
+	}
+	else if (isExist(taskGroup, displayType)){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if ((list[i]).getTaskGroup() == displayType){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+		return "";
+	}
+	else if (isExist(taskPlace, displayType)){
+		for (unsigned int i = 0; i < list.size(); i++){
+			if ((list[i]).getPlace() == displayType){
+				DisplayedTaskList::addTask(list[i]);
+			}
+		}
+		return "";
+	}
+	else if (findTimeBy != string::npos){
+		size_t displayBy = displayType.find("/", findTimeBy);
+		string displayByDate;
+		if (displayBy != string::npos){
+			displayByDate = displayType.substr(displayBy - 2, 5);
+		}
+		else{
+			Task a;
+			string dateInfo = removeFirstWord(displayType);
+			displayByDate = a.getDate(dateInfo);
+		}
+
+		for (unsigned int i = 0; i < list.size(); i++){
+			string taskDate = list[i].getDate();
+			if (list[i].getTaskType() != "floating"){
+				if (isEariler(taskDate, displayByDate)){
+					DisplayedTaskList::addTask(list[i]);
+				}
+			}		
+		}
+		
+		return "";
+	}
+	else{
+		return MagicString::INVALID_DISPLAY;
+	}
+}
+
+string TaskList::markAsDone(string input){
+	assert(input != "");
+	
+	if (!isDigit(input)){
+		string errorlog = input + " " + MagicString::MESSAGE_INVALID_INDEX;
+		storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);
+		return MagicString::MESSAGE_INVALID_INDEX;
+	}
+
+	int index;
+	istringstream in(input);
+	in >> index;
+
+	int size = DisplayedTaskList::returnListSize();
+	try{
+		if (index > size || index <= 0){
+			throw - 1;
+		}
+	}
+	catch (int){
+		return MagicString::TASK + input + MagicString::NON_EXISTENCE;
+	}
+
+	lastCommandType = "done";
+	lastChangedTaskIndex = findTargetedTaskIndex(index);
+	list[lastChangedTaskIndex].markAsDone();
+	string output = MagicString::TASK + input + MagicString::MARK_AS_DONE;
+
+	storage::tempFile();
+	return output;
+}	
+
+
+string TaskList::setPriority(string input){
+	assert(input != "");
+
+	string taskIndex = getFirstWord(input);
+	string taskInfo = removeFirstWord(input);
+
+	if (!isDigit(taskIndex)){
+		string errorlog = input + " " + MagicString::MESSAGE_INVALID_INDEX;
+		storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);
+		return MagicString::MESSAGE_INVALID_INDEX;
+	}
+
+	int index;
+	istringstream in(taskIndex);
+	in >> index;
+
+	string output;
+	int size = DisplayedTaskList::returnListSize();
+	try{
+		if (index > size || index <= 0){
+			throw - 1;
+		}
+	}
+	catch (int){
+		return MagicString::TASK + taskIndex + MagicString::NON_EXISTENCE;
+	}
+
+	try{
+		if (taskInfo == "A" || taskInfo == "B" || taskInfo == "C"){
+			lastCommandType = "setPriority";
+			lastChangedTaskIndex = findTargetedTaskIndex(index);
+			lastUnchangedTask = list[lastChangedTaskIndex];
+
+			list[lastChangedTaskIndex].setPriority(taskInfo);
+
+			lastChangedTask = list[lastChangedTaskIndex];
+			output = MagicString::TASK + taskIndex + MagicString::SET_PRIORITY;
+
+			storage::tempFile();
+			return output;
+		}
+		else{
+			throw MagicString::INVALID_PRIORITY;
+		}
+	}
+	catch (string){
+		return MagicString::INVALID_PRIORITY;
+	}
+}
+
+string TaskList::undo(){
+	if (lastCommandType == "add"){
+		list.pop_back();
+		isLastCommandUndo = true;
+		storage::tempFile();
+		return MagicString::ADD_UNDO;
+	}
+	else if (lastCommandType == "update"){
+		list[lastChangedTaskIndex] = lastUnchangedTask;
+		isLastCommandUndo = true;
+		storage::tempFile();
+		return MagicString::UPDATE_UNDO;
+	}
+	else if (lastCommandType == "delete"){
+		list.insert(list.begin() + lastChangedTaskIndex, lastUnchangedTask);
+		isLastCommandUndo = true;
+		storage::tempFile();
+		return MagicString::DELETE_UNDO;
+	}
+	else if (lastCommandType == "done"){
+		list[lastChangedTaskIndex].markAsUndone();
+		isLastCommandUndo = true;
+		storage::tempFile();
+		return MagicString::MARK_UNDO;
+	}
+	else if (lastCommandType == "setPriority"){
+		list[lastChangedTaskIndex] = lastUnchangedTask;
+		isLastCommandUndo = true;
+		storage::tempFile();
+		return MagicString::PRIORITY_UNDO;
+	}
+	else{
+		return MagicString::UNDO_UNABLE;
+	}
+}
+
+string TaskList::redo(){
+	if (isLastCommandUndo){//redo action will only be executed when the previous command is undo
+		isLastCommandUndo = false;
+		if (lastCommandType == "add"){
+			list.push_back(lastChangedTask);
+			storage::tempFile();
+			return MagicString::ADD_REDO;
+		}
+		else if (lastCommandType == "update"){
+			list[lastChangedTaskIndex] = lastChangedTask;
+			storage::tempFile();
+			return MagicString::UPDATE_REDO;
+		}
+		else if (lastCommandType == "delete"){
+			list.erase(list.begin() + lastChangedTaskIndex);
+			storage::tempFile();
+			return MagicString::DELETE_REDO;
+		}
+		else if (lastCommandType == "done"){
+			list[lastChangedTaskIndex].markAsDone();
+			storage::tempFile();
+			return MagicString::MARK_REDO;
+		}
+		else{
+			list[lastChangedTaskIndex] = lastChangedTask;
+			storage::tempFile();
+			return MagicString::PRIORITY_REDO;
+		}
+	}
+	else{
+		return MagicString::REDO_UNABLE;
+	}
+}
+
+string TaskList::getFirstWord(string input)
+{
+	return input.substr(0, input.find(' '));
+}
+
+string TaskList::removeFirstWord(string input)
+{
+	return input.substr(input.find_first_of(" ") + 1);
+}
+
+vector<string> TaskList::splitText(string text){
+	vector<string> words;
+	string word;
+	istringstream in(text);
+	copy(istream_iterator<string>(in),
+		istream_iterator<string>(),
+		back_inserter<vector<string>>(words));
+
+	return words;
+}
+
+string TaskList::printVector(vector<string> output){
+	ostringstream oss;
+	for (unsigned int i = 0; i < output.size(); i++){
+		oss << output[i];
+	}
+	return oss.str();
+}
+
+//to find out the task index of the selected task in the overall task list
+int TaskList::findTargetedTaskIndex(int displayedIndex){
+	int size = list.size();
+	for (int i = 0; i < size; i++){
+		if (list[i].ToString()==(DisplayedTaskList::resturnTask(displayedIndex)).ToString()){
+			return i;
+		}
+	}
+	return -1;
+}
+
+void TaskList::empty(){
+	while (!list.empty()){
+		list.pop_back();
+	}
+}
+
+void TaskList::addTaskGroup(Task newTask){
+	string group = newTask.getTaskGroup();
+	if (group != ""){
+		if (!isExist(taskGroup, group)){
+			taskGroup.push_back(group);
+		}
+	}
+}
+
+void TaskList::addPlace(Task newTask){
+	string place = newTask.getPlace();
+	if (place != ""){
+		if (!isExist(taskPlace, place)){
+			taskPlace.push_back(place);
+		}
+	}
+}
+
+bool TaskList::isExist(vector<string> list, string input){
+	if (list.empty()){
+		return false;
+	}
+	
+	for (unsigned int i = 0; i < list.size(); i++){
+		if (input == list[i]){
+			return true;
+		}
+	}
+
+	return false;
+}
+
+//to check whether the task date is earlier than the display by date
+bool TaskList::isEariler(string taskDate, string displayByDate){
+	int month_by = atoi(displayByDate.substr(3, 2).c_str());
+	int day_by = atoi(displayByDate.substr(0, 2).c_str());
+
+	int month_task = atoi(taskDate.substr(3, 2).c_str());
+	int day_task = atoi(taskDate.substr(0, 2).c_str());
+
+	if (month_task < month_by){
+		return true;
+	}
+	else if (month_task > month_by){
+		return false;
+	}
+	else{
+		if (day_task <= day_by){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
+}
+
+//to checks whether the string can be converted to int
+bool TaskList::isDigit(string input){
+	for (unsigned int i = 0; i < input.size(); i++){
+		if (!isdigit(input[i])){
+			return false;
+		}
+	}
+	return true;
+}
+
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\TaskList.cpp
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\TaskList.h
+	 */
+
+class TaskList
+{
+private:
+	static vector<Task> list;
+	static vector<string> taskGroup;
+	static vector<string> taskPlace;
+	static bool isLastCommandUndo;
+	static string lastCommandType;
+	static int lastChangedTaskIndex;
+	static Task lastUnchangedTask;
+	static Task lastChangedTask;
+
+	static string getFirstWord(string input);
+	static string removeFirstWord(string input);
+	static vector<string> splitText(string text);
+	static string printVector(vector<string> output);
+	static int  findTargetedTaskIndex(int displayedIndex);
+	static string addToDisplayedTaskList(string displayType);
+	static void addTaskGroup(Task newtask);
+	static void addPlace(Task newtask);
+	static bool isExist(vector<string> checkingList, string input);
+	static void addRepeatTask(Task newTask, string repear_type, int repeat_time);
+	static bool isEariler(string taskDate, string displayByDate);
+	static bool isDigit(string input);
+
+public:
+	static void copyFromStorage();
+	static void copyToStorage();
+
+	static string addTask(string input);
+	static string updateTask(string input);
+	static string deleteTask(string input);
+	static string search(string input);
+	static string display(string displayType);
+	static string markAsDone(string input);
+	static string setPriority(string input);
+	static void empty();
+	
+	static string undo();
+	static string redo();
+};
+
+#endif
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\TaskList.h
+
+
+
+
+

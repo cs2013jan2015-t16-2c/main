@@ -1,0 +1,1092 @@
+//@author: a0093586n
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\DisplayColor.cpp
+	 */
+
+const string DisplayColor::SYMBOL_NEW_LINE = "\n";
+const string DisplayColor::SYMBOL_PRIORITY_A = "(A)";
+const string DisplayColor::SYMBOL_PRIORITY_B = "(B)";
+const string DisplayColor::SYMBOL_PRIORITY_C = "(C)";
+const string DisplayColor::STRING_SPACE = " ";
+
+//this is for unit testing only
+string DisplayColor::TEST_OUTPUT;
+
+//to display a task list in a colored form
+string DisplayColor::displayColor(string displayText) {
+	concolinit();
+
+	size_t foundNewLineStart = 0;
+	size_t foundNewLineEnd = 0;
+	size_t foundTag = 0;
+	size_t foundAt = 0;
+	size_t foundSpace = 0;
+	size_t foundInProcessOrDone = 0;
+
+	while (foundNewLineEnd != string::npos) {
+		foundNewLineEnd = displayText.find(DisplayColor::SYMBOL_NEW_LINE, foundNewLineStart);
+		string currentLine = displayText.substr(foundNewLineStart, foundNewLineEnd - foundNewLineStart);
+
+		if (currentLine.find(DisplayColor::SYMBOL_PRIORITY_A) != string::npos) {
+			settextcolor(red);
+		}
+		else if (currentLine.find(DisplayColor::SYMBOL_PRIORITY_B) != string::npos) {
+			settextcolor(yellow);
+		}
+		else if (currentLine.find(DisplayColor::SYMBOL_PRIORITY_C) != string::npos) {
+			settextcolor(cyan);
+		}
+		else {
+			settextcolor(white);
+		}
+
+		if (currentLine.find('#') != string::npos && currentLine.find('@') != string::npos) {
+			// to display tasks with both # and @
+			foundTag = currentLine.find('#');
+			cout << currentLine.substr(0, foundTag - 0);
+			TEST_OUTPUT = currentLine.substr(0, foundTag - 0); //For unit testing
+			foundSpace = currentLine.find(" ", foundTag);
+			settextcolor(dark_aqua);
+
+			foundAt = currentLine.find('@');
+			cout << currentLine.substr(foundTag, foundAt - foundTag);
+			TEST_OUTPUT += currentLine.substr(foundTag, foundAt - foundTag); //For unit testing
+			foundSpace = currentLine.find(" ", foundAt);
+			settextcolor(dark_green);
+			cout << currentLine.substr(foundAt, foundSpace - foundAt) << STRING_SPACE;
+			TEST_OUTPUT += currentLine.substr(foundAt, foundSpace - foundAt); //For unit testing
+		}
+		else if (currentLine.find('#') != string::npos && currentLine.find('@') == string::npos) {
+			// to display tasks # only
+			foundTag = currentLine.find('#');
+			cout << currentLine.substr(0, foundTag - 0);
+			TEST_OUTPUT = currentLine.substr(0, foundTag - 0); //For unit testing
+			foundSpace = currentLine.find(" ", foundTag);
+			settextcolor(dark_aqua);
+			cout << currentLine.substr(foundTag, foundSpace - foundTag) << STRING_SPACE;
+			TEST_OUTPUT += currentLine.substr(foundTag, foundSpace - foundTag); //For unit testing
+		}
+		else if (currentLine.find('#') == string::npos && currentLine.find('@') != string::npos) {
+			// to display tasks with @ only
+			foundAt = currentLine.find('@');
+			cout << currentLine.substr(0, foundAt - 0);
+			TEST_OUTPUT = currentLine.substr(0, foundAt - 0);
+			foundSpace = currentLine.find(" ", foundAt);
+			settextcolor(dark_green);
+			cout << currentLine.substr(foundAt, foundSpace - foundAt) << STRING_SPACE;
+			TEST_OUTPUT += currentLine.substr(foundAt, foundSpace - foundAt); //For unit testing
+		}
+		else {
+			// to display tasks with neither # nor @
+			if (currentLine.find(MagicString::LABEL_PROCESSING_TASK) != string::npos) {
+				foundInProcessOrDone = currentLine.find(MagicString::LABEL_PROCESSING_TASK);
+				cout << currentLine.substr(0, foundInProcessOrDone);
+				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone); //For unit testing
+			}
+			else {
+				foundInProcessOrDone = currentLine.find(MagicString::LABEL_FINISHED_TASK);
+				cout << currentLine.substr(0, foundInProcessOrDone);
+				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone); //For unit testing
+			}
+		}
+
+		if (currentLine.find(MagicString::LABEL_FINISHED_TASK) != string::npos) {
+			settextcolor(deftextcol);
+			foundInProcessOrDone = currentLine.find(MagicString::LABEL_FINISHED_TASK);
+			cout << currentLine.substr(foundInProcessOrDone) << endl;
+		}
+
+		if (currentLine.find(MagicString::LABEL_PROCESSING_TASK) != string::npos) {
+			cout << endl;
+		}
+		
+		foundNewLineStart = foundNewLineEnd + 1;
+	}
+	settextcolor(deftextcol);
+	return TEST_OUTPUT;
+}
+
+//to display a message after a successful action in 'green'
+string DisplayColor::displaySuccess(string displayText) {
+	concolinit();
+	settextcolor(dark_green);
+	cout << displayText;
+	TEST_OUTPUT = displayText;
+	settextcolor(deftextcol);
+	return TEST_OUTPUT;
+}
+
+//to display an error message 'red'
+string DisplayColor::displayError(string displayText) {
+	concolinit();
+	settextcolor(red);
+	cout << displayText;
+	DisplayColor::TEST_OUTPUT = displayText;
+	settextcolor(deftextcol);
+	return TEST_OUTPUT;
+}
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\DisplayColor.cpp
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\DisplayColor.h
+	 */
+
+using namespace std;
+
+class DisplayColor{
+private:
+	static const string SYMBOL_NEW_LINE;
+	static const string SYMBOL_PRIORITY_A;
+	static const string SYMBOL_PRIORITY_B;
+	static const string SYMBOL_PRIORITY_C;
+	static const string EMPTY_STRING;
+	static const string STRING_SPACE;
+
+public:
+	static string displayColor(string displayText);
+	static string displaySuccess(string displayText);
+	static string displayError(string displayText);
+
+	//this is for unit testing only
+	static string TEST_OUTPUT;
+};
+#endif
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\DisplayColor.h
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\Help.cpp
+	 */
+
+const string Help::STRING_EMPTY = "";
+
+//to show the main page of when using help function
+void Help::mainHelpPage() {
+	cout << MagicString::HELP_MAIN_L1 << endl;
+	cout << MagicString::HELP_MAIN_L2 << endl;
+	cout << MagicString::HELP_MAIN_L3 << endl;
+	cout << MagicString::HELP_MAIN_L4 << endl;
+	cout << MagicString::HELP_MAIN_L5 << endl;
+	cout << MagicString::HELP_MAIN_L6 << endl;
+	cout << MagicString::HELP_MAIN_L7 << endl;
+	cout << MagicString::HELP_MAIN_L8 << endl;
+	cout << MagicString::HELP_MAIN_L9 << endl;
+	cout << MagicString::HELP_MAIN_L10 << endl;
+	cout << MagicString::HELP_MAIN_L11 << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to show the page explaining how to use 'add' function
+void Help::addHelpPage() {
+	cout << MagicString::INSTRUCTION_ADD << endl;
+	cout << MagicString::INSTRUCTION_ADD_FLOATING << endl;
+	cout << MagicString::INSTRUCTION_ADD_DEADLINE << endl;
+	cout << MagicString::INSTRUCTION_ADD_TIMED_1 << endl;
+	cout << MagicString::INSTRUCTION_ADD_TIMED_2 << endl;
+	cout << MagicString::INSTRUCTION_ADD_TAG << endl;
+	cout << MagicString::INSTRUCTION_ADD_VENUE << endl;
+	cout << MagicString::INSTRUCTION_ADD_BOTH << endl;
+	cout << MagicString::INSTRUCTION_ADD_RECUR_1 << endl;
+	cout << MagicString::INSTRUCTION_ADD_RECUR_2 << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to show the page explaining how to use 'display' function
+void Help::displayHelpPage() {
+	cout << MagicString::INSTRUCTION_DISPLAY << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_TODAY << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_FLOATING << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_DEADLINE << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_TIMED << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_DONE << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_CLASS << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_VENUE << endl;
+	cout << MagicString::INSTRUCTION_DISPLAY_ALL << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to show the page explaining how to use 'set priority' function
+void Help::setPriorityHelpPage() {
+	cout << MagicString::INSTRUCTION_COMMON << endl;
+	cout << MagicString::INSTRUCTION_SET_PRIORITY << endl;
+	cout << MagicString::INSTRUCTION_SET_PRIORITY_REMINDER << endl;
+	cout << MagicString::INSTRUCTION_SET_PRIORITY_EXP1 << endl;
+	cout << MagicString::INSTRUCTION_SET_PRIORITY_EXP2 << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+}
+
+//to show the page explaining how to use 'delete' function
+void Help::deleteHelpPage() {
+	cout << MagicString::INSTRUCTION_COMMON << endl;
+	cout << MagicString::INSTRUCTION_DELETE << endl;
+	cout << MagicString::INSTRUCTION_DELETE_EXP << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to show the page explaining how to use 'update' function
+void Help::updateHelpPage() {
+	cout << MagicString::INSTRUCTION_COMMON << endl;
+	cout << MagicString::INSTRUCTION_UPDATE << endl;
+	cout << MagicString::INSTRUCTION_UPDATE_EXP << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to show the page explaining how to use 'undo/redo' function
+void Help::undoRedoHelpPage() {
+	cout << MagicString::INSTRUCTION_UNDO << endl;
+	cout << MagicString::INSTRUCTION_REDO << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to show the page explaining how to use 'archive' function
+void Help::archiveHelpPage() {
+	cout << MagicString::INSTRUCTION_ARCHIVE << endl;
+	cout << MagicString::INSTRUCTION_ARCHIVE_EXP1 << endl;
+	cout << MagicString::INSTRUCTION_ARCHIVE_EXP2 << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to show the page explaining how to use 'clear' function
+void Help::clearHelpPage() {
+	cout << MagicString::INSTRUCTION_CLEAR_EXP1 << endl;
+	cout << MagicString::INSTRUCTION_CLEAR_EXP2 << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to show the page explaining how to exit KeepTrack
+void Help::exitHelpPage() {
+	cout << MagicString::INSTRUCTION_EXIT << endl;
+	cout << endl;
+	cout << MagicString::MESSAGE_NEXT_ACTION << endl;
+	cout << MagicString::MESSAGE_RETURN_TO_MAIN << endl;
+	cout << MagicString::MESSAGE_EXIT_HELP << endl;
+	cout << MagicString::DIVIDER;
+	cout << MagicString::MESSAGE_COMMAND;
+	return;
+}
+
+//to determine whether the current page is the main page or not.
+bool Help::isInMainHelpPage = true;
+
+//to display information to the user
+void Help::showHelp(string helpText) {
+	cout << helpText;
+}
+
+//to receive user's command, process it,
+//and return the corresponding feedback to the user
+string Help::executeHelpCommand() {
+	Help::mainHelpPage();
+	string userInput;
+
+
+
+	while (getline(cin, userInput)) {
+		assert(userInput != "");
+		if (!isDigit(userInput)){
+			Help::showHelp(MagicString::MESSAGE_INVALID_INDEX);
+			cout << endl;
+			cout << endl;
+			Help::mainHelpPage();
+			Help::isInMainHelpPage = true;
+		}
+		else try{
+			if (Help::isInMainHelpPage && userInput == MagicString::ADD_HELP_PAGE_INDEX) {
+				Help::addHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::DISPLAY_HELP_PAGE_INDEX) {
+				Help::displayHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::SET_PRIORITY_HELP_PAGE_INDEX) {
+				Help::setPriorityHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::DELETE_HELP_PAGE_INDEX) {
+				Help::deleteHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::UPDATE_HELP_PAGE_INDEX) {
+				Help::updateHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::UNDO_REDO_HELP_PAGE_INDEX) {
+				Help::undoRedoHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::ARCHIVE_HELP_PAGE_INDEX) {
+				Help::archiveHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::CLEAR_HELP_PAGE_INDEX) {
+				Help::clearHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::EXIT_HELP_PAGE_INDEX) {
+				Help::exitHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (!Help::isInMainHelpPage && userInput == MagicString::REUTRN_TO_MAIN_HELP_PAGE) {
+				Help::mainHelpPage();
+				Help::isInMainHelpPage = true;
+			}
+			else if (userInput == MagicString::EXIT_HELP) {
+				Help::isInMainHelpPage = true;
+				return STRING_EMPTY;
+			}
+			else {
+				throw - 1;
+			}
+		}
+		catch (int){
+			Help::showHelp(MagicString::MESSAGE_INVALID_INDEX);
+			cout << endl;
+			cout << endl;
+			Help::mainHelpPage();
+			Help::isInMainHelpPage = true;
+		}
+	}
+	return STRING_EMPTY;
+}
+
+bool Help::isDigit(string userInput){
+	for (unsigned int i = 0; i < userInput.size(); i++){
+		if (!isdigit(userInput[i])){
+			return false;
+		}
+	}
+	return true;
+}
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\Help.cpp
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\Help.h
+	 */
+
+class Help {
+private:
+	static void mainHelpPage();
+	static void addHelpPage();
+	static void displayHelpPage();
+	static void setPriorityHelpPage();
+	static void deleteHelpPage();
+	static void updateHelpPage();
+	static void undoRedoHelpPage();
+	static void archiveHelpPage();
+	static void clearHelpPage();
+	static void exitHelpPage();
+	static bool isDigit(string userInput);
+
+	static bool isInMainHelpPage;
+
+	static const string STRING_EMPTY;
+public:
+	static void showHelp(string helpText);
+	static string executeHelpCommand();
+};
+#endif
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\Help.h
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\InterfaceInput.cpp
+	 */
+
+//These are the shortened commands
+const string InterfaceInput::SHORTENED_COMMAND_UPDATE = "up";
+const string InterfaceInput::SHORTENED_COMMAND_DELETE = "del";
+const string InterfaceInput::SHORTENED_COMMAND_DISPLAY = "dis";
+const string InterfaceInput::SHORTENED_COMMAND_SEARCH = "se";
+const string InterfaceInput::SHORTENED_COMMAND_ARCHIVE = "arc";
+const string InterfaceInput::SHORTENED_COMMAND_UNDO = "un";
+const string InterfaceInput::SHORTENED_COMMAND_REDO = "re";
+const string InterfaceInput::SHORTENED_COMMAND_EXIT = "q";
+
+const string InterfaceInput::STRING_EMPTY = "";
+const string InterfaceInput::STRING_TODAY = "today";
+
+//These are the output information for 'clear all' action
+const string InterfaceInput::MESSAGE_ABORT_CLEAR = "Clear action aborted";
+const string InterfaceInput::SYMBOL_YES = "Y";
+const string InterfaceInput::SYMBOL_NO = "N";
+
+//These are for unit testing only
+string InterfaceInput::TEST_OUTPUT_EXECUTE;
+string InterfaceInput::TEST_OUTPUT_TODAY;
+
+//to 'cin' user's command and pass it to 'executeUserCommand' function
+//for further processing
+string InterfaceInput::getUserCommand() {
+	string userCommand;
+
+	cout << MagicString::MESSAGE_USER_COMMAND;
+	getline(cin, userCommand);
+
+	return userCommand;
+}
+
+//to receive user's command, process it,
+//and return the corresponding feedback to the user
+string InterfaceInput::executeUserCommand(string userCommand) {
+	assert(userCommand != "");
+	string commandTypeString;
+	string taskString;
+
+	commandTypeString = getFirstWord(userCommand);
+	taskString = removeFirstWord(userCommand);
+
+	transform(commandTypeString.begin(), commandTypeString.end(), commandTypeString.begin(), ::tolower);
+	
+	COMMAND_TYPE commandType;
+	commandType = determineCommandType(commandTypeString, taskString);
+
+	string displayText;
+
+	switch (commandType) {
+	case HELP:
+		return Help::executeHelpCommand();
+
+	case ADD_TASK:
+		displayText = TaskList::addTask(taskString);
+		if (displayText == MagicString::FLOATING_CANNOT_RECUR) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::RECURRING_TASK_ADDED) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::INVALID_TIME_INPUT) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::TASK_ADDED) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		else {
+			//displayText is MagicString::INVALID_TIME_INPUT
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		cout << endl;
+		cout << endl;
+		return displayToday();
+
+	case SEARCH:
+		displayText = TaskList::search(taskString);
+		if (displayText == MagicString::TASK_EMPTY) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText);
+		}
+		else if (displayText == MagicString::SEARCH_NOT_FOUND) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText);
+		}
+		else {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayColor(displayText); //For unit testing
+		}
+		return STRING_EMPTY;
+	
+	case UPDATE:
+		displayText = TaskList::updateTask(taskString);
+		if (displayText == MagicString::MESSAGE_INVALID_INDEX) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::INVALID_TIME_INPUT) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			cout << displayText << endl;
+		}
+		cout << endl;
+		cout << endl;
+		return displayToday();
+	
+	case DELETE_TASK:
+		displayText = TaskList::deleteTask(taskString);
+		if (displayText == MagicString::MESSAGE_INVALID_INDEX) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		cout << endl;
+		cout << endl;
+		return displayToday();
+	
+	case DISPLAY_TASKS:
+		displayText = TaskList::display(taskString);
+		if (displayText == MagicString::INVALID_DISPLAY) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::TASK_EMPTY2){
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayColor(displayText); //For unit testing
+		}
+		return STRING_EMPTY;
+	
+	case MARK_DONE:
+		displayText = TaskList::markAsDone(taskString);
+		if (displayText == MagicString::MESSAGE_INVALID_INDEX) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		cout << endl;
+		cout << endl;
+		return displayToday();
+	
+	case SET_PRIORITY:
+		displayText = TaskList::setPriority(taskString);
+		if (displayText == MagicString::MESSAGE_INVALID_INDEX) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::INVALID_PRIORITY) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			//displayText is MagicString::SET_PRIORITY
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		cout << endl;
+		cout << endl;
+		return displayToday();
+	
+	case ARCHIVE:
+		displayText = storage::archive(taskString);
+		if (displayText == MagicString::FORMAT_INCORRECT) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			//displayText is MagicString::SUCCESS_ARCHIVE
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		return STRING_EMPTY;
+	
+	case SAVE_DONE:
+		displayText = storage::saveDone();
+		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		return STRING_EMPTY;
+	
+	case SAVE_IN_PROGRESS:
+		displayText = storage::saveProgress();
+		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		return STRING_EMPTY;
+	
+	case CLEAR_FILE:
+		if (isConfirmedToClear()) {
+			displayText = storage::deletePer();
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+			return STRING_EMPTY;
+		}
+		else {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(MESSAGE_ABORT_CLEAR); //For unit testing
+			return STRING_EMPTY;
+		}
+	
+	case CLEAR_ARCHIVE:
+		displayText = storage::archiveDelete(taskString);
+		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		return STRING_EMPTY;
+	
+	case UNDO:
+		displayText = TaskList::undo();
+		if (displayText == MagicString::UNDO_UNABLE) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		cout << endl;
+		cout << endl;
+		return displayToday();
+	
+	case REDO:
+		displayText = TaskList::redo();
+		if (displayText == MagicString::REDO_UNABLE) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		cout << endl;
+		cout << endl;
+		return displayToday();
+
+	case EXIT:
+		TaskList::copyToStorage();
+		cout << MagicString::MESSAGE_GOODBYE << endl;
+		exit(0);
+	
+	case OTHERS:
+	default:
+		InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(MagicString::ERROR_INVALID_COMMAND); //For unit testing
+		return STRING_EMPTY;
+	}
+}
+
+//to determine which command type the user command belongs to
+//and to return the command type to the 'executeUserCommand' function
+InterfaceInput::COMMAND_TYPE InterfaceInput::determineCommandType(string commandTypeString, string taskString) {
+	if (commandTypeString == "help") {
+		return COMMAND_TYPE::HELP;
+	}
+	else if (commandTypeString == "add") {
+		return COMMAND_TYPE::ADD_TASK;
+	}
+	else if (commandTypeString == "update" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_UPDATE) {
+		return COMMAND_TYPE::UPDATE;
+	}
+	else if (commandTypeString == "delete" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_DELETE) {
+		return COMMAND_TYPE::DELETE_TASK;
+	}
+	else if (commandTypeString == "search" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_SEARCH) {
+		return COMMAND_TYPE::SEARCH;
+	}
+	else if (commandTypeString == "display" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_DISPLAY) {
+		return COMMAND_TYPE::DISPLAY_TASKS;
+	}
+	else if (commandTypeString == "done") {
+		return COMMAND_TYPE::MARK_DONE;
+	}
+	else if (commandTypeString == "set"){
+		return COMMAND_TYPE::SET_PRIORITY;
+	}
+	else if (commandTypeString == "archive" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_DISPLAY) {
+		return COMMAND_TYPE::ARCHIVE;
+	}
+	else if (commandTypeString == "save") {
+		if (taskString == "done") {
+			return COMMAND_TYPE::SAVE_DONE;
+		}
+		else if (taskString == "progress") {
+			return COMMAND_TYPE::SAVE_IN_PROGRESS;
+		}
+		else {
+			return COMMAND_TYPE::OTHERS;
+		}
+	}
+	else if (commandTypeString == "clear") {
+		if (taskString == "all") {
+			return COMMAND_TYPE::CLEAR_FILE;
+		}
+		else if (taskString == "") {
+			return COMMAND_TYPE::OTHERS;
+		}
+		else {
+			return COMMAND_TYPE::CLEAR_ARCHIVE;
+		}
+	}
+	else if (commandTypeString == "undo" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_UNDO) {
+		return COMMAND_TYPE::UNDO;
+	}
+	else if (commandTypeString == "redo" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_REDO) {
+		return COMMAND_TYPE::REDO;
+	}
+	else if (commandTypeString == "exit" || commandTypeString == InterfaceInput::SHORTENED_COMMAND_EXIT) {
+		return COMMAND_TYPE::EXIT;
+	}
+	else{
+		return COMMAND_TYPE::OTHERS;
+	}
+}
+
+string InterfaceInput::getFirstWord(string userCommand) {
+	return userCommand.substr(0, userCommand.find(' '));
+}
+
+string InterfaceInput::removeFirstWord(string userCommand) {
+	return userCommand.substr(userCommand.find_first_of(" ") + 1);
+}
+
+//to display today's task list to the user
+string InterfaceInput::displayToday() {
+	string displayText;
+
+	cout << MagicString::MESSAGE_TODAY_TASK << endl;
+	displayText = TaskList::display(STRING_TODAY);
+	if (displayText != MagicString::TASK_EMPTY2) {
+		TEST_OUTPUT_TODAY = DisplayColor::displayColor(displayText); //For unit testing
+		return STRING_EMPTY;
+	}
+	else {
+		TEST_OUTPUT_TODAY = DisplayColor::displayError(MagicString::MESSAGE_NO_TASK_TODAY); //For unit testing
+		return STRING_EMPTY;
+	}
+}
+
+//when the user decides to 'clear all' function,
+//the following function is used to confirm the above action
+//as 'clear all' action cannot be undone.
+bool InterfaceInput::isConfirmedToClear(){
+	DisplayColor::displayError(MagicString::MESSAGE_WARNING_1);
+	cout << MagicString::MESSAGE_WARNING_2;
+	string userInput;
+	while (true){
+		getline(cin, userInput);
+		transform(userInput.begin(), userInput.end(), userInput.begin(), ::toupper);
+		cout << MagicString::DIVIDER;
+		if (userInput == SYMBOL_YES) {
+			return true;
+		}
+		else if (userInput == SYMBOL_NO) {
+			return false;
+		}
+		else{
+			DisplayColor::displayError(MagicString::ERROR_INVALID_COMMAND);
+			cout << '\n' << MagicString::ERROR_TYPE_AGAIN;
+		}
+	}
+}
+
+// These are for unit test only
+// to call private functions
+string InterfaceInput::testGetFirstWord(string testString) {
+	return InterfaceInput::getFirstWord(testString);
+}
+
+string InterfaceInput::testRemoveFirstWord(string testString){
+	return InterfaceInput::removeFirstWord(testString);
+}
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\InterfaceInput.cpp
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\InterfaceInput.h
+	 */
+
+class InterfaceInput {
+public:
+	enum COMMAND_TYPE {
+		HELP, ADD_TASK, UPDATE, DELETE_TASK, SEARCH, DISPLAY_TASKS, MARK_DONE, SET_PRIORITY, 
+		ARCHIVE, SAVE_DONE, SAVE_IN_PROGRESS, CLEAR_FILE, CLEAR_ARCHIVE, UNDO, REDO, EXIT, OTHERS
+	};
+
+private:
+	static const string SHORTENED_COMMAND_UPDATE;
+	static const string SHORTENED_COMMAND_DELETE;
+	static const string SHORTENED_COMMAND_DISPLAY;
+	static const string SHORTENED_COMMAND_SEARCH;
+	static const string SHORTENED_COMMAND_ARCHIVE;
+	static const string SHORTENED_COMMAND_UNDO;
+	static const string SHORTENED_COMMAND_REDO;
+	static const string SHORTENED_COMMAND_EXIT;
+	
+	static const string STRING_TODAY;
+	static const string STRING_EMPTY;
+	static const string STRING_DO_NOT_EXIST;
+
+	static const string MESSAGE_ABORT_CLEAR;
+	static const string SYMBOL_YES;
+	static const string SYMBOL_NO;
+
+	static COMMAND_TYPE determineCommandType(string commandTypeString, string taskString);
+
+	static string getFirstWord(string userCommand);
+	static string removeFirstWord(string userCommand);
+
+public:
+	static string executeUserCommand(string userCommand);
+	static bool isValidDisplayChoice(string taskString);
+	static string getUserCommand();
+	static string displayToday();
+	static bool isConfirmedToClear();
+
+	//These are for unit test
+	static string TEST_OUTPUT_EXECUTE;
+	static string TEST_OUTPUT_TODAY;
+	static string testGetFirstWord(string testString);
+	static string testRemoveFirstWord(string testString);
+};
+#endif
+
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\InterfaceInput.h
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\InterfaceOutput.cpp
+	 */
+
+//to display welcome message to the user when KeepTrack is opened
+string InterfaceOutput::displayWelcome() {
+	return MagicString::MESSAGE_WELCOME;
+}
+
+//to display today's date to the user
+void InterfaceOutput::displayDate() {
+	cout << MagicString::TODAY;
+	time_t t = time(0);
+	struct tm * now = localtime(&t);
+	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
+}
+
+//to display a tip to the user
+string InterfaceOutput::displayTip() {
+	return MagicString::MESSAGE_TIP;
+}
+
+//to display information to the user
+void InterfaceOutput::showToUser(string text) {
+	cout << text << endl;
+}
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\InterfaceOutput.cpp
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\InterfaceOutput.h
+	 */
+
+class InterfaceOutput {
+public:
+	static string displayWelcome();
+	static void displayDate();
+	static string displayTip();
+	static void showToUser(string text);
+};
+#endif
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\InterfaceOutput.h
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\KeepTrack.cpp
+	 */
+
+int main() {
+	storage::backup();
+	DisplayColor::displaySuccess(storage::starting());
+	cout << endl;
+	InterfaceOutput::showToUser(InterfaceOutput::displayWelcome());
+	InterfaceOutput::displayDate();
+	TaskList::copyFromStorage();
+	
+	cout << MagicString::DIVIDER;
+	InterfaceOutput::showToUser(InterfaceOutput::displayTip());
+	cout << MagicString::DIVIDER;
+
+	while (true) {
+		string userCommand;
+		string output;
+
+		userCommand = InterfaceInput::getUserCommand();
+		storage::logging(userCommand, storage::LOGFILE);
+		system("cls");
+		InterfaceOutput::displayDate();
+		cout << MagicString::DIVIDER;
+		cout << MagicString::MESSAGE_USER_COMMAND << userCommand << endl;
+		output = InterfaceInput::executeUserCommand(userCommand);
+		InterfaceOutput::showToUser(output);
+		cout << MagicString::DIVIDER;
+    }
+
+	return 0;
+}
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\Project\KeepTrack.cpp
+
+
+
+
+
+	/**
+	 * origin: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\TextUITest\TextUITest.cpp
+	 */
+
+	string temp;
+	TEST_CLASS(TestInterfaceInput) {
+	
+	public:
+		
+		TEST_METHOD(TestGetFirstWord) {
+			// to test if this method can return the first word of user input
+			string testString = "add do homework";
+			string expectedOutput = "add";
+			string actualOutput = InterfaceInput::testGetFirstWord(testString);
+
+			Assert::AreEqual(expectedOutput, actualOutput);
+		}
+
+		TEST_METHOD(TestRemoveFirstWord) {
+			// to test if this method can return the remaining part of the user input
+			// after removing the first word
+			string testString = "add do homework";
+			string expectedOutput = "do homework";
+			string actualOutput = InterfaceInput::testRemoveFirstWord(testString);
+
+			Assert::AreEqual(expectedOutput, actualOutput);
+		}
+
+		TEST_METHOD(TestExecuteUserCommand) {
+			// to test if this method can return the correct feedback
+			string testStringAdd = "add do homework -from 14:00 15/05 -to 15:00 @room #study";
+			temp = InterfaceInput::executeUserCommand(testStringAdd);
+			string expectedOutputAdd1 = MagicString::MESSAGE_NO_TASK_TODAY;
+			string expectedOutputAdd2 = MagicString::TASK_ADDED;
+			string actualOutputAdd1 = InterfaceInput::TEST_OUTPUT_TODAY;
+			string actualOutputAdd2 = InterfaceInput::TEST_OUTPUT_EXECUTE;
+
+			string testStringDelete = "delete 1";
+			temp = InterfaceInput::executeUserCommand(testStringDelete);
+			string expectedOutputDelete1 = MagicString::MESSAGE_NO_TASK_TODAY;
+			string expectedOutputDelete2 = MagicString::TASK + "1" + MagicString::NON_EXISTENCE;
+			string actualOutputDelete1 = InterfaceInput::TEST_OUTPUT_TODAY;
+			string actualOutputDelete2 = InterfaceInput::TEST_OUTPUT_EXECUTE;
+
+			string testStringInvalidCommand = "invalid command";
+			temp = InterfaceInput::executeUserCommand(testStringInvalidCommand);
+			string expectedOutputInvalidCommand = MagicString::ERROR_INVALID_COMMAND;
+			string actualOutputInvalidCommand = InterfaceInput::TEST_OUTPUT_EXECUTE;
+
+			string testStringDisplayToday = "display today";
+			string expectedOutputDisplayToday = MagicString::MESSAGE_NO_TASK_TODAY;
+			temp = InterfaceInput::executeUserCommand(testStringDisplayToday);
+			string actualOutputDisplayToday = InterfaceInput::TEST_OUTPUT_EXECUTE;
+
+			Assert::AreEqual(expectedOutputAdd1, actualOutputAdd1);
+			Assert::AreEqual(expectedOutputAdd2, actualOutputAdd2);
+			Assert::AreEqual(expectedOutputDelete1, actualOutputDelete1);
+			Assert::AreEqual(expectedOutputDelete2, actualOutputDelete2);
+			Assert::AreEqual(expectedOutputInvalidCommand, actualOutputInvalidCommand);
+			Assert::AreEqual(expectedOutputDisplayToday, expectedOutputDisplayToday);
+		}
+	};
+
+	TEST_CLASS(TestInterfaceOutput) {
+	public:
+
+		TEST_METHOD(TestDisplayWelcome) {
+			// to test if welcome message can be shown
+			string expectedOutput = MagicString::MESSAGE_WELCOME;
+			string actualOutput = InterfaceOutput::displayWelcome();
+			Assert::AreEqual(expectedOutput, actualOutput);
+		}
+
+	};
+
+	TEST_CLASS(TestDisplayColor) {
+	public:
+
+		TEST_METHOD(TestDisplayColorMethod) {
+			//to test if the 'displayColor' function can output the correct value
+			string testStringDisplayColor = "do homework";
+			string expectedOutputDisplayColor = "do homework";
+			temp = DisplayColor::displayColor(testStringDisplayColor);
+			string actualOutputDisplayColor = DisplayColor::TEST_OUTPUT;
+
+			Assert::AreEqual(expectedOutputDisplayColor, actualOutputDisplayColor);
+		}
+
+		TEST_METHOD(TestDisplayError) {
+			//to test if the 'displayError' function can output the correct value
+			string testStringDisplayError = "error";
+			string expectedOutputDisplayError = "error";
+			temp = DisplayColor::displayError(testStringDisplayError);
+			string actualOutputDisplayError = DisplayColor::TEST_OUTPUT;
+
+			Assert::AreEqual(expectedOutputDisplayError, actualOutputDisplayError);
+		}
+
+		TEST_METHOD(TestDisplaySuccess) {
+			//to test if the 'displaySuccess' function can output the correct value
+			string testStringDisplaySuccess = "success";
+			string expectedOutputDisplaySuccess = "success";
+			temp = DisplayColor::displaySuccess(testStringDisplaySuccess);
+			string actualOutputDisplaySuccess = DisplayColor::TEST_OUTPUT;
+
+			Assert::AreEqual(expectedOutputDisplaySuccess, actualOutputDisplaySuccess);
+		}
+	};
+}
+
+	// End of segment: D:\NUS\Modules\Year II Sem II\CS2103\Project\Project\TextUITest\TextUITest.cpp
+
+
+
+
+
