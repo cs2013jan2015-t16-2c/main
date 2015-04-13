@@ -285,9 +285,11 @@ string TaskList::addToDisplayedTaskList(string displayType){
 
 		for (unsigned int i = 0; i < list.size(); i++){
 			string taskDate = list[i].getDate();
-			if (isEariler(taskDate, displayByDate)){
-				DisplayedTaskList::addTask(list[i]);
-			}
+			if (list[i].getTaskType() != "floating"){
+				if (isEariler(taskDate, displayByDate)){
+					DisplayedTaskList::addTask(list[i]);
+				}
+			}		
 		}
 		
 		return "";
