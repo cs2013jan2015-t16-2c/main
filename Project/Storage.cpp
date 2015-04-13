@@ -207,7 +207,7 @@ void storage::backup(){ //To be called before starting function
 
 string storage::logTime(){
 	string TimeLog;
-
+	stringstream  ss;
 	time_t currentTime;
 	struct tm *localTime;
 
@@ -221,7 +221,8 @@ string storage::logTime(){
 	int Min = localTime -> tm_min;
 	int Sec = localTime -> tm_sec;
 
-	TimeLog = "[" + Hour + ":" + Min + ":" + Sec + " " + Year + "-" + Month + "-" + Day + "]";
+	ss << "[" + Hour + ":" + Min + ":" + Sec + " " + Year + "-" + Month + "-" + Day + "]";
+	TimeLog = ss.str();
 	return TimeLog; 
 }
 
@@ -241,7 +242,7 @@ void storage::logging(string input, string fileName){
 	}
 	readFile.close();
 
-	content += TimeLog;
+	content += storage::logTime();
 	content += input;
 	writeFile.open(fileName);
 	writeFile << content <<endl;
