@@ -3,6 +3,7 @@
 
 //@author A0114792A
 const string MagicString::MESSAGE_EMPTY = "Task list is empty";
+
 //interfaceinput
 const string MagicString::MESSAGE_USER_COMMAND = "Command: ";
 const string MagicString::MESSAGE_NO_TASK_TODAY = "There is no task today!";
@@ -10,12 +11,14 @@ const string MagicString::MESSAGE_TODAY_TASK = "Today's task:";
 const string MagicString::MESSAGE_WARNING_1 = "WARNING: THIS ACTION CANNOT BE UNDONE!\n";
 const string MagicString::MESSAGE_WARNING_2 = "Enter(Y) to continue\nEnter(N) to abort\nYour choice: ";
 const string MagicString::ERROR_TYPE_AGAIN = "Please enter again: ";
+
 //interfaceoutput
 const string MagicString::MESSAGE_WELCOME = "Welcome to KeepTrack";
 const string MagicString::MESSAGE_TIP = "Tip: enter 'help' to learn how to use KeepTrack";
 const string MagicString::MESSAGE_GOODBYE = "Goodbye!";
 const string MagicString::ERROR_INVALID_COMMAND = "Error: invalid command!";
 const string MagicString::TODAY = "                              Today is ";
+
 //Storage
 const string MagicString::PROGRAM_START = "Data has been successfully loaded";
 const string MagicString::SUCCESS_ARCHIVE = "Tasklist is successfully archived";
@@ -25,6 +28,7 @@ const string MagicString::DONE_TASK_SAVED = "Done tasks have been saved into the
 const string MagicString::IN_PROGRESS_TASK_SAVED = "In progress tasks have been saved into the file";
 const string MagicString::STORAGE_CLEARED = "Permanent storage file has been cleared";
 const string MagicString::ARCHIVE_CLEARED = "Archived storage file has been cleared";
+
 //Task
 const string MagicString::LABEL_SCHEDULED_TASK = "timed";
 const string MagicString::LABEL_DEADLINE_TASK = "deadline";
@@ -34,11 +38,9 @@ const string MagicString::LABEL_FINISHED_TASK = "done";
 const string MagicString::LABEL_DAY = "day";
 const string MagicString::LABEL_WEEK = "week";
 const string MagicString::LABEL_MONTH = "month";
-const string MagicString::MESSAGE_INVALID_DATE = "invalid date, please input a valid one";
-const string MagicString::MESSAGE_INVALID_TIME = "invalid time, please enter a valid one";
-const string MagicString::MESSAGE2_INVALID_TIME = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 const int MagicString::DAY[] = { 0, 1, 2, 3, 4, 5, 6 };
 const string MagicString::DAY_S[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
+
 //TaskList
 const string MagicString::FLOATING_CANNOT_RECUR = "Floating task cannot be added recurrsively";
 const string MagicString::RECURRING_TASK_ADDED = "Recurring tasks added";
@@ -67,8 +69,14 @@ const string MagicString::DELETE_REDO = "Deleting command is redone";
 const string MagicString::MARK_REDO = "MarkasDone command is redone";
 const string MagicString::PRIORITY_REDO = "SetPriority command is redone";
 const string MagicString::REDO_UNABLE = "previous action cannot be redone";
+const string MagicString::MESSAGE_INVALID_DATE = "invalid date, please input a valid one";
+const string MagicString::MESSAGE_INVALID_TIME = "invalid time, please enter a valid one";
+const string MagicString::MESSAGE2_INVALID_TIME = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
+const string MagicString::LABEL_ERROR_FILE = "errorlog.txt";
+
 //keepTrack
 const string MagicString::DIVIDER = "================================================================================";
+
 //help
 const string MagicString::HELP_MAIN_L1 =  "Please select the function you would like to know";
 const string MagicString::HELP_MAIN_L2 =  "1.  Add a task";

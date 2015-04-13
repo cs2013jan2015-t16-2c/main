@@ -53,7 +53,7 @@ string TaskList::addTask(string input){
 		}
 		else{
 			ofstream errorlog;
-			errorlog.open("errorlog.txt");
+			errorlog.open(MagicString::LABEL_ERROR_FILE);
 			errorlog << input << " " << MagicString::INVALID_TIME_INPUT << endl;//logging all invalid time input command for future check
 			errorlog.close();
 			return MagicString::INVALID_TIME_INPUT;
@@ -74,7 +74,7 @@ string TaskList::addTask(string input){
 		}
 		else{
 			ofstream errorlog;
-			errorlog.open("errorlog.txt");
+			errorlog.open(MagicString::LABEL_ERROR_FILE);
 			errorlog << input << " " << MagicString::INVALID_TIME_INPUT << endl;
 			errorlog.close();
 			return MagicString::INVALID_TIME_INPUT;
