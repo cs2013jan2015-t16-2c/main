@@ -10,8 +10,8 @@ const string DisplayColor::SYMBOL_NEW_LINE = "\n";
 const string DisplayColor::SYMBOL_PRIORITY_A = "(A)";
 const string DisplayColor::SYMBOL_PRIORITY_B = "(B)";
 const string DisplayColor::SYMBOL_PRIORITY_C = "(C)";
-const string DisplayColor::STATUS_IN_PROGRESS = "in progress";
-const string DisplayColor::STATUS_DONE = "done";
+const string DisplayColor::STATUS_IN_PROGRESS = "-in progress";
+const string DisplayColor::STATUS_DONE = "-done";
 const string DisplayColor::STRING_SPACE = " ";
 
 //this is for unit testing only
@@ -83,26 +83,26 @@ string DisplayColor::displayColor(string displayText) {
 		}
 		else {
 			// to display tasks with neither # nor @
-			if (currentLine.find(DisplayColor::STATUS_IN_PROGRESS) != string::npos) {
-				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_IN_PROGRESS);
+			if (currentLine.find(MagicString::LABEL_PROCESSING_TASK) != string::npos) {
+				foundInProcessOrDone = currentLine.find(MagicString::LABEL_PROCESSING_TASK);
 				cout << currentLine.substr(0, foundInProcessOrDone) ;
 				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone); //For unit testing
 			}
 			else {
-				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_DONE);
+				foundInProcessOrDone = currentLine.find(MagicString::LABEL_FINISHED_TASK);
 				cout << currentLine.substr(0, foundInProcessOrDone);
 				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone); //For unit testing
 			}
 		}
 
-		if (currentLine.find(DisplayColor::STATUS_IN_PROGRESS) != string::npos) {
+		if (currentLine.find(MagicString::LABEL_PROCESSING_TASK) != string::npos) {
 			settextcolor(white);
-			foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_IN_PROGRESS);
+			foundInProcessOrDone = currentLine.find(MagicString::LABEL_PROCESSING_TASK);
 			cout << currentLine.substr(foundInProcessOrDone) << endl;
 		}
 		else {
 			settextcolor(deftextcol);
-			foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_DONE);
+			foundInProcessOrDone = currentLine.find(MagicString::LABEL_FINISHED_TASK);
 			cout << currentLine.substr(foundInProcessOrDone) << endl;
 		}
 
