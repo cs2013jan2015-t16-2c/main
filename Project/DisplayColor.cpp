@@ -10,8 +10,6 @@ const string DisplayColor::SYMBOL_NEW_LINE = "\n";
 const string DisplayColor::SYMBOL_PRIORITY_A = "(A)";
 const string DisplayColor::SYMBOL_PRIORITY_B = "(B)";
 const string DisplayColor::SYMBOL_PRIORITY_C = "(C)";
-const string DisplayColor::STATUS_IN_PROGRESS = "-in progress";
-const string DisplayColor::STATUS_DONE = "-done";
 const string DisplayColor::STRING_SPACE = " ";
 
 //this is for unit testing only
@@ -95,12 +93,7 @@ string DisplayColor::displayColor(string displayText) {
 			}
 		}
 
-		if (currentLine.find(MagicString::LABEL_PROCESSING_TASK) != string::npos) {
-			settextcolor(white);
-			foundInProcessOrDone = currentLine.find(MagicString::LABEL_PROCESSING_TASK);
-			cout << currentLine.substr(foundInProcessOrDone) << endl;
-		}
-		else {
+		if (currentLine.find(MagicString::LABEL_FINISHED_TASK) != string::npos) {
 			settextcolor(deftextcol);
 			foundInProcessOrDone = currentLine.find(MagicString::LABEL_FINISHED_TASK);
 			cout << currentLine.substr(foundInProcessOrDone) << endl;
