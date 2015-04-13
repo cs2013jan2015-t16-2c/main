@@ -9,6 +9,7 @@ class MagicString{
 public:
 	//display taskList
 	static const string MESSAGE_EMPTY;
+
 	//interfaceinput
 	static const string MESSAGE_USER_COMMAND;
 	static const string MESSAGE_NO_TASK_TODAY;
@@ -16,12 +17,14 @@ public:
 	static const string MESSAGE_WARNING_1;
 	static const string MESSAGE_WARNING_2;
 	static const string ERROR_TYPE_AGAIN;
+
 	//interfaceoutput
 	static const string MESSAGE_WELCOME;
 	static const string MESSAGE_TIP;
 	static const string MESSAGE_GOODBYE;
 	static const string ERROR_INVALID_COMMAND;
 	static const string TODAY;
+
 	//storage
 	static const string PROGRAM_START;
 	static const string SUCCESS_ARCHIVE;
@@ -31,6 +34,7 @@ public:
 	static const string IN_PROGRESS_TASK_SAVED;
 	static const string STORAGE_CLEARED;
 	static const string ARCHIVE_CLEARED;
+
 	//task
 	static const string LABEL_SCHEDULED_TASK;
 	static const string LABEL_DEADLINE_TASK;
@@ -40,11 +44,9 @@ public:
 	static const string LABEL_DAY;
 	static const string LABEL_WEEK;
 	static const string LABEL_MONTH;
-	static const string MESSAGE_INVALID_DATE;
-	static const string MESSAGE_INVALID_TIME;
-	static const string MESSAGE2_INVALID_TIME;
 	static const int DAY[];
 	static const string DAY_S[];
+
 	//taskList
 	static const string FLOATING_CANNOT_RECUR;
 	static const string RECURRING_TASK_ADDED;
@@ -73,9 +75,14 @@ public:
 	static const string MARK_REDO;
 	static const string PRIORITY_REDO;
 	static const string REDO_UNABLE;
+	static const string MESSAGE_INVALID_DATE;
+	static const string MESSAGE_INVALID_TIME;
+	static const string MESSAGE2_INVALID_TIME;
+	static const string LABEL_ERROR_FILE;
 
 	//keepTrack
 	static const string DIVIDER;
+
 	//help
 	static const string HELP_MAIN_L1;
 	static const string HELP_MAIN_L2;
