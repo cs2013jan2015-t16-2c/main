@@ -19,6 +19,7 @@ private:
 	static const string STATUS_IN_PROGRESS;
 	static const string STATUS_DONE;
 	static const string EMPTY_STRING;
+	static const string STRING_SPACE;
 
 public:
 	static string displayColor(string displayText);
