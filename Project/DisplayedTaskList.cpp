@@ -12,7 +12,7 @@ string DisplayedTaskList::display(){
 	sort();
 	ostringstream overallOss;
 	for (unsigned int i = 0; i < displayedTaskList.size() - 1; i++){
-		ostringstream oss;			
+		ostringstream oss;
 		oss << i + 1 << ". " << displayedTaskList[i].ToString() << endl;
 		string taskDisplay = oss.str();
 		overallOss << taskDisplay;
