@@ -8,6 +8,7 @@ const string storage::FILENAME = "storage.txt";
 const string storage::TEMP = "temp.txt";
 const string storage::DONE = "done.txt";
 const string storage::PROGRESS = "progress.txt";
+const string storage::LOGFILE = "log.txt";
 
 //@author A0114792A
 void storage::ending() {
@@ -188,4 +189,12 @@ void storage::backup(){ //call before starting function
 		temporary.close();
 		remove(TEMP.c_str());
 	}
+}
+
+void storage::logging(string input){
+	ofstream file;
+
+	file.open(LOGFILE);
+	file << input <<endl;
+	file.close();
 }

@@ -19,6 +19,7 @@ private:
 	static const string TEMP;
 	static const string DONE;
 	static const string PROGRESS;
+	static const string LOGFILE;
 
 public:
 	static string starting();
@@ -33,6 +34,7 @@ public:
 	static void tempFile();
 	static void deleteTemp();
 	static void backup();
+	static void logging(string input);
 };
 
 #endif
