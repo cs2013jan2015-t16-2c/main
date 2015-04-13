@@ -1,6 +1,7 @@
 #include "storage.h"
 #include "MagicString.h"
 #include "TaskList.h"
+#include <assert.h>
 
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
@@ -99,6 +100,8 @@ string storage::saveProgress(){
 }
 
 string storage::archive(string fileName){
+	assert(size.fileName() > 4); 
+
 	ofstream file;
 	string content;
 
