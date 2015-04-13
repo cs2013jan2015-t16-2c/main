@@ -6,6 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "MagicString.h"
 
 //@author A0093586N
 using namespace std;
@@ -16,8 +17,6 @@ private:
 	static const string SYMBOL_PRIORITY_A;
 	static const string SYMBOL_PRIORITY_B;
 	static const string SYMBOL_PRIORITY_C;
-	static const string STATUS_IN_PROGRESS;
-	static const string STATUS_DONE;
 	static const string EMPTY_STRING;
 	static const string STRING_SPACE;
 
