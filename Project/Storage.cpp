@@ -8,7 +8,7 @@ const string storage::TEMP = "temp.txt";
 const string storage::DONE = "done.txt";
 const string storage::PROGRESS = "progress.txt";
 
-//@QinZhao A0114792
+//@author A0114792A
 void storage::ending() {
 	ofstream file;
 	string content;

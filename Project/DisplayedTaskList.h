@@ -5,7 +5,7 @@
 #include "Task.h"
 #include "MagicString.h"
 
-//@author A0093586N
+//@author A0113624R
 class DisplayedTaskList
 {
 private:
