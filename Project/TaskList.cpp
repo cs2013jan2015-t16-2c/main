@@ -54,7 +54,7 @@ string TaskList::addTask(string input){
 		else{
 			ofstream errorlog;
 			errorlog.open("errorlog.txt");
-			errorlog << input << " " << MagicString::INVALID_TIME_INPUT << endl;
+			errorlog << input << " " << MagicString::INVALID_TIME_INPUT << endl;//logging all invalid time input command for future check
 			errorlog.close();
 			return MagicString::INVALID_TIME_INPUT;
 		}
@@ -221,6 +221,7 @@ string TaskList::display(string displayType){
 	}
 }
 
+//According to displayType, add all tasks which match with the displayType to the DisplayedTaskList class
 string TaskList::addToDisplayedTaskList(string displayType){
 	size_t findTimeBy = displayType.find("-by");
 	if (displayType == "all"){
@@ -415,7 +416,7 @@ string TaskList::undo(){
 }
 
 string TaskList::redo(){
-	if (isLastCommandUndo){
+	if (isLastCommandUndo){//redo action will only be executed when the previous command is undo
 		isLastCommandUndo = false;
 		if (lastCommandType == "add"){
 			list.push_back(lastChangedTask);
@@ -477,6 +478,7 @@ string TaskList::printVector(vector<string> output){
 	return oss.str();
 }
 
+//to find out the task index of the selected task in the overall task list
 int TaskList::findTargetedTaskIndex(int displayedIndex){
 	int size = list.size();
 	for (int i = 0; i < size; i++){
@@ -525,6 +527,7 @@ bool TaskList::isExist(vector<string> list, string input){
 	return false;
 }
 
+//to check whether the task date is earlier than the display by date
 bool TaskList::isEariler(string taskDate, string displayByDate){
 	int month_by = atoi(displayByDate.substr(3, 2).c_str());
 	int day_by = atoi(displayByDate.substr(0, 2).c_str());
@@ -548,12 +551,12 @@ bool TaskList::isEariler(string taskDate, string displayByDate){
 	}
 }
 
+//to checks whether the string can be converted to int
 bool TaskList::isDigit(string input){
 	for (unsigned int i = 0; i < input.size(); i++){
 		if (!isdigit(input[i])){
 			return false;
 		}
 	}
-
 	return true;
 }
