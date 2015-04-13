@@ -37,9 +37,14 @@ public:
 	static const string LABEL_FLOATING_TASK;
 	static const string LABEL_PROCESSING_TASK;
 	static const string LABEL_FINISHED_TASK;
+	static const string LABEL_DAY;
+	static const string LABEL_WEEK;
+	static const string LABEL_MONTH;
 	static const string MESSAGE_INVALID_DATE;
 	static const string MESSAGE_INVALID_TIME;
 	static const string MESSAGE2_INVALID_TIME;
+	static const int DAY[];
+	static const string DAY_S[];
 	//taskList
 	static const string FLOATING_CANNOT_RECUR;
 	static const string RECURRING_TASK_ADDED;

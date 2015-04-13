@@ -31,9 +31,14 @@ const string MagicString::LABEL_DEADLINE_TASK = "deadline";
 const string MagicString::LABEL_FLOATING_TASK = "floating";
 const string MagicString::LABEL_PROCESSING_TASK = "in progress";
 const string MagicString::LABEL_FINISHED_TASK = "done";
+const string MagicString::LABEL_DAY = "day";
+const string MagicString::LABEL_WEEK = "week";
+const string MagicString::LABEL_MONTH = "month";
 const string MagicString::MESSAGE_INVALID_DATE = "invalid date, please input a valid one";
 const string MagicString::MESSAGE_INVALID_TIME = "invalid time, please enter a valid one";
 const string MagicString::MESSAGE2_INVALID_TIME = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
+const int MagicString::DAY[] = { 0, 1, 2, 3, 4, 5, 6 };
+const string MagicString::DAY_S[] = { "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" };
 //TaskList
 const string MagicString::FLOATING_CANNOT_RECUR = "Floating task cannot be added recurrsively";
 const string MagicString::RECURRING_TASK_ADDED = "Recurring tasks added";
