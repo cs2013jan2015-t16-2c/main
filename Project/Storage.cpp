@@ -20,6 +20,7 @@ void storage::ending() {
 	file.open(FILENAME);
 	content = TaskList::display("all");
 	
+	//exception
 	try {
 		if (content != MagicString::TASK_EMPTY2){
 			throw 1;
@@ -31,6 +32,7 @@ void storage::ending() {
 
 	content = TaskList::display("done");
 	
+	//exception
 	try{
 		if(content != MagicString::TASK_EMPTY2)
 			throw 'a';
@@ -58,7 +60,7 @@ string storage::starting() {
 	return MagicString::PROGRAM_START;
 }
 
-string storage::deletePer(){
+string storage::deletePer(){ //delete permanent storage file
 	remove(FILENAME.c_str());
 	TaskList::empty();
 	return MagicString::STORAGE_CLEARED;
@@ -101,8 +103,9 @@ string storage::saveProgress(){
 }
 
 string storage::archive(string fileName){
-	assert(fileName.size() > 4); 
+	assert(fileName.size() > 4); //assertion
 	
+	//exception
 	try{
 		if (fileName.find(".txt") == string::npos) {
 			throw 1;
@@ -167,11 +170,11 @@ void storage::tempFile(){ //call by every command
 	temporary.close();
 }
 
-void storage::deleteTemp(){ //call if exit is exeucited
+void storage::deleteTemp(){ //To be called if exit is exeucited
 	remove(TEMP.c_str());
 }
 
-void storage::backup(){ //call before starting function
+void storage::backup(){ //To be called before starting function
 	ifstream temporary;
 	ofstream file;
 	string tempLine;
@@ -201,6 +204,8 @@ void storage::backup(){ //call before starting function
 }
 
 void storage::logging(string input, string fileName){
+	assert(input != ""); //assertion
+
 	ifstream readFile;
 	ofstream writeFile;
 	string line;
