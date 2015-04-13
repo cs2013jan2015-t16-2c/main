@@ -165,18 +165,16 @@ Task::~Task(){}
 Task::Task(string task, string input){
 	if (!task.empty()){
 		//store status
-		std::size_t find_status = task.find(MagicString::LABEL_PROCESSING_TASK);
-		if (find_status != std::string::npos){
+		int find_status;
+		std::size_t find_process = task.find(MagicString::LABEL_PROCESSING_TASK);
+		if (find_process != std::string::npos){
 			status = MagicString::LABEL_PROCESSING_TASK;
+			find_status = find_process;
 		}
-		else{
-			std::size_t find_status = task.find(MagicString::LABEL_FINISHED_TASK);
-			if (find_status != std::string::npos){
-				status = MagicString::LABEL_FINISHED_TASK;
-			}
-			else{
-				status = "";
-			}
+		std::size_t find_done = task.find(MagicString::LABEL_FINISHED_TASK);
+		if (find_done != std::string::npos){
+			status = MagicString::LABEL_FINISHED_TASK;
+			find_status = find_done;
 		}
 
 		std::size_t get_priority = task.find("(");
