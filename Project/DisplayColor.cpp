@@ -97,7 +97,7 @@ string DisplayColor::displayColor(string displayText) {
 		if (currentLine.find(DisplayColor::STATUS_IN_PROGRESS) != string::npos) {
 			settextcolor(white);
 			foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_IN_PROGRESS);
-			cout << " " << currentLine.substr(foundInProcessOrDone) << endl;
+			cout << currentLine.substr(foundInProcessOrDone) << endl;
 		}
 		else {
 			settextcolor(deftextcol);
