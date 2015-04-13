@@ -108,8 +108,7 @@ public:
 	static const string INSTRUCTION_ADD_TIMED_2;
 	static const string INSTRUCTION_ADD_TAG;
 	static const string INSTRUCTION_ADD_VENUE;
-	static const string INSTRUCTION_ADD_BOTH_1;
-	static const string INSTRUCTION_ADD_BOTH_2;
+	static const string INSTRUCTION_ADD_BOTH;
 	static const string INSTRUCTION_ADD_RECUR_1;
 	static const string INSTRUCTION_ADD_RECUR_2;
 

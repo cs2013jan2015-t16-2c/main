@@ -20,6 +20,7 @@ private:
 	static void archiveHelpPage();
 	static void clearHelpPage();
 	static void exitHelpPage();
+	static bool isDigit(string userInput);
 
 	static bool isInMainHelpPage;
 

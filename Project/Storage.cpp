@@ -27,26 +27,17 @@ void storage::ending() {
 		file << content;
 	}
 
-	//if (content != MagicString::TASK_EMPTY2){
-	//	file << content;
-	//	file.close();
-	//}
-
 	content = TaskList::display("done");
 	
 	try{
 		if(content != MagicString::TASK_EMPTY2)
-			throw "save";
+			throw 'a';
 	}
-	catch(string){
+	catch(char){
 		file << endl;
 		file << content;
 	}
-	//if(content != MagicString::TASK_EMPTY2){
-	//	file << endl;
-	//	file << content;
-	//	file.close();
-	//}
+
 	file.close();
 }
 

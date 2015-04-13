@@ -95,16 +95,15 @@ const string MagicString::MESSAGE_EXIT_HELP =      "00: get back to KeepTrack!";
 const string MagicString::MESSAGE_COMMAND = "Command: ";
 
 const string MagicString::INSTRUCTION_ADD =          "You can add three types of tasks";
-const string MagicString::INSTRUCTION_ADD_FLOATING = "1.  Floating task:  add do assignment";
-const string MagicString::INSTRUCTION_ADD_DEADLINE = "2.  Deadline:       add finish assignment -by 14:00 13/04";
-const string MagicString::INSTRUCTION_ADD_TIMED_1 =  "3.  Timed task:     add do assignment -from 12/04 09:00 -to 11:00";
-const string MagicString::INSTRUCTION_ADD_TIMED_2 =  "4.  Timed task:     add do assignment -from next Fri 08:00 -to 10:00";
-const string MagicString::INSTRUCTION_ADD_TAG =      "5.  Classification: add do assignment #study";
-const string MagicString::INSTRUCTION_ADD_VENUE =    "6.  Venue:          add do assignment @lab";
-const string MagicString::INSTRUCTION_ADD_BOTH_1 =   "7.  Both:           add do assignment #study @lab";
-const string MagicString::INSTRUCTION_ADD_BOTH_2 =   "8.  Both:           add do assignment @lab #study";
-const string MagicString::INSTRUCTION_ADD_RECUR_1 =  "9.  Recurring task: add do assignment -from 14/05 09:00 -to 10:00 -everyday";
-const string MagicString::INSTRUCTION_ADD_RECUR_2 =  "10. Recurring task: add do assignment -from 14/05 09:00 -to 10:00 -everyweek";
+const string MagicString::INSTRUCTION_ADD_FLOATING = "1. Floating task:  add do assignment";
+const string MagicString::INSTRUCTION_ADD_DEADLINE = "2. Deadline:       add finish assignment -by 14:00 13/04";
+const string MagicString::INSTRUCTION_ADD_TIMED_1 =  "3. Timed task:     add do assignment -from 12/04 09:00 -to 11:00";
+const string MagicString::INSTRUCTION_ADD_TIMED_2 =  "4. Timed task:     add do assignment -from next Fri 08:00 -to 10:00";
+const string MagicString::INSTRUCTION_ADD_TAG =      "5. Classification: add do assignment #study";
+const string MagicString::INSTRUCTION_ADD_VENUE =    "6. Venue:          add do assignment @lab";
+const string MagicString::INSTRUCTION_ADD_BOTH =   "7. Both:           add do assignment #study @lab";
+const string MagicString::INSTRUCTION_ADD_RECUR_1 =  "8. Recurring task: add do assignment -from 14/05 09:00 -to 10:00 -everyday";
+const string MagicString::INSTRUCTION_ADD_RECUR_2 =  "9. Recurring task: add do assignment -from 14/05 09:00 -to 10:00 -everyweek";
 
 const string MagicString::INSTRUCTION_DISPLAY =          "You can display your task list in the following ways: ";
 const string MagicString::INSTRUCTION_DISPLAY_TODAY =    "1. All the tasks:           display today";

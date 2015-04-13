@@ -45,52 +45,65 @@ string DisplayColor::displayColor(string displayText) {
 		}
 
 		if (currentLine.find('#') != string::npos && currentLine.find('@') != string::npos) {
+			// to display tasks with both # and @
 			foundTag = currentLine.find('#');
 			cout << currentLine.substr(0, foundTag - 0);
-			TEST_OUTPUT = currentLine.substr(0, foundTag - 0);
+			TEST_OUTPUT = currentLine.substr(0, foundTag - 0); //For unit testing
 			foundSpace = currentLine.find(" ", foundTag);
 			settextcolor(dark_aqua);
 
 			foundAt = currentLine.find('@');
 			cout << currentLine.substr(foundTag, foundAt - foundTag);
-			TEST_OUTPUT += currentLine.substr(foundTag, foundAt - foundTag);
+			TEST_OUTPUT += currentLine.substr(foundTag, foundAt - foundTag); //For unit testing
 			foundSpace = currentLine.find(" ", foundAt);
 			settextcolor(dark_green);
-			cout << currentLine.substr(foundAt, foundSpace - foundAt) << endl;
-			TEST_OUTPUT += currentLine.substr(foundAt, foundSpace - foundAt);
+			cout << currentLine.substr(foundAt, foundSpace - foundAt);
+			TEST_OUTPUT += currentLine.substr(foundAt, foundSpace - foundAt); //For unit testing
 		}
 		else if (currentLine.find('#') != string::npos && currentLine.find('@') == string::npos) {
+			// to display tasks # only
 			foundTag = currentLine.find('#');
 			cout << currentLine.substr(0, foundTag - 0);
-			TEST_OUTPUT = currentLine.substr(0, foundTag - 0);
+			TEST_OUTPUT = currentLine.substr(0, foundTag - 0); //For unit testing
 			foundSpace = currentLine.find(" ", foundTag);
 			settextcolor(dark_aqua);
-			cout << currentLine.substr(foundTag, foundSpace - foundTag) << endl;
-			TEST_OUTPUT += currentLine.substr(foundTag, foundSpace - foundTag);
+			cout << currentLine.substr(foundTag, foundSpace - foundTag);
+			TEST_OUTPUT += currentLine.substr(foundTag, foundSpace - foundTag); //For unit testing
 		}
 		else if (currentLine.find('#') == string::npos && currentLine.find('@') != string::npos) {
+			// to display tasks with @ only
 			foundAt = currentLine.find('@');
 			cout << currentLine.substr(0, foundAt - 0);
 			TEST_OUTPUT = currentLine.substr(0, foundAt - 0);
 			foundSpace = currentLine.find(" ", foundAt);
 			settextcolor(dark_green);
-			cout << currentLine.substr(foundAt, foundSpace - foundAt) << endl;
-			TEST_OUTPUT += currentLine.substr(foundAt, foundSpace - foundAt);
+			cout << currentLine.substr(foundAt, foundSpace - foundAt);
+			TEST_OUTPUT += currentLine.substr(foundAt, foundSpace - foundAt); //For unit testing
 		}
 		else {
-			if (currentLine.find(DisplayColor::STATUS_DONE) != string::npos) {
-				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_DONE);
-				cout << currentLine.substr(0, foundInProcessOrDone) << endl;
-				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone);
+			// to display tasks with neither # nor @
+			if (currentLine.find(DisplayColor::STATUS_IN_PROGRESS) != string::npos) {
+				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_IN_PROGRESS);
+				cout << currentLine.substr(0, foundInProcessOrDone);
+				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone); //For unit testing
 			}
 			else {
-				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_IN_PROGRESS);
-				cout << currentLine.substr(0, foundInProcessOrDone) << endl;
-				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone);
+				foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_DONE);
+				cout << currentLine.substr(0, foundInProcessOrDone);
+				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone); //For unit testing
 			}
 		}
 
-		//if (currentLine.find(DisplayColor::)
+		if (currentLine.find(DisplayColor::STATUS_IN_PROGRESS) != string::npos) {
+			settextcolor(white);
+			foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_IN_PROGRESS);
+			cout << " " << currentLine.substr(foundInProcessOrDone) << endl;
+		}
+		else {
+			settextcolor(deftextcol);
+			foundInProcessOrDone = currentLine.find(DisplayColor::STATUS_DONE);
+			cout << currentLine.substr(foundInProcessOrDone) << endl;
+		}
 
 		foundNewLineStart = foundNewLineEnd + 1;
 	}

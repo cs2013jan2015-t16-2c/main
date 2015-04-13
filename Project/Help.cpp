@@ -1,5 +1,6 @@
 #include "Help.h"
 #include "MagicString.h"
+#include <assert.h>
 
 //@author A0093586N
 const string Help::STRING_EMPTY = "";
@@ -31,8 +32,7 @@ void Help::addHelpPage() {
 	cout << MagicString::INSTRUCTION_ADD_TIMED_2 << endl;
 	cout << MagicString::INSTRUCTION_ADD_TAG << endl;
 	cout << MagicString::INSTRUCTION_ADD_VENUE << endl;
-	cout << MagicString::INSTRUCTION_ADD_BOTH_1 << endl;
-	cout << MagicString::INSTRUCTION_ADD_BOTH_2 << endl;
+	cout << MagicString::INSTRUCTION_ADD_BOTH << endl;
 	cout << MagicString::INSTRUCTION_ADD_RECUR_1 << endl;
 	cout << MagicString::INSTRUCTION_ADD_RECUR_2 << endl;
 	cout << endl;
@@ -173,59 +173,82 @@ string Help::executeHelpCommand() {
 	Help::mainHelpPage();
 	string userInput;
 
+
+
 	while (getline(cin, userInput)) {
-		if (Help::isInMainHelpPage && userInput == MagicString::ADD_HELP_PAGE_INDEX) {
-			Help::addHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::DISPLAY_HELP_PAGE_INDEX) {
-			Help::displayHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::SET_PRIORITY_HELP_PAGE_INDEX) {
-			Help::setPriorityHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::DELETE_HELP_PAGE_INDEX) {
-			Help::deleteHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::UPDATE_HELP_PAGE_INDEX) {
-			Help::updateHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::UNDO_REDO_HELP_PAGE_INDEX) {
-			Help::undoRedoHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::ARCHIVE_HELP_PAGE_INDEX) {
-			Help::archiveHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::CLEAR_HELP_PAGE_INDEX) {
-			Help::clearHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (Help::isInMainHelpPage && userInput == MagicString::EXIT_HELP_PAGE_INDEX) {
-			Help::exitHelpPage();
-			Help::isInMainHelpPage = false;
-		}
-		else if (!Help::isInMainHelpPage && userInput == MagicString::REUTRN_TO_MAIN_HELP_PAGE) {
-			Help::mainHelpPage();
-			Help::isInMainHelpPage = true;
-		}
-		else if (userInput == MagicString::EXIT_HELP) {
-			Help::isInMainHelpPage = true;
-			return STRING_EMPTY;
-		}
-		else {
+		assert(userInput != "");
+		if (!isDigit(userInput)){
 			Help::showHelp(MagicString::MESSAGE_INVALID_INDEX);
 			cout << endl;
 			cout << endl;
 			Help::mainHelpPage();
 			Help::isInMainHelpPage = true;
 		}
-
+		else try{
+			if (Help::isInMainHelpPage && userInput == MagicString::ADD_HELP_PAGE_INDEX) {
+				Help::addHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::DISPLAY_HELP_PAGE_INDEX) {
+				Help::displayHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::SET_PRIORITY_HELP_PAGE_INDEX) {
+				Help::setPriorityHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::DELETE_HELP_PAGE_INDEX) {
+				Help::deleteHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::UPDATE_HELP_PAGE_INDEX) {
+				Help::updateHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::UNDO_REDO_HELP_PAGE_INDEX) {
+				Help::undoRedoHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::ARCHIVE_HELP_PAGE_INDEX) {
+				Help::archiveHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::CLEAR_HELP_PAGE_INDEX) {
+				Help::clearHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (Help::isInMainHelpPage && userInput == MagicString::EXIT_HELP_PAGE_INDEX) {
+				Help::exitHelpPage();
+				Help::isInMainHelpPage = false;
+			}
+			else if (!Help::isInMainHelpPage && userInput == MagicString::REUTRN_TO_MAIN_HELP_PAGE) {
+				Help::mainHelpPage();
+				Help::isInMainHelpPage = true;
+			}
+			else if (userInput == MagicString::EXIT_HELP) {
+				Help::isInMainHelpPage = true;
+				return STRING_EMPTY;
+			}
+			else {
+				throw - 1;
+			}
+		}
+		catch (int){
+			Help::showHelp(MagicString::MESSAGE_INVALID_INDEX);
+			cout << endl;
+			cout << endl;
+			Help::mainHelpPage();
+			Help::isInMainHelpPage = true;
+		}
 	}
 	return STRING_EMPTY;
+}
+
+bool Help::isDigit(string userInput){
+	for (unsigned int i = 0; i < userInput.size(); i++){
+		if (!isdigit(userInput[i])){
+			return false;
+		}
+	}
+	return true;
 }
