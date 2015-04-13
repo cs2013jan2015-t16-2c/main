@@ -15,6 +15,7 @@ const string INVALID_DATE_MSG = "invalid date, please input a valid one";
 const string INVALID_TIME_MSG = "invalid time, please enter a valid one";
 const string INVALID_TIME_MSG2 = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 
+//@author A0135141W
 Task::Task(){
 	taskname = "";
 	task_type = "";
@@ -898,13 +899,28 @@ bool Task::checkInputValidation(){
 	else if (task_type == SCHEDULED_TASK_LABEL){
 		int mon_s = atoi(scheduled_start_date.substr(3, 2).c_str());
 		int day_s = atoi(scheduled_start_date.substr(0, 2).c_str());
-		int hour_s = atoi(start_time.substr(0, 2).c_str());
-		int min_s = atoi(start_time.substr(3, 2).c_str());
+		int hour_s, min_s;
+		if (start_time != ""){
+			hour_s = atoi(start_time.substr(0, 2).c_str());
+			min_s = atoi(start_time.substr(3, 2).c_str());
+		}
+		else{
+			hour_s = 0;
+			min_s = 0;
+		}
 
 		int mon_e = atoi(scheduled_end_date.substr(3, 2).c_str());
 		int day_e = atoi(scheduled_end_date.substr(0, 2).c_str());
-		int hour_e = atoi(end_time.substr(0, 2).c_str());
-		int min_e = atoi(end_time.substr(3, 2).c_str());
+		int hour_e, min_e;
+		if (end_time != ""){
+			hour_e = atoi(end_time.substr(0, 2).c_str());
+			min_e = atoi(end_time.substr(3, 2).c_str());
+		}
+		else{
+			hour_e = 23;
+			min_e = 59;
+		}
+		
 
 		if (!isWithinLimit(mon_s, day_s, hour_s, min_s) || !isWithinLimit(mon_e, day_e, hour_e, min_e)){
 			return false;
@@ -932,8 +948,16 @@ bool Task::checkInputValidation(){
 	else{
 		int mon = atoi(deadline_date.substr(3, 2).c_str());
 		int day = atoi(deadline_date.substr(0, 2).c_str());
-		int hour = atoi(deadline_time.substr(0, 2).c_str());
-		int min = atoi(deadline_time.substr(3, 2).c_str());
+		int hour, min;
+		if (deadline_time != ""){
+			hour = atoi(deadline_time.substr(0, 2).c_str());
+			min = atoi(deadline_time.substr(3, 2).c_str());
+		}
+		else{
+			hour = 23;
+			min = 59;
+		}
+		
 
 		if (!isWithinLimit(mon, day, hour, min)){
 			return false;

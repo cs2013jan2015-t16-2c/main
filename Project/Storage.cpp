@@ -25,7 +25,6 @@ void storage::ending() {
 	}
 	catch (int){
 		file << content;
-		file.close();
 	}
 
 	//if (content != MagicString::TASK_EMPTY2){
@@ -42,7 +41,6 @@ void storage::ending() {
 	catch(string){
 		file << endl;
 		file << content;
-		file.close();
 	}
 	//if(content != MagicString::TASK_EMPTY2){
 	//	file << endl;
@@ -117,14 +115,12 @@ string storage::archive(string fileName){
 	content = TaskList::display("all");
 	if (content != MagicString::TASK_EMPTY2){
 		file << content;
-		file.close();
 	}
 
 	content = TaskList::display("done");
 	if (content != MagicString::TASK_EMPTY2){
 		file << endl;
 		file << content;
-		file.close();
 	}
 	file.close();
 	
@@ -157,14 +153,12 @@ void storage::tempFile(){ //call by every command
 	content = TaskList::display("all");
 	if (content != MagicString::TASK_EMPTY2){
 		temporary << content;
-		temporary.close();
 	}
 
 	content = TaskList::display("done");
 	if (content != MagicString::TASK_EMPTY2){
 		temporary << endl;
 		temporary << content;
-		temporary.close();
 	}
 	temporary.close();
 }

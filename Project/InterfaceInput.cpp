@@ -2,6 +2,7 @@
 // Interface.cpp
 
 #include "InterfaceInput.h"
+#include <assert.h>
 
 //@author A0093586N
 //These are the shortened commands
@@ -40,6 +41,7 @@ string InterfaceInput::getUserCommand() {
 //to receive user's command, process it,
 //and return the corresponding feedback to the user
 string InterfaceInput::executeUserCommand(string userCommand) {
+	assert(userCommand != "");
 	string commandTypeString;
 	string taskString;
 
@@ -59,25 +61,63 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 
 	case ADD_TASK:
 		displayText = TaskList::addTask(taskString);
-		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		if (displayText == MagicString::FLOATING_CANNOT_RECUR) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::RECURRING_TASK_ADDED) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::INVALID_TIME_INPUT) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::TASK_ADDED) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
+		else {
+			//displayText is MagicString::INVALID_TIME_INPUT
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
 		cout << endl;
 		cout << endl;
 		return displayToday();
 
 	case SEARCH:
 		displayText = TaskList::search(taskString);
-		TEST_OUTPUT_EXECUTE = DisplayColor::displayColor(displayText); //For unit testing
+		if (displayText == MagicString::TASK_EMPTY) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText);
+		}
+		else if (displayText == MagicString::SEARCH_NOT_FOUND) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText);
+		}
+		else {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayColor(displayText); //For unit testing
+		}
 		return STRING_EMPTY;
 	
 	case UPDATE:
-		cout << TaskList::updateTask(taskString) << endl;
+		displayText = TaskList::updateTask(taskString);
+		if (displayText == MagicString::MESSAGE_INVALID_INDEX) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::INVALID_TIME_INPUT) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			cout << TaskList::updateTask(taskString) << endl;
+		}
 		cout << endl;
 		cout << endl;
 		return displayToday();
 	
 	case DELETE_TASK:
 		displayText = TaskList::deleteTask(taskString);
-		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+		if (displayText == MagicString::MESSAGE_INVALID_INDEX) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
 			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
@@ -102,7 +142,10 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	
 	case MARK_DONE:
 		displayText = TaskList::markAsDone(taskString);
-		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+		if (displayText == MagicString::MESSAGE_INVALID_INDEX) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
 			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
@@ -114,10 +157,17 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	
 	case SET_PRIORITY:
 		displayText = TaskList::setPriority(taskString);
-		if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+		if (displayText == MagicString::MESSAGE_INVALID_INDEX) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText.find(MagicString::NON_EXISTENCE) != string::npos) {
+			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else if (displayText == MagicString::INVALID_PRIORITY) {
 			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
+			//displayText is MagicString::SET_PRIORITY
 			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
 		}
 		cout << endl;

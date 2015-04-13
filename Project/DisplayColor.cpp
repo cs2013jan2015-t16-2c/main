@@ -89,6 +89,9 @@ string DisplayColor::displayColor(string displayText) {
 				TEST_OUTPUT = currentLine.substr(0, foundInProcessOrDone);
 			}
 		}
+
+		//if (currentLine.find(DisplayColor::)
+
 		foundNewLineStart = foundNewLineEnd + 1;
 	}
 	settextcolor(deftextcol);

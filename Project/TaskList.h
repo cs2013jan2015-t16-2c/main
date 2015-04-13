@@ -34,6 +34,7 @@ private:
 	static bool isExist(vector<string> checkingList, string input);
 	static void addRepeatTask(Task newTask, string repear_type, int repeat_time);
 	static bool isEariler(string taskDate, string displayByDate);
+	static bool isDigit(string input);
 
 public:
 	static void copyFromStorage();
