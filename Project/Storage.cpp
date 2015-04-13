@@ -19,14 +19,12 @@ void storage::ending() {
 	content = TaskList::display("all");
 	if (content != MagicString::TASK_EMPTY2){
 		file << content;
-		file.close();
 	}
 
 	content = TaskList::display("done");
 	if(content != MagicString::TASK_EMPTY2){
 		file << endl;
 		file << content;
-		file.close();
 	}
 	file.close();
 }
@@ -96,14 +94,12 @@ string storage::archive(string fileName){
 	content = TaskList::display("all");
 	if (content != MagicString::TASK_EMPTY2){
 		file << content;
-		file.close();
 	}
 
 	content = TaskList::display("done");
 	if (content != MagicString::TASK_EMPTY2){
 		file << endl;
 		file << content;
-		file.close();
 	}
 	file.close();
 	
@@ -136,14 +132,12 @@ void storage::tempFile(){ //call by every command
 	content = TaskList::display("all");
 	if (content != MagicString::TASK_EMPTY2){
 		temporary << content;
-		temporary.close();
 	}
 
 	content = TaskList::display("done");
 	if (content != MagicString::TASK_EMPTY2){
 		temporary << endl;
 		temporary << content;
-		temporary.close();
 	}
 	temporary.close();
 }
