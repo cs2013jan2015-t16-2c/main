@@ -1,7 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "storage.h"
 #include "MagicString.h"
 #include "TaskList.h"
 #include <assert.h>
+#include <ctime>
 
 vector<string> storage::task;
 const string storage::FILENAME = "storage.txt";
@@ -203,6 +205,27 @@ void storage::backup(){ //To be called before starting function
 	}
 }
 
+string storage::logTime(){
+	string TimeLog;
+	stringstream  ss;
+	time_t currentTime;
+	struct tm *localTime;
+
+	time( &currentTime);
+	localTime = localtime( &currentTime);
+
+	int Day = localTime -> tm_mday;
+	int Month = localTime -> tm_mon + 1;
+	int Year = localTime -> tm_year + 1900;
+	int Hour = localTime -> tm_hour;
+	int Min = localTime -> tm_min;
+	int Sec = localTime -> tm_sec;
+
+	ss << "[" << Hour << ":" << Min << ":" << Sec << " " << Year << "-" << Month << "-" << Day << "]";
+	TimeLog = ss.str();
+	return TimeLog; 
+}
+
 void storage::logging(string input, string fileName){
 	assert(input != ""); //assertion
 
@@ -219,6 +242,7 @@ void storage::logging(string input, string fileName){
 	}
 	readFile.close();
 
+	content += storage::logTime();
 	content += input;
 	writeFile.open(fileName);
 	writeFile << content <<endl;

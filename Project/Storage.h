@@ -35,6 +35,7 @@ public:
 	static void backup();
 	static void logging(string input, string fileName);
 	static const string LOGFILE;
+	static string logTime();
 };
 
 #endif
