@@ -28,6 +28,7 @@ const string MagicString::DONE_TASK_SAVED = "Done tasks have been saved into the
 const string MagicString::IN_PROGRESS_TASK_SAVED = "In progress tasks have been saved into the file";
 const string MagicString::STORAGE_CLEARED = "Permanent storage file has been cleared";
 const string MagicString::ARCHIVE_CLEARED = "Archived storage file has been cleared";
+const string MagicString::FORMAT_INCORRECT = "Path should end with .txt";
 
 //Task
 const string MagicString::LABEL_SCHEDULED_TASK = "timed";
