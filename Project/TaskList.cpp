@@ -52,10 +52,8 @@ string TaskList::addTask(string input){
 			}
 		}
 		else{
-			ofstream errorlog;
-			errorlog.open(MagicString::LABEL_ERROR_FILE);
-			errorlog << input << " " << MagicString::INVALID_TIME_INPUT << endl;//logging all invalid time input command for future check
-			errorlog.close();
+			string errorlog = input + " " + MagicString::INVALID_TIME_INPUT;
+			storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);//logging the invalid time input command for future check
 			return MagicString::INVALID_TIME_INPUT;
 		}
 		
@@ -73,10 +71,8 @@ string TaskList::addTask(string input){
 			return MagicString::TASK_ADDED;
 		}
 		else{
-			ofstream errorlog;
-			errorlog.open(MagicString::LABEL_ERROR_FILE);
-			errorlog << input << " " << MagicString::INVALID_TIME_INPUT << endl;
-			errorlog.close();
+			string errorlog = input + " " + MagicString::INVALID_TIME_INPUT;
+			storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);//logging the invalid time input command for future check
 			return MagicString::INVALID_TIME_INPUT;
 		}
 	}
@@ -107,6 +103,8 @@ string TaskList::updateTask(string input){
 	string taskInfo = removeFirstWord(input);
 
 	if (!isDigit(taskIndex)){
+		string errorlog = input + " " + MagicString::MESSAGE_INVALID_INDEX;
+		storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 	
@@ -148,6 +146,8 @@ string TaskList::deleteTask(string input){
 	assert(input != "");
 	
 	if (!isDigit(input)){
+		string errorlog = input + " " + MagicString::MESSAGE_INVALID_INDEX;
+		storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
@@ -221,7 +221,7 @@ string TaskList::display(string displayType){
 	}
 }
 
-//According to displayType, add all tasks which match with the displayType to the DisplayedTaskList class
+//to add all tasks which match with the displayType to the DisplayedTaskList class
 string TaskList::addToDisplayedTaskList(string displayType){
 	size_t findTimeBy = displayType.find("-by");
 	if (displayType == "all"){
@@ -304,6 +304,8 @@ string TaskList::markAsDone(string input){
 	assert(input != "");
 	
 	if (!isDigit(input)){
+		string errorlog = input + " " + MagicString::MESSAGE_INVALID_INDEX;
+		storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
@@ -338,6 +340,8 @@ string TaskList::setPriority(string input){
 	string taskInfo = removeFirstWord(input);
 
 	if (!isDigit(taskIndex)){
+		string errorlog = input + " " + MagicString::MESSAGE_INVALID_INDEX;
+		storage::logging(errorlog, MagicString::LABEL_ERROR_FILE);
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 

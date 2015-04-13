@@ -8,7 +8,7 @@ const string storage::FILENAME = "storage.txt";
 const string storage::TEMP = "temp.txt";
 const string storage::DONE = "done.txt";
 const string storage::PROGRESS = "progress.txt";
-const string storage::LOGFILE = "log.txt";
+const string storage::LOGFILE = "commandlog.txt";
 
 //@author A0114792A
 void storage::ending() {
@@ -191,13 +191,13 @@ void storage::backup(){ //call before starting function
 	}
 }
 
-void storage::logging(string input){
+void storage::logging(string input, string fileName){
 	ifstream readFile;
 	ofstream writeFile;
 	string line;
 	string content;
 
-	readFile.open(LOGFILE);
+	readFile.open(fileName);
 	
 	while (getline(readFile, line)) {
 		content = content + line;
@@ -206,7 +206,7 @@ void storage::logging(string input){
 	readFile.close();
 
 	content += input;
-	writeFile.open(LOGFILE);
+	writeFile.open(fileName);
 	writeFile << content <<endl;
 	writeFile.close();
 }
