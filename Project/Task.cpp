@@ -15,7 +15,7 @@ const string INVALID_DATE_MSG = "invalid date, please input a valid one";
 const string INVALID_TIME_MSG = "invalid time, please enter a valid one";
 const string INVALID_TIME_MSG2 = "invalid time frame, ending time cannot be earlier than starting time, please enter a valid one";
 
-//author @A0135141W
+//@author A0135141W
 Task::Task(){
 	taskname = "";
 	task_type = "";
