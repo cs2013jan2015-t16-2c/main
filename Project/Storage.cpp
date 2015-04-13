@@ -100,7 +100,7 @@ string storage::saveProgress(){
 }
 
 string storage::archive(string fileName){
-	assert(size.fileName() > 4); 
+	assert(fileName.size() > 4); 
 
 	ofstream file;
 	string content;

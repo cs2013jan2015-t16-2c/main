@@ -101,7 +101,7 @@ const string MagicString::INSTRUCTION_ADD_TIMED_1 =  "3. Timed task:     add do 
 const string MagicString::INSTRUCTION_ADD_TIMED_2 =  "4. Timed task:     add do assignment -from next Fri 08:00 -to 10:00";
 const string MagicString::INSTRUCTION_ADD_TAG =      "5. Classification: add do assignment #study";
 const string MagicString::INSTRUCTION_ADD_VENUE =    "6. Venue:          add do assignment @lab";
-const string MagicString::INSTRUCTION_ADD_BOTH =   "7. Both:           add do assignment #study @lab";
+const string MagicString::INSTRUCTION_ADD_BOTH =     "7. Both:           add do assignment #study @lab";
 const string MagicString::INSTRUCTION_ADD_RECUR_1 =  "8. Recurring task: add do assignment -from 14/05 09:00 -to 10:00 -everyday";
 const string MagicString::INSTRUCTION_ADD_RECUR_2 =  "9. Recurring task: add do assignment -from 14/05 09:00 -to 10:00 -everyweek";
 
