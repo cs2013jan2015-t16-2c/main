@@ -176,7 +176,13 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 	
 	case ARCHIVE:
 		displayText = storage::archive(taskString);
-		TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		if (displayText == MagicString::FORMAT_INCORRECT) {
+			TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
+		}
+		else {
+			//displayText is MagicString::SUCCESS_ARCHIVE
+			TEST_OUTPUT_EXECUTE = DisplayColor::displaySuccess(displayText); //For unit testing
+		}
 		return STRING_EMPTY;
 	
 	case SAVE_DONE:
