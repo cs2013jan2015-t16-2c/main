@@ -193,8 +193,13 @@ void storage::backup(){ //call before starting function
 
 void storage::logging(string input){
 	ofstream file;
+	string line;
 
 	file.open(LOGFILE);
+	
+	while(!file.eof()){
+		getline(file, line);
+	}
 	file << input <<endl;
 	file.close();
 }
