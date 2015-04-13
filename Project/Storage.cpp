@@ -17,17 +17,38 @@ void storage::ending() {
 
 	file.open(FILENAME);
 	content = TaskList::display("all");
-	if (content != MagicString::TASK_EMPTY2){
+	
+	try {
+		if (content != MagicString::TASK_EMPTY2){
+			throw 1;
+		}
+	}
+	catch (int){
 		file << content;
 		file.close();
 	}
 
+	//if (content != MagicString::TASK_EMPTY2){
+	//	file << content;
+	//	file.close();
+	//}
+
 	content = TaskList::display("done");
-	if(content != MagicString::TASK_EMPTY2){
+	
+	try{
+		if(content != MagicString::TASK_EMPTY2)
+			throw "save";
+	}
+	catch(string){
 		file << endl;
 		file << content;
 		file.close();
 	}
+	//if(content != MagicString::TASK_EMPTY2){
+	//	file << endl;
+	//	file << content;
+	//	file.close();
+	//}
 	file.close();
 }
 
