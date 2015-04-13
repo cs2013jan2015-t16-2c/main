@@ -34,6 +34,7 @@ public:
 	static const string IN_PROGRESS_TASK_SAVED;
 	static const string STORAGE_CLEARED;
 	static const string ARCHIVE_CLEARED;
+	static const string FORMAT_INCORRECT;
 
 	//task
 	static const string LABEL_SCHEDULED_TASK;

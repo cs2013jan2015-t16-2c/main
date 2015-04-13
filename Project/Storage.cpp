@@ -102,7 +102,16 @@ string storage::saveProgress(){
 
 string storage::archive(string fileName){
 	assert(fileName.size() > 4); 
-
+	
+	try{
+		if (fileName.find(".txt") == string::npos) {
+			throw 1;
+		}
+	}
+	catch (int){
+		return MagicString::FORMAT_INCORRECT;
+	}
+	
 	ofstream file;
 	string content;
 
