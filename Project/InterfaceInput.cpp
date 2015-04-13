@@ -106,7 +106,7 @@ string InterfaceInput::executeUserCommand(string userCommand) {
 			InterfaceInput::TEST_OUTPUT_EXECUTE = DisplayColor::displayError(displayText); //For unit testing
 		}
 		else {
-			cout << TaskList::updateTask(taskString) << endl;
+			cout << displayText << endl;
 		}
 		cout << endl;
 		cout << endl;
