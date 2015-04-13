@@ -221,7 +221,7 @@ string storage::logTime(){
 	int Min = localTime -> tm_min;
 	int Sec = localTime -> tm_sec;
 
-	ss << "[" + Hour + ":" + Min + ":" + Sec + " " + Year + "-" + Month + "-" + Day + "]";
+	ss << "[" << Hour << ":" << Min << ":" + Sec << " " << Year << "-" << Month << "-" << Day << "]";
 	TimeLog = ss.str();
 	return TimeLog; 
 }
