@@ -25,6 +25,7 @@ int main() {
 		string output;
 
 		userCommand = InterfaceInput::getUserCommand();
+		storage::logging(userCommand);
 		system("cls");
 		InterfaceOutput::displayDate();
 		cout << MagicString::DIVIDER;
