@@ -2,7 +2,8 @@
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
-//Ma Zhuoyuan A0113624R
+
+//author A0113624R
 namespace TaskListTest
 {		
 	TEST_CLASS(TaskListTest)
