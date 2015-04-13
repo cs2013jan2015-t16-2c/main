@@ -106,10 +106,10 @@ string TaskList::updateTask(string input){
 	string taskIndex = getFirstWord(input);
 	string taskInfo = removeFirstWord(input);
 
-	if (taskIndex.size() != 1 || !isdigit(taskIndex[0])){
+	if (!isDigit(taskIndex)){
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
-
+	
 	int index;
 	istringstream in(taskIndex);
 	in >> index;
@@ -122,7 +122,7 @@ string TaskList::updateTask(string input){
 		}
 	}
 	catch (int){
-		return MagicString::TASK + input + MagicString::NON_EXISTENCE;
+		return MagicString::TASK + taskIndex + MagicString::NON_EXISTENCE;
 	}
 	
 	int listIndex = findTargetedTaskIndex(index);
@@ -147,7 +147,7 @@ string TaskList::updateTask(string input){
 string TaskList::deleteTask(string input){
 	assert(input != "");
 	
-	if (input.size() != 1 || !isdigit(input[0])){
+	if (!isDigit(input)){
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
@@ -300,7 +300,7 @@ string TaskList::addToDisplayedTaskList(string displayType){
 string TaskList::markAsDone(string input){
 	assert(input != "");
 	
-	if (input.size() != 1 || !isdigit(input[0])){
+	if (!isDigit(input)){
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
@@ -334,7 +334,7 @@ string TaskList::setPriority(string input){
 	string taskIndex = getFirstWord(input);
 	string taskInfo = removeFirstWord(input);
 
-	if (taskIndex.size() != 1 || !isdigit(taskIndex[0])){
+	if (!isDigit(taskIndex)){
 		return MagicString::MESSAGE_INVALID_INDEX;
 	}
 
@@ -350,7 +350,7 @@ string TaskList::setPriority(string input){
 		}
 	}
 	catch (int){
-		return MagicString::TASK + input + MagicString::NON_EXISTENCE;
+		return MagicString::TASK + taskIndex + MagicString::NON_EXISTENCE;
 	}
 
 	try{
@@ -544,4 +544,14 @@ bool TaskList::isEariler(string taskDate, string displayByDate){
 			return false;
 		}
 	}
+}
+
+bool TaskList::isDigit(string input){
+	for (unsigned int i = 0; i < input.size(); i++){
+		if (!isdigit(input[i])){
+			return false;
+		}
+	}
+
+	return true;
 }
