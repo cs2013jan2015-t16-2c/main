@@ -244,6 +244,7 @@ string Help::executeHelpCommand() {
 	return STRING_EMPTY;
 }
 
+//@author A0093586N-reused
 bool Help::isDigit(string userInput){
 	for (unsigned int i = 0; i < userInput.size(); i++){
 		if (!isdigit(userInput[i])){
