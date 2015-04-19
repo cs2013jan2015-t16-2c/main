@@ -1,33 +1,11 @@
-// Source File
-// Interface.cpp
+//@author: a0093586n-reused
 
-#include "InterfaceInput.h"
-#include <assert.h>
 
-//@author A0093586N
-//These are the shortened commands
-const string InterfaceInput::SHORTENED_COMMAND_UPDATE = "up";
-const string InterfaceInput::SHORTENED_COMMAND_DELETE = "del";
-const string InterfaceInput::SHORTENED_COMMAND_DISPLAY = "dis";
-const string InterfaceInput::SHORTENED_COMMAND_SEARCH = "se";
-const string InterfaceInput::SHORTENED_COMMAND_ARCHIVE = "arc";
-const string InterfaceInput::SHORTENED_COMMAND_UNDO = "un";
-const string InterfaceInput::SHORTENED_COMMAND_REDO = "re";
-const string InterfaceInput::SHORTENED_COMMAND_EXIT = "q";
 
-const string InterfaceInput::STRING_EMPTY = "";
-const string InterfaceInput::STRING_TODAY = "today";
+	/**
+	 * origin: C:\Users\YU\Desktop\CSProject\main\Project\InterfaceInput.cpp
+	 */
 
-//These are the output information for 'clear all' action
-const string InterfaceInput::MESSAGE_ABORT_CLEAR = "Clear action aborted";
-const string InterfaceInput::SYMBOL_YES = "Y";
-const string InterfaceInput::SYMBOL_NO = "N";
-
-//These are for unit testing only
-string InterfaceInput::TEST_OUTPUT_EXECUTE;
-string InterfaceInput::TEST_OUTPUT_TODAY;
-
-//@author A0093586N-reused
 //to 'cin' user's command and pass it to 'executeUserCommand' function
 //for further processing
 string InterfaceInput::getUserCommand() {
@@ -322,53 +300,41 @@ string InterfaceInput::removeFirstWord(string userCommand) {
 	return userCommand.substr(userCommand.find_first_of(" ") + 1);
 }
 
-//@author A0093586N
-//to display today's task list to the user
-string InterfaceInput::displayToday() {
-	string displayText;
+	// End of segment: C:\Users\YU\Desktop\CSProject\main\Project\InterfaceInput.cpp
 
-	cout << MagicString::MESSAGE_TODAY_TASK << endl;
-	displayText = TaskList::display(STRING_TODAY);
-	if (displayText != MagicString::TASK_EMPTY2) {
-		TEST_OUTPUT_TODAY = DisplayColor::displayColor(displayText); //For unit testing
-		return STRING_EMPTY;
-	}
-	else {
-		TEST_OUTPUT_TODAY = DisplayColor::displayError(MagicString::MESSAGE_NO_TASK_TODAY); //For unit testing
-		return STRING_EMPTY;
-	}
+
+
+
+
+	/**
+	 * origin: C:\Users\YU\Desktop\CSProject\main\Project\InterfaceOutput.cpp
+	 */
+
+//to display today's date to the user
+void InterfaceOutput::displayDate() {
+	cout << MagicString::TODAY;
+	time_t t = time(0);
+	struct tm * now = localtime(&t);
+	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
 }
 
-//when the user decides to 'clear all' function,
-//the following function is used to confirm the above action
-//as 'clear all' action cannot be undone.
-bool InterfaceInput::isConfirmedToClear(){
-	DisplayColor::displayError(MagicString::MESSAGE_WARNING_1);
-	cout << MagicString::MESSAGE_WARNING_2;
-	string userInput;
-	while (true){
-		getline(cin, userInput);
-		transform(userInput.begin(), userInput.end(), userInput.begin(), ::toupper);
-		cout << MagicString::DIVIDER;
-		if (userInput == SYMBOL_YES) {
-			return true;
-		}
-		else if (userInput == SYMBOL_NO) {
-			return false;
-		}
-		else{
-			DisplayColor::displayError(MagicString::ERROR_INVALID_COMMAND);
-			cout << '\n' << MagicString::ERROR_TYPE_AGAIN;
-		}
-	}
-}
+	// End of segment: C:\Users\YU\Desktop\CSProject\main\Project\InterfaceOutput.cpp
 
-// These are for unit test only
-// to call private functions
-string InterfaceInput::testGetFirstWord(string testString) {
-	return InterfaceInput::getFirstWord(testString);
-}
 
-string InterfaceInput::testRemoveFirstWord(string testString){
-	return InterfaceInput::removeFirstWord(testString);
+
+
+
+	/**
+	 * origin: C:\Users\YU\Desktop\CSProject\main\Project\InterfaceOutput.cpp
+	 */
+
+//to display information to the user
+void InterfaceOutput::showToUser(string text) {
+	cout << text << endl;
 }
+	// End of segment: C:\Users\YU\Desktop\CSProject\main\Project\InterfaceOutput.cpp
+
+
+
+
+

@@ -8,6 +8,7 @@ string InterfaceOutput::displayWelcome() {
 	return MagicString::MESSAGE_WELCOME;
 }
 
+//@author A0093586N-reused
 //to display today's date to the user
 void InterfaceOutput::displayDate() {
 	cout << MagicString::TODAY;
@@ -16,11 +17,13 @@ void InterfaceOutput::displayDate() {
 	cout << now->tm_mday << '-' << now->tm_mon + 1 << '-' << now->tm_year + 1900 << endl;
 }
 
+//@author A0093586N
 //to display a tip to the user
 string InterfaceOutput::displayTip() {
 	return MagicString::MESSAGE_TIP;
 }
 
+//@author A0093586N-reused
 //to display information to the user
 void InterfaceOutput::showToUser(string text) {
 	cout << text << endl;
